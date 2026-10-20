@@ -230,6 +230,8 @@ public enum Device: Sendable {
   case iPhone18Pro
   /// Device is an [iPhone 18 Pro Max](https://support.apple.com/en-us/148591)
   case iPhone18ProMax
+  /// iPhone Duo. Scalar display metrics are unspecified because the device has two displays.
+  case iPhoneDuo
   /// Device is an [iPad 2](https://support.apple.com/kb/SP622)
   ///
   /// ![Image](https://support.apple.com/library/APPLE/APPLECARE_ALLGEOS/SP622/SP622_01-ipad2-mul.png)
@@ -494,6 +496,7 @@ public enum Device: Sendable {
     case "iPhone18,5": return iPhone17e
     case "iPhone19,2": return iPhone18Pro
     case "iPhone19,3", "iPhone19,7": return iPhone18ProMax
+    case "iPhone19,4": return iPhoneDuo
     case "iPad2,1", "iPad2,2", "iPad2,3", "iPad2,4": return iPad2
     case "iPad3,1", "iPad3,2", "iPad3,3": return iPad3
     case "iPad3,4", "iPad3,5", "iPad3,6": return iPad4
@@ -546,6 +549,15 @@ public enum Device: Sendable {
     }
   }
 
+  /// Whether the catalog model has a foldable display, including simulator wrappers.
+  public var isFoldable: Bool {
+    switch self {
+    case .iPhoneDuo: return true
+    case .simulator(let model): return model.isFoldable
+    default: return false
+    }
+  }
+
   /// Get the real device from a device.
   /// If the device is a an iPhone8Plus simulator this function returns .iPhone8Plus (the real device).
   /// If the parameter is a real device, this function returns just that passed parameter.
@@ -561,7 +573,7 @@ public enum Device: Sendable {
     return device
   }
 
-  /// Returns diagonal screen length in inches
+  /// Catalog diagonal in inches, or -1 for an unknown or multi-display model.
   public var diagonal: Double {
     switch self {
     case .iPodTouch5: return 4
@@ -618,6 +630,7 @@ public enum Device: Sendable {
     case .iPhone17e: return 6.1
     case .iPhone18Pro: return 6.3
     case .iPhone18ProMax: return 6.9
+    case .iPhoneDuo: return -1
     case .iPad2: return 9.7
     case .iPad3: return 9.7
     case .iPad4: return 9.7
@@ -668,7 +681,7 @@ public enum Device: Sendable {
     }
   }
 
-  /// Returns screen ratio as a tuple
+  /// Catalog screen ratio, or (-1, -1) when a single display is unspecified.
   public var screenRatio: (width: Double, height: Double) {
     switch self {
     case .iPodTouch5: return (width: 9, height: 16)
@@ -725,6 +738,7 @@ public enum Device: Sendable {
     case .iPhone17e: return (width: 9, height: 19.5)
     case .iPhone18Pro: return (width: 9, height: 19.5)
     case .iPhone18ProMax: return (width: 9, height: 19.5)
+    case .iPhoneDuo: return (width: -1, height: -1)
     case .iPad2: return (width: 3, height: 4)
     case .iPad3: return (width: 3, height: 4)
     case .iPad4: return (width: 3, height: 4)
@@ -790,7 +804,7 @@ public enum Device: Sendable {
       .iPhone13ProMax, .iPhoneSE3, .iPhone14, .iPhone14Plus, .iPhone14Pro, .iPhone14ProMax,
       .iPhone15, .iPhone15Plus, .iPhone15Pro, .iPhone15ProMax, .iPhone16, .iPhone16Plus,
       .iPhone16Pro, .iPhone16ProMax, .iPhone16e, .iPhone17, .iPhone17Pro, .iPhone17ProMax,
-      .iPhoneAir, .iPhone17e, .iPhone18Pro, .iPhone18ProMax,
+      .iPhoneAir, .iPhone17e, .iPhone18Pro, .iPhone18ProMax, .iPhoneDuo,
     ]
   }
 
@@ -816,7 +830,7 @@ public enum Device: Sendable {
       .iPhone13Pro, .iPhone13ProMax, .iPhone14, .iPhone14Plus, .iPhone14Pro, .iPhone14ProMax,
       .iPhone15, .iPhone15Plus, .iPhone15Pro, .iPhone15ProMax, .iPhone16, .iPhone16Plus,
       .iPhone16Pro, .iPhone16ProMax, .iPhone16e, .iPhone17, .iPhone17Pro, .iPhone17ProMax,
-      .iPhoneAir, .iPhone17e, .iPhone18Pro, .iPhone18ProMax,
+      .iPhoneAir, .iPhone17e, .iPhone18Pro, .iPhone18ProMax, .iPhoneDuo,
     ]
   }
 
@@ -925,11 +939,11 @@ public enum Device: Sendable {
   public static var allTouchIDCapableDevices: [Device] {
     return [
       .iPhone5s, .iPhone6, .iPhone6Plus, .iPhone6s, .iPhone6sPlus, .iPhone7, .iPhone7Plus,
-      .iPhoneSE, .iPhone8, .iPhone8Plus, .iPhoneSE2, .iPhoneSE3, .iPadAir2, .iPad5, .iPad6,
-      .iPadAir3, .iPad7, .iPad8, .iPad9, .iPad10, .iPadA16, .iPadAir4, .iPadAir5, .iPadAir11M2,
-      .iPadAir13M2, .iPadAir11M3, .iPadAir13M3, .iPadAir11M4, .iPadAir13M4, .iPadMini3, .iPadMini4,
-      .iPadMini5, .iPadMini6, .iPadMiniA17Pro, .iPadPro9Inch, .iPadPro12Inch, .iPadPro12Inch2,
-      .iPadPro10Inch,
+      .iPhoneSE, .iPhone8, .iPhone8Plus, .iPhoneSE2, .iPhoneSE3, .iPhoneDuo, .iPadAir2, .iPad5,
+      .iPad6, .iPadAir3, .iPad7, .iPad8, .iPad9, .iPad10, .iPadA16, .iPadAir4, .iPadAir5,
+      .iPadAir11M2, .iPadAir13M2, .iPadAir11M3, .iPadAir13M3, .iPadAir11M4, .iPadAir13M4,
+      .iPadMini3, .iPadMini4, .iPadMini5, .iPadMini6, .iPadMiniA17Pro, .iPadPro9Inch,
+      .iPadPro12Inch, .iPadPro12Inch2, .iPadPro10Inch,
     ]
   }
 
@@ -957,12 +971,13 @@ public enum Device: Sendable {
       .iPhone14, .iPhone14Plus, .iPhone14Pro, .iPhone14ProMax, .iPhone15, .iPhone15Plus,
       .iPhone15Pro, .iPhone15ProMax, .iPhone16, .iPhone16Plus, .iPhone16Pro, .iPhone16ProMax,
       .iPhone16e, .iPhone17, .iPhone17Pro, .iPhone17ProMax, .iPhoneAir, .iPhone17e, .iPhone18Pro,
-      .iPhone18ProMax, .iPadAir2, .iPad5, .iPad6, .iPadAir3, .iPad7, .iPad8, .iPad9, .iPad10,
-      .iPadA16, .iPadAir4, .iPadAir5, .iPadAir11M2, .iPadAir13M2, .iPadAir11M3, .iPadAir13M3,
-      .iPadAir11M4, .iPadAir13M4, .iPadMini3, .iPadMini4, .iPadMini5, .iPadMini6, .iPadMiniA17Pro,
-      .iPadPro9Inch, .iPadPro12Inch, .iPadPro12Inch2, .iPadPro10Inch, .iPadPro11Inch,
-      .iPadPro12Inch3, .iPadPro11Inch2, .iPadPro12Inch4, .iPadPro11Inch3, .iPadPro12Inch5,
-      .iPadPro11Inch4, .iPadPro12Inch6, .iPadPro11M4, .iPadPro13M4, .iPadPro11M5, .iPadPro13M5,
+      .iPhone18ProMax, .iPhoneDuo, .iPadAir2, .iPad5, .iPad6, .iPadAir3, .iPad7, .iPad8, .iPad9,
+      .iPad10, .iPadA16, .iPadAir4, .iPadAir5, .iPadAir11M2, .iPadAir13M2, .iPadAir11M3,
+      .iPadAir13M3, .iPadAir11M4, .iPadAir13M4, .iPadMini3, .iPadMini4, .iPadMini5, .iPadMini6,
+      .iPadMiniA17Pro, .iPadPro9Inch, .iPadPro12Inch, .iPadPro12Inch2, .iPadPro10Inch,
+      .iPadPro11Inch, .iPadPro12Inch3, .iPadPro11Inch2, .iPadPro12Inch4, .iPadPro11Inch3,
+      .iPadPro12Inch5, .iPadPro11Inch4, .iPadPro12Inch6, .iPadPro11M4, .iPadPro13M4, .iPadPro11M5,
+      .iPadPro13M5,
     ]
   }
 
@@ -991,7 +1006,7 @@ public enum Device: Sendable {
       .iPhone13Pro, .iPhone13ProMax, .iPhone14, .iPhone14Plus, .iPhone14Pro, .iPhone14ProMax,
       .iPhone15, .iPhone15Plus, .iPhone15Pro, .iPhone15ProMax, .iPhone16, .iPhone16Plus,
       .iPhone16Pro, .iPhone16ProMax, .iPhone16e, .iPhone17, .iPhone17Pro, .iPhone17ProMax,
-      .iPhoneAir, .iPhone17e, .iPhone18Pro, .iPhone18ProMax,
+      .iPhoneAir, .iPhone17e, .iPhone18Pro, .iPhone18ProMax, .iPhoneDuo,
     ]
   }
 
@@ -1014,9 +1029,9 @@ public enum Device: Sendable {
       .iPhone13Pro, .iPhone13ProMax, .iPhone14, .iPhone14Plus, .iPhone14Pro, .iPhone14ProMax,
       .iPhone15, .iPhone15Plus, .iPhone15Pro, .iPhone15ProMax, .iPhone16, .iPhone16Plus,
       .iPhone16Pro, .iPhone16ProMax, .iPhone16e, .iPhone17, .iPhone17Pro, .iPhone17ProMax,
-      .iPhoneAir, .iPhone17e, .iPhone18Pro, .iPhone18ProMax, .iPad10, .iPadA16, .iPadAir4,
-      .iPadAir5, .iPadAir11M2, .iPadAir13M2, .iPadAir11M3, .iPadAir13M3, .iPadAir11M4, .iPadAir13M4,
-      .iPadMini6, .iPadMiniA17Pro, .iPadPro11Inch, .iPadPro12Inch3, .iPadPro11Inch2,
+      .iPhoneAir, .iPhone17e, .iPhone18Pro, .iPhone18ProMax, .iPhoneDuo, .iPad10, .iPadA16,
+      .iPadAir4, .iPadAir5, .iPadAir11M2, .iPadAir13M2, .iPadAir11M3, .iPadAir13M3, .iPadAir11M4,
+      .iPadAir13M4, .iPadMini6, .iPadMiniA17Pro, .iPadPro11Inch, .iPadPro12Inch3, .iPadPro11Inch2,
       .iPadPro12Inch4, .iPadPro11Inch3, .iPadPro12Inch5, .iPadPro11Inch4, .iPadPro12Inch6,
       .iPadPro11M4, .iPadPro13M4, .iPadPro11M5, .iPadPro13M5,
     ]
@@ -1033,7 +1048,7 @@ public enum Device: Sendable {
     return [
       .iPhone14Pro, .iPhone14ProMax, .iPhone15, .iPhone15Plus, .iPhone15Pro, .iPhone15ProMax,
       .iPhone16, .iPhone16Plus, .iPhone16Pro, .iPhone16ProMax, .iPhone17, .iPhone17Pro,
-      .iPhone17ProMax, .iPhoneAir, .iPhone18Pro, .iPhone18ProMax,
+      .iPhone17ProMax, .iPhoneAir, .iPhone18Pro, .iPhone18ProMax, .iPhoneDuo,
     ]
   }
 
@@ -1065,7 +1080,7 @@ public enum Device: Sendable {
       .iPhone13, .iPhone13Mini, .iPhone13Pro, .iPhone13ProMax, .iPhoneSE3, .iPhone14, .iPhone14Plus,
       .iPhone14Pro, .iPhone14ProMax, .iPhone15, .iPhone15Plus, .iPhone15Pro, .iPhone15ProMax,
       .iPhone16, .iPhone16Plus, .iPhone16Pro, .iPhone16ProMax, .iPhone16e, .iPhone17, .iPhone17Pro,
-      .iPhone17ProMax, .iPhoneAir, .iPhone17e, .iPhone18Pro, .iPhone18ProMax,
+      .iPhone17ProMax, .iPhoneAir, .iPhone17e, .iPhone18Pro, .iPhone18ProMax, .iPhoneDuo,
     ]
   }
 
@@ -1082,9 +1097,9 @@ public enum Device: Sendable {
       .iPhone13Pro, .iPhone13ProMax, .iPhoneSE3, .iPhone14, .iPhone14Plus, .iPhone14Pro,
       .iPhone14ProMax, .iPhone15, .iPhone15Plus, .iPhone15Pro, .iPhone15ProMax, .iPhone16,
       .iPhone16Plus, .iPhone16Pro, .iPhone16ProMax, .iPhone16e, .iPhone17, .iPhone17Pro,
-      .iPhone17ProMax, .iPhoneAir, .iPhone17e, .iPhone18Pro, .iPhone18ProMax, .iPad10, .iPadA16,
-      .iPadAir5, .iPadAir11M2, .iPadAir13M2, .iPadAir11M3, .iPadAir13M3, .iPadAir11M4, .iPadAir13M4,
-      .iPadMini6, .iPadMiniA17Pro, .iPadPro11Inch3, .iPadPro12Inch5, .iPadPro11Inch4,
+      .iPhone17ProMax, .iPhoneAir, .iPhone17e, .iPhone18Pro, .iPhone18ProMax, .iPhoneDuo, .iPad10,
+      .iPadA16, .iPadAir5, .iPadAir11M2, .iPadAir13M2, .iPadAir11M3, .iPadAir13M3, .iPadAir11M4,
+      .iPadAir13M4, .iPadMini6, .iPadMiniA17Pro, .iPadPro11Inch3, .iPadPro12Inch5, .iPadPro11Inch4,
       .iPadPro12Inch6, .iPadPro11M4, .iPadPro13M4, .iPadPro11M5, .iPadPro13M5,
     ]
   }
@@ -1108,8 +1123,8 @@ public enum Device: Sendable {
       .iPhone13Pro, .iPhone13ProMax, .iPhoneSE3, .iPhone14, .iPhone14Plus, .iPhone14Pro,
       .iPhone14ProMax, .iPhone15, .iPhone15Plus, .iPhone15Pro, .iPhone15ProMax, .iPhone16,
       .iPhone16Plus, .iPhone16Pro, .iPhone16ProMax, .iPhone16e, .iPhone17, .iPhone17Pro,
-      .iPhone17ProMax, .iPhoneAir, .iPhone17e, .iPhone18Pro, .iPhone18ProMax, .iPadAir3, .iPad7,
-      .iPad8, .iPad9, .iPad10, .iPadA16, .iPadAir4, .iPadAir5, .iPadAir11M2, .iPadAir13M2,
+      .iPhone17ProMax, .iPhoneAir, .iPhone17e, .iPhone18Pro, .iPhone18ProMax, .iPhoneDuo, .iPadAir3,
+      .iPad7, .iPad8, .iPad9, .iPad10, .iPadA16, .iPadAir4, .iPadAir5, .iPadAir11M2, .iPadAir13M2,
       .iPadAir11M3, .iPadAir13M3, .iPadAir11M4, .iPadAir13M4, .iPadMini5, .iPadMini6,
       .iPadMiniA17Pro, .iPadPro11Inch, .iPadPro12Inch3, .iPadPro11Inch2, .iPadPro12Inch4,
       .iPadPro11Inch3, .iPadPro12Inch5, .iPadPro11Inch4, .iPadPro12Inch6, .iPadPro11M4,
@@ -1132,7 +1147,7 @@ public enum Device: Sendable {
       .iPhone13, .iPhone13Mini, .iPhone13Pro, .iPhone13ProMax, .iPhoneSE3, .iPhone14, .iPhone14Plus,
       .iPhone14Pro, .iPhone14ProMax, .iPhone15, .iPhone15Plus, .iPhone15Pro, .iPhone15ProMax,
       .iPhone16, .iPhone16Plus, .iPhone16Pro, .iPhone16ProMax, .iPhone16e, .iPhone17, .iPhone17Pro,
-      .iPhone17ProMax, .iPhoneAir, .iPhone17e, .iPhone18Pro, .iPhone18ProMax,
+      .iPhone17ProMax, .iPhoneAir, .iPhone17e, .iPhone18Pro, .iPhone18ProMax, .iPhoneDuo,
     ]
   }
 
@@ -1165,9 +1180,9 @@ public enum Device: Sendable {
     return [
       .iPhone15, .iPhone15Plus, .iPhone15Pro, .iPhone15ProMax, .iPhone16, .iPhone16Plus,
       .iPhone16Pro, .iPhone16ProMax, .iPhone16e, .iPhone17, .iPhone17Pro, .iPhone17ProMax,
-      .iPhoneAir, .iPhone17e, .iPhone18Pro, .iPhone18ProMax, .iPad10, .iPadA16, .iPadAir4,
-      .iPadAir5, .iPadAir11M2, .iPadAir13M2, .iPadAir11M3, .iPadAir13M3, .iPadAir11M4, .iPadAir13M4,
-      .iPadMini6, .iPadMiniA17Pro, .iPadPro11Inch, .iPadPro12Inch3, .iPadPro11Inch2,
+      .iPhoneAir, .iPhone17e, .iPhone18Pro, .iPhone18ProMax, .iPhoneDuo, .iPad10, .iPadA16,
+      .iPadAir4, .iPadAir5, .iPadAir11M2, .iPadAir13M2, .iPadAir11M3, .iPadAir13M3, .iPadAir11M4,
+      .iPadAir13M4, .iPadMini6, .iPadMiniA17Pro, .iPadPro11Inch, .iPadPro12Inch3, .iPadPro11Inch2,
       .iPadPro12Inch4, .iPadPro11Inch3, .iPadPro12Inch5, .iPadPro11Inch4, .iPadPro12Inch6,
       .iPadPro11M4, .iPadPro13M4, .iPadPro11M5, .iPadPro13M5,
     ]
@@ -1199,7 +1214,7 @@ public enum Device: Sendable {
     return allRealDevices.map(Device.simulator)
   }
 
-  /// Returns whether the device is any of the simulator
+  /// Returns whether the device is a simulator, including unknown models.
   /// Useful when there is a need to check and skip running a portion of code (location request or others)
   public var isSimulator: Bool {
     if case .simulator = self { return true }
@@ -1287,7 +1302,7 @@ public enum Device: Sendable {
     return UIDevice.current.localizedModel
   }
 
-  /// PPI (Pixels per Inch) on the current device's screen (if applicable). When the device is not applicable this property returns nil.
+  /// Catalog pixels per inch, or nil when a single display is unspecified.
   public var ppi: Int? {
     switch self {
     case .iPodTouch5: return 326
@@ -1344,6 +1359,7 @@ public enum Device: Sendable {
     case .iPhone17e: return 460
     case .iPhone18Pro: return 460
     case .iPhone18ProMax: return 460
+    case .iPhoneDuo: return nil
     case .iPad2: return 132
     case .iPad3: return 264
     case .iPad4: return 264
@@ -1467,6 +1483,7 @@ extension Device: CustomStringConvertible {
     case .iPhone17e: return "iPhone 17e"
     case .iPhone18Pro: return "iPhone 18 Pro"
     case .iPhone18ProMax: return "iPhone 18 Pro Max"
+    case .iPhoneDuo: return "iPhone Duo"
     case .iPad2: return "iPad 2"
     case .iPad3: return "iPad (3rd generation)"
     case .iPad4: return "iPad (4th generation)"
@@ -1577,6 +1594,7 @@ extension Device: CustomStringConvertible {
     case .iPhone17e: return "iPhone 17e"
     case .iPhone18Pro: return "iPhone 18 Pro"
     case .iPhone18ProMax: return "iPhone 18 Pro Max"
+    case .iPhoneDuo: return "iPhone Duo"
     case .iPad2: return "iPad 2"
     case .iPad3: return "iPad (3rd generation)"
     case .iPad4: return "iPad (4th generation)"
@@ -1869,8 +1887,8 @@ extension Device {
   /// All Apple Pencil Capable Devices
   public static var allApplePencilCapableDevices: [Device] {
     return [
-      .iPad6, .iPadAir3, .iPad7, .iPad8, .iPad9, .iPad10, .iPadA16, .iPadAir4, .iPadAir5,
-      .iPadAir11M2, .iPadAir13M2, .iPadAir11M3, .iPadAir13M3, .iPadAir11M4, .iPadAir13M4,
+      .iPhoneDuo, .iPad6, .iPadAir3, .iPad7, .iPad8, .iPad9, .iPad10, .iPadA16, .iPadAir4,
+      .iPadAir5, .iPadAir11M2, .iPadAir13M2, .iPadAir11M3, .iPadAir13M3, .iPadAir11M4, .iPadAir13M4,
       .iPadMini5, .iPadMini6, .iPadMiniA17Pro, .iPadPro9Inch, .iPadPro12Inch, .iPadPro12Inch2,
       .iPadPro10Inch, .iPadPro11Inch, .iPadPro12Inch3, .iPadPro11Inch2, .iPadPro12Inch4,
       .iPadPro11Inch3, .iPadPro12Inch5, .iPadPro11Inch4, .iPadPro12Inch6, .iPadPro11M4,
@@ -1891,6 +1909,7 @@ extension Device {
     case .iPadPro12Inch: return .firstGeneration
     case .iPadPro12Inch2: return .firstGeneration
     case .iPadPro10Inch: return .firstGeneration
+    case .iPhoneDuo: return .firstGenerationUsbC
     case .iPad10: return [.firstGeneration, .firstGenerationUsbC]
     case .iPadA16: return [.firstGeneration, .firstGenerationUsbC]
     case .iPadAir4: return [.secondGeneration, .firstGenerationUsbC]
@@ -2012,6 +2031,7 @@ extension Device {
     case .iPhone16: return [.wide, .ultraWide]
     case .iPhone16Plus: return [.wide, .ultraWide]
     case .iPhone17: return [.wide, .ultraWide]
+    case .iPhoneDuo: return [.wide, .ultraWide]
     case .iPadPro11Inch2: return [.wide, .ultraWide]
     case .iPadPro12Inch4: return [.wide, .ultraWide]
     case .iPadPro11Inch3: return [.wide, .ultraWide]
@@ -2048,14 +2068,14 @@ extension Device {
       .iPhone13, .iPhone13Mini, .iPhone13Pro, .iPhone13ProMax, .iPhoneSE3, .iPhone14, .iPhone14Plus,
       .iPhone14Pro, .iPhone14ProMax, .iPhone15, .iPhone15Plus, .iPhone15Pro, .iPhone15ProMax,
       .iPhone16, .iPhone16Plus, .iPhone16Pro, .iPhone16ProMax, .iPhone16e, .iPhone17, .iPhone17Pro,
-      .iPhone17ProMax, .iPhoneAir, .iPhone17e, .iPhone18Pro, .iPhone18ProMax, .iPad2, .iPad3,
-      .iPad4, .iPadAir, .iPadAir2, .iPad5, .iPad6, .iPadAir3, .iPad7, .iPad8, .iPad9, .iPad10,
-      .iPadA16, .iPadAir4, .iPadAir5, .iPadAir11M2, .iPadAir13M2, .iPadAir11M3, .iPadAir13M3,
-      .iPadAir11M4, .iPadAir13M4, .iPadMini, .iPadMini2, .iPadMini3, .iPadMini4, .iPadMini5,
-      .iPadMini6, .iPadMiniA17Pro, .iPadPro9Inch, .iPadPro12Inch, .iPadPro12Inch2, .iPadPro10Inch,
-      .iPadPro11Inch, .iPadPro12Inch3, .iPadPro11Inch2, .iPadPro12Inch4, .iPadPro11Inch3,
-      .iPadPro12Inch5, .iPadPro11Inch4, .iPadPro12Inch6, .iPadPro11M4, .iPadPro13M4, .iPadPro11M5,
-      .iPadPro13M5,
+      .iPhone17ProMax, .iPhoneAir, .iPhone17e, .iPhone18Pro, .iPhone18ProMax, .iPhoneDuo, .iPad2,
+      .iPad3, .iPad4, .iPadAir, .iPadAir2, .iPad5, .iPad6, .iPadAir3, .iPad7, .iPad8, .iPad9,
+      .iPad10, .iPadA16, .iPadAir4, .iPadAir5, .iPadAir11M2, .iPadAir13M2, .iPadAir11M3,
+      .iPadAir13M3, .iPadAir11M4, .iPadAir13M4, .iPadMini, .iPadMini2, .iPadMini3, .iPadMini4,
+      .iPadMini5, .iPadMini6, .iPadMiniA17Pro, .iPadPro9Inch, .iPadPro12Inch, .iPadPro12Inch2,
+      .iPadPro10Inch, .iPadPro11Inch, .iPadPro12Inch3, .iPadPro11Inch2, .iPadPro12Inch4,
+      .iPadPro11Inch3, .iPadPro12Inch5, .iPadPro11Inch4, .iPadPro12Inch6, .iPadPro11M4,
+      .iPadPro13M4, .iPadPro11M5, .iPadPro13M5,
     ]
   }
 
@@ -2075,14 +2095,14 @@ extension Device {
       .iPhone13, .iPhone13Mini, .iPhone13Pro, .iPhone13ProMax, .iPhoneSE3, .iPhone14, .iPhone14Plus,
       .iPhone14Pro, .iPhone14ProMax, .iPhone15, .iPhone15Plus, .iPhone15Pro, .iPhone15ProMax,
       .iPhone16, .iPhone16Plus, .iPhone16Pro, .iPhone16ProMax, .iPhone16e, .iPhone17, .iPhone17Pro,
-      .iPhone17ProMax, .iPhoneAir, .iPhone17e, .iPhone18Pro, .iPhone18ProMax, .iPad2, .iPad3,
-      .iPad4, .iPadAir, .iPadAir2, .iPad5, .iPad6, .iPadAir3, .iPad7, .iPad8, .iPad9, .iPad10,
-      .iPadA16, .iPadAir4, .iPadAir5, .iPadAir11M2, .iPadAir13M2, .iPadAir11M3, .iPadAir13M3,
-      .iPadAir11M4, .iPadAir13M4, .iPadMini, .iPadMini2, .iPadMini3, .iPadMini4, .iPadMini5,
-      .iPadMini6, .iPadMiniA17Pro, .iPadPro9Inch, .iPadPro12Inch, .iPadPro12Inch2, .iPadPro10Inch,
-      .iPadPro11Inch, .iPadPro12Inch3, .iPadPro11Inch2, .iPadPro12Inch4, .iPadPro11Inch3,
-      .iPadPro12Inch5, .iPadPro11Inch4, .iPadPro12Inch6, .iPadPro11M4, .iPadPro13M4, .iPadPro11M5,
-      .iPadPro13M5,
+      .iPhone17ProMax, .iPhoneAir, .iPhone17e, .iPhone18Pro, .iPhone18ProMax, .iPhoneDuo, .iPad2,
+      .iPad3, .iPad4, .iPadAir, .iPadAir2, .iPad5, .iPad6, .iPadAir3, .iPad7, .iPad8, .iPad9,
+      .iPad10, .iPadA16, .iPadAir4, .iPadAir5, .iPadAir11M2, .iPadAir13M2, .iPadAir11M3,
+      .iPadAir13M3, .iPadAir11M4, .iPadAir13M4, .iPadMini, .iPadMini2, .iPadMini3, .iPadMini4,
+      .iPadMini5, .iPadMini6, .iPadMiniA17Pro, .iPadPro9Inch, .iPadPro12Inch, .iPadPro12Inch2,
+      .iPadPro10Inch, .iPadPro11Inch, .iPadPro12Inch3, .iPadPro11Inch2, .iPadPro12Inch4,
+      .iPadPro11Inch3, .iPadPro12Inch5, .iPadPro11Inch4, .iPadPro12Inch6, .iPadPro11M4,
+      .iPadPro13M4, .iPadPro11M5, .iPadPro13M5,
     ]
   }
 
@@ -2103,7 +2123,7 @@ extension Device {
       .iPhone12ProMax, .iPhone13, .iPhone13Mini, .iPhone13Pro, .iPhone13ProMax, .iPhone14,
       .iPhone14Plus, .iPhone14Pro, .iPhone14ProMax, .iPhone15, .iPhone15Plus, .iPhone15Pro,
       .iPhone15ProMax, .iPhone16, .iPhone16Plus, .iPhone16Pro, .iPhone16ProMax, .iPhone17,
-      .iPhone17Pro, .iPhone17ProMax, .iPhone18Pro, .iPhone18ProMax, .iPadPro11Inch2,
+      .iPhone17Pro, .iPhone17ProMax, .iPhone18Pro, .iPhone18ProMax, .iPhoneDuo, .iPadPro11Inch2,
       .iPadPro12Inch4, .iPadPro11Inch3, .iPadPro12Inch5, .iPadPro11Inch4, .iPadPro12Inch6,
     ]
   }
@@ -2264,6 +2284,7 @@ extension Device {
     case .iPhone17e: return .a19
     case .iPhone18Pro: return .a20Pro
     case .iPhone18ProMax: return .a20Pro
+    case .iPhoneDuo: return .a20Pro
     case .iPad2: return .a5
     case .iPad3: return .a5X
     case .iPad4: return .a6X

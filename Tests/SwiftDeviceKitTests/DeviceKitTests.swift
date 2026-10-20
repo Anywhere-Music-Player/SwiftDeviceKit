@@ -37,7 +37,7 @@ final class DeviceKitTests: XCTestCase {
     XCTAssertEqual(chip.description, "A20 Pro")
     // The deferred model and unverified identifiers must remain unknown.
     for identifier in [
-      "iPhone19,1", "iPhone19,4", "iPhone19,5", "iPhone19,6", "placeholder:iPhone18Pro",
+      "iPhone19,1", "iPhone19,5", "iPhone19,6", "placeholder:iPhone18Pro",
       "placeholder:iPhone18ProMax",
     ] {
       XCTAssertEqual(Device.mapToDevice(identifier: identifier), .unknown(identifier))
@@ -568,6 +568,7 @@ final class DeviceKitTests: XCTestCase {
 
   func testHasDynamicIsland() {
     let dynamicIslandDevices: [Device] = [
+      .iPhoneDuo,
       .iPhone14Pro,
       .iPhone14ProMax,
       .iPhone15,
@@ -594,6 +595,7 @@ final class DeviceKitTests: XCTestCase {
 
   func testHas5gSupport() {
     let has5gDevices: [Device] = [
+      .iPhoneDuo,
       .iPhone12,
       .iPhone12Mini,
       .iPhone12Pro,
@@ -794,6 +796,7 @@ final class DeviceKitTests: XCTestCase {
 
   func testHasUSBCConnectivity() {
     let usbCDevices: [Device] = [
+      .iPhoneDuo,
       .iPhone15,
       .iPhone15Plus,
       .iPhone15Pro,

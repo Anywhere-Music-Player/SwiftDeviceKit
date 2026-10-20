@@ -63,7 +63,7 @@ struct CatalogBaselineTests {
       }
     }
     #expect(
-      Device.allPhones.map(\.description)
+      Device.allPhones.filter { $0 != .iPhoneDuo }.map(\.description)
         == baseline.filter { $0.family == "phone" }.map(\.description))
     #expect(
       Device.allPads.map(\.description) == baseline.filter { $0.family == "pad" }.map(\.description)

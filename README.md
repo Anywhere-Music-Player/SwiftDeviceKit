@@ -25,7 +25,7 @@ print(device.hasUSBCConnectivity)
 ## Scope
 
 - One Swift module and no external package dependencies.
-- The complete upstream iOS catalog: 99 iPhone, iPad, iPod and HomePod models.
+- The complete upstream iOS catalog (99 models), plus iPhone Duo.
   Old model records are retained for explicit lookups; running on old iOS is unsupported.
 - Model identifiers, names, display specifications, cameras, CPU, biometrics,
   Apple Pencil support and capability groups.
@@ -76,11 +76,39 @@ compatibility shims or claim complete source compatibility with DeviceKit.
 4. Add a model regression test. Keep the frozen 5.9.0 baseline fixture unchanged.
 5. Review the diff, then publish a tested semantic-version tag when ready.
 
-New-device pull requests, including
-[DeviceKit #507](https://github.com/devicekit/DeviceKit/pull/507), are **not imported**
-in this initial cleanup. Unverified identifiers continue to return `.unknown`.
-The initial catalog includes the iPhone 18 Pro / Pro Max records already released
-in DeviceKit 5.9.0.
+## iPhone Duo
+
+`iPhone19,4` maps to `.iPhoneDuo`; `isFoldable` also works on its simulator wrapper.
+The identifier and foldability were adapted from Zandor Smith's
+[DeviceKit #507](https://github.com/devicekit/DeviceKit/pull/507), pinned at
+`1b48a59b0fe0c93ccf2db5392957bc5615ae5068`.
+The locally installed Apple CoreSimulator profile `iPhone Duo.simdevicetype`,
+version 405, independently identifies the model as `iPhone19,4`.
+
+Capabilities were checked against [Apple's technical specifications](https://www.apple.com/iphone-duo/specs/)
+on 21 October 2026: A20 Pro, Touch ID, Dynamic Island, rounded corners, USB-C,
+wireless charging, 5G, dual eSIM, USB-C Apple Pencil, and wide/ultra-wide cameras.
+An optical-quality crop is not treated as a separate telephoto camera.
+The imported PR's unconfirmed capability defaults were updated from this source.
+
+The model has two displays:
+
+| Panel | Diagonal | Pixels | PPI |
+| --- | --- | --- | --- |
+| Outer | 5.4 inches | 1398 × 2034 | 460 |
+| Inner | 7.6 inches | 1878 × 2670 | 430 |
+
+The installed simulator profile describes the inner panel as 2007 × 2853 at 460 PPI;
+it therefore must not be used as the authoritative hardware specification.
+`diagonal` and `screenRatio` return the existing unknown sentinel `-1`, and `ppi`
+returns `nil` for Duo, because the current scalar API does not identify a panel.
+These values do not mean that Apple's specifications are unknown. A future API
+can represent both panels explicitly. For layout, use the current view's geometry.
+
+Validation uses catalog lookups on an iPhone 17 Pro simulator. No Duo simulator
+or physical Duo is required to exercise the identifier mapping; those tests do
+not verify folding transitions or real hardware behavior. Other upstream PRs
+remain separate work.
 
 ## Validation
 
