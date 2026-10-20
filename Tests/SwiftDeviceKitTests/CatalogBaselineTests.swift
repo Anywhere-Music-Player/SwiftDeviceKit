@@ -91,6 +91,18 @@ struct CatalogBaselineTests {
   }
 
   @Test
+  func simulatorCameraMetadataMatchesTheCatalogModel() {
+    for model in Device.allRealDevices + [.homePod, .unknown("future-model")] {
+      let simulator = Device.simulator(model)
+      #expect(simulator.cameras == model.cameras)
+      #expect(simulator.hasCamera == model.hasCamera)
+      #expect(simulator.hasWideCamera == model.hasWideCamera)
+      #expect(simulator.hasUltraWideCamera == model.hasUltraWideCamera)
+      #expect(simulator.hasTelephotoCamera == model.hasTelephotoCamera)
+    }
+  }
+
+  @Test
   func catalogCanCrossActorBoundaries() async {
     let device = Device.iPhone13Pro
     let result = await Task.detached {

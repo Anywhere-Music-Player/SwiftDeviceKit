@@ -1307,6 +1307,7 @@ extension Device {
   % for device in list(filter(lambda device: device.cameras == 123, iOSDevices)):
       case .${device.caseName}: return [.wide, .telephoto, .ultraWide]
   % end
+      case .simulator(let model): return model.cameras
       default: return []
     }
   }

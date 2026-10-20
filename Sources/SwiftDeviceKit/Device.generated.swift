@@ -2054,6 +2054,7 @@ extension Device {
     case .iPhone17ProMax: return [.wide, .telephoto, .ultraWide]
     case .iPhone18Pro: return [.wide, .telephoto, .ultraWide]
     case .iPhone18ProMax: return [.wide, .telephoto, .ultraWide]
+    case .simulator(let model): return model.cameras
     default: return []
     }
   }

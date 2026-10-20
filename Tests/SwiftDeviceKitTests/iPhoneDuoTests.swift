@@ -43,9 +43,9 @@ struct iPhoneDuoTests {
       #expect(device.hasEsimSupport)
       #expect(device.hasDualEsimSupport)
       #expect(device.applePencilSupport == .firstGenerationUsbC)
+      #expect(device.cameras == [.wide, .ultraWide])
+      #expect(!device.hasTelephotoCamera)
     }
-    #expect(Device.iPhoneDuo.cameras == [.wide, .ultraWide])
-    #expect(!Device.iPhoneDuo.hasTelephotoCamera)
   }
 
   @Test

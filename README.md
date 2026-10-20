@@ -64,7 +64,8 @@ func batteryDescription() -> String? {
 
 `Device.identifier` is now immutable. For custom input, call
 `Device.mapToDevice(identifier:)` instead of changing global state.
-Simulator detection also recognizes `.simulator(.unknown(...))`.
+Simulator detection also recognizes `.simulator(.unknown(...))`. Simulator camera
+metadata describes its catalog model, not cameras physically available to the simulator.
 Inherited deprecated aliases remain available; this package does not add new
 compatibility shims or claim complete source compatibility with DeviceKit.
 

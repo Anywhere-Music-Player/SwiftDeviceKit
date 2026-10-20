@@ -9,6 +9,7 @@
 - Make device identity immutable, value types Sendable and UIKit access MainActor-isolated.
 - Preserve the upstream iOS model catalog and exact display names.
 - Recognize simulators whose models are not yet in the catalog.
+- Forward simulator camera metadata to its catalog model, matching other capabilities.
 - Keep reproducible catalog generation and add a frozen 5.9.0 regression baseline.
 - Add iPhone Duo identification and foldability from DeviceKit #507, with capabilities
   checked against Apple specifications and identity checked against its simulator profile.
