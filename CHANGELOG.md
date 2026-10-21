@@ -1,36 +1,25 @@
 # Changelog
 
-## Unreleased
+## 2026.0.0 — 2026-10-21
 
-- Establish SwiftDeviceKit from DeviceKit 5.9.0 with its MIT attribution.
-- Require iOS/iPadOS 18+, Swift tools 6.4 and Swift 6 language mode.
-- Provide dependency-free `SwiftDeviceKitCore` and `SwiftDeviceKitSystem` products;
-  System depends on Core. Remove other platform implementations,
-  obsolete Swift/OS compatibility branches and alternate distribution tooling.
-- Make device identity immutable, value types Sendable and UIKit access MainActor-isolated.
-- Restrict the catalog to 66 iPhone/iPad models supporting iOS/iPadOS 18 or later;
-  preserve the exact names and metadata of retained models.
-- Remove 34 older or out-of-scope models, iPod-only APIs and unused CPU cases.
-  Their 67 identifiers now resolve to unknown; 105 supported identifiers remain.
-- Recognize simulators whose models are not yet in the catalog.
-- Forward simulator camera metadata to its catalog model, matching other capabilities.
-- Replace Python/GYB generation with typed Swift definitions, one file per model.
-- Split the catalog, hardware value types and runtime utilities into focused files.
-- Derive capability groups and the identifier index from the registered records.
-- Keep the frozen 5.9.0 baseline and verify retained hardware metadata and group
-  ordering against a snapshot captured before the Swift catalog migration.
-- Test excluded identifiers and the oldest supported iPhone/iPad generations.
-- Add iPhone Duo identification and foldability from DeviceKit #507, with capabilities
-  checked against Apple specifications and identity checked against its simulator profile.
-- Expose immutable, Sendable screen records through `screens` and `screen(_:)`,
-  including both Duo panels' Apple-published diagonal, pixel resolution, PPI and ratio.
-- Use Duo's outer panel for scalar display metrics, independently of fold state.
-- Move source provenance from the README introduction to `ATTRIBUTION.md`;
-  retain the MIT license and original copyright notices.
-- Keep model identity, simulator/preview detection and catalog types in Core without UIKit.
-- Move UIKit-backed state and the disk-space privacy manifest into System; expose
-  the same Core Device type through a public alias.
-- Split catalog and System test targets, and document validation without a simulator
-  for each catalog model. Reject recursive malformed simulator environment values.
-- Keep active-panel detection and SwiftUI layout outside the package.
-- Defer unrelated upstream pull requests.
+Initial release of SwiftDeviceKit, based on DeviceKit.
+
+- Support iOS / iPadOS 18+ with Swift tools 6.4 and Swift 6 language mode.
+- Provide two modules with no external dependencies: `SwiftDeviceKitCore` for
+  device identification and hardware data, and `SwiftDeviceKitSystem` for Core
+  plus runtime utilities.
+- Include 66 iPhone and iPad models with 105 hardware identifiers.
+- Define the catalog entirely in Swift, with one file per device and shared
+  indexes and capability groups.
+- Use `Sendable` device and hardware values, immutable identity and
+  `@MainActor` isolation for UIKit-backed APIs.
+- Identify iPhone Duo and expose specifications for both of its screens.
+- Return model camera metadata for simulator wrappers and recognize simulators
+  of unknown devices.
+- Provide battery, thermal state, storage, orientation, brightness and system
+  information through the System module.
+- Include catalog and System tests, plus an optional standalone comparison
+  against the original DeviceKit.
+- Document module usage, migration, screens and adding new devices.
+
+Source history and acknowledgments are recorded in [ATTRIBUTION.md](ATTRIBUTION.md).
