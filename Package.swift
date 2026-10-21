@@ -5,17 +5,24 @@ let package = Package(
   name: "SwiftDeviceKit",
   platforms: [.iOS(.v18)],
   products: [
-    .library(name: "SwiftDeviceKit", targets: ["SwiftDeviceKit"])
+    .library(name: "SwiftDeviceKitCore", targets: ["SwiftDeviceKitCore"]),
+    .library(name: "SwiftDeviceKitSystem", targets: ["SwiftDeviceKitSystem"]),
   ],
   targets: [
+    .target(name: "SwiftDeviceKitCore"),
     .target(
-      name: "SwiftDeviceKit",
+      name: "SwiftDeviceKitSystem",
+      dependencies: ["SwiftDeviceKitCore"],
       resources: [.process("PrivacyInfo.xcprivacy")]
     ),
     .testTarget(
-      name: "SwiftDeviceKitTests",
-      dependencies: ["SwiftDeviceKit"],
+      name: "SwiftDeviceKitCoreTests",
+      dependencies: ["SwiftDeviceKitCore"],
       resources: [.process("Fixtures")]
+    ),
+    .testTarget(
+      name: "SwiftDeviceKitSystemTests",
+      dependencies: ["SwiftDeviceKitSystem"]
     ),
   ],
   swiftLanguageModes: [.v6]

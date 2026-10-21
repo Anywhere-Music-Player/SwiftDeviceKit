@@ -1,0 +1,1892 @@
+{
+  "models": [
+    {
+      "identifier": "iPod5,1",
+      "cpu": "A5",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPod7,1",
+      "cpu": "A8",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPod9,1",
+      "cpu": "A10 Fusion",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone3,1",
+      "cpu": "A4",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone4,1",
+      "cpu": "A5",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone5,1",
+      "cpu": "A6",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone5,3",
+      "cpu": "A6",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone6,1",
+      "cpu": "A7",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone7,2",
+      "cpu": "A8",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone7,1",
+      "cpu": "A8",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone8,1",
+      "cpu": "A9",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone8,2",
+      "cpu": "A9",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone9,1",
+      "cpu": "A10 Fusion",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone9,2",
+      "cpu": "A10 Fusion",
+      "cameras": [
+        "wide",
+        "telephoto"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone8,4",
+      "cpu": "A9",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone10,1",
+      "cpu": "A11 Bionic",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone10,2",
+      "cpu": "A11 Bionic",
+      "cameras": [
+        "wide",
+        "telephoto"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone10,3",
+      "cpu": "A11 Bionic",
+      "cameras": [
+        "wide",
+        "telephoto"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone11,2",
+      "cpu": "A12 Bionic",
+      "cameras": [
+        "wide",
+        "telephoto"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone11,4",
+      "cpu": "A12 Bionic",
+      "cameras": [
+        "wide",
+        "telephoto"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone11,8",
+      "cpu": "A12 Bionic",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone12,1",
+      "cpu": "A13 Bionic",
+      "cameras": [
+        "wide",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone12,3",
+      "cpu": "A13 Bionic",
+      "cameras": [
+        "wide",
+        "telephoto",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone12,5",
+      "cpu": "A13 Bionic",
+      "cameras": [
+        "wide",
+        "telephoto",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone12,8",
+      "cpu": "A13 Bionic",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone13,2",
+      "cpu": "A14 Bionic",
+      "cameras": [
+        "wide",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone13,1",
+      "cpu": "A14 Bionic",
+      "cameras": [
+        "wide",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone13,3",
+      "cpu": "A14 Bionic",
+      "cameras": [
+        "wide",
+        "telephoto",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone13,4",
+      "cpu": "A14 Bionic",
+      "cameras": [
+        "wide",
+        "telephoto",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone14,5",
+      "cpu": "A15 Bionic",
+      "cameras": [
+        "wide",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone14,4",
+      "cpu": "A15 Bionic",
+      "cameras": [
+        "wide",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone14,2",
+      "cpu": "A15 Bionic",
+      "cameras": [
+        "wide",
+        "telephoto",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone14,3",
+      "cpu": "A15 Bionic",
+      "cameras": [
+        "wide",
+        "telephoto",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone14,6",
+      "cpu": "A15 Bionic",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone14,7",
+      "cpu": "A15 Bionic",
+      "cameras": [
+        "wide",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone14,8",
+      "cpu": "A15 Bionic",
+      "cameras": [
+        "wide",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone15,2",
+      "cpu": "A16 Bionic",
+      "cameras": [
+        "wide",
+        "telephoto",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone15,3",
+      "cpu": "A16 Bionic",
+      "cameras": [
+        "wide",
+        "telephoto",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone15,4",
+      "cpu": "A16 Bionic",
+      "cameras": [
+        "wide",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone15,5",
+      "cpu": "A16 Bionic",
+      "cameras": [
+        "wide",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone16,1",
+      "cpu": "A17 Pro",
+      "cameras": [
+        "wide",
+        "telephoto",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone16,2",
+      "cpu": "A17 Pro",
+      "cameras": [
+        "wide",
+        "telephoto",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone17,3",
+      "cpu": "A18",
+      "cameras": [
+        "wide",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone17,4",
+      "cpu": "A18",
+      "cameras": [
+        "wide",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone17,1",
+      "cpu": "A18 Pro",
+      "cameras": [
+        "wide",
+        "telephoto",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone17,2",
+      "cpu": "A18 Pro",
+      "cameras": [
+        "wide",
+        "telephoto",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone17,5",
+      "cpu": "A18",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone18,3",
+      "cpu": "A19",
+      "cameras": [
+        "wide",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone18,1",
+      "cpu": "A19 Pro",
+      "cameras": [
+        "wide",
+        "telephoto",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone18,2",
+      "cpu": "A19 Pro",
+      "cameras": [
+        "wide",
+        "telephoto",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone18,4",
+      "cpu": "A19 Pro",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone18,5",
+      "cpu": "A19",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone19,2",
+      "cpu": "A20 Pro",
+      "cameras": [
+        "wide",
+        "telephoto",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone19,3",
+      "cpu": "A20 Pro",
+      "cameras": [
+        "wide",
+        "telephoto",
+        "ultraWide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPhone19,4",
+      "cpu": "A20 Pro",
+      "cameras": [
+        "wide",
+        "ultraWide"
+      ],
+      "pencil": 4
+    },
+    {
+      "identifier": "iPad2,1",
+      "cpu": "A5",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPad3,1",
+      "cpu": "A5X",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPad3,4",
+      "cpu": "A6X",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPad4,1",
+      "cpu": "A7",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPad5,3",
+      "cpu": "A8X",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPad6,11",
+      "cpu": "A9",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPad7,5",
+      "cpu": "A10 Fusion",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 1
+    },
+    {
+      "identifier": "iPad11,3",
+      "cpu": "A12 Bionic",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 1
+    },
+    {
+      "identifier": "iPad7,11",
+      "cpu": "A10 Fusion",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 1
+    },
+    {
+      "identifier": "iPad11,6",
+      "cpu": "A12 Bionic",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 1
+    },
+    {
+      "identifier": "iPad12,1",
+      "cpu": "A13 Bionic",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 1
+    },
+    {
+      "identifier": "iPad13,18",
+      "cpu": "A14 Bionic",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 5
+    },
+    {
+      "identifier": "iPad15,7",
+      "cpu": "A16 Bionic",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 5
+    },
+    {
+      "identifier": "iPad13,1",
+      "cpu": "A14 Bionic",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 6
+    },
+    {
+      "identifier": "iPad13,16",
+      "cpu": "M1",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 6
+    },
+    {
+      "identifier": "iPad14,8",
+      "cpu": "M2",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 12
+    },
+    {
+      "identifier": "iPad14,10",
+      "cpu": "M2",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 12
+    },
+    {
+      "identifier": "iPad15,3",
+      "cpu": "M3",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 12
+    },
+    {
+      "identifier": "iPad15,5",
+      "cpu": "M3",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 12
+    },
+    {
+      "identifier": "iPad16,8",
+      "cpu": "M4",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 12
+    },
+    {
+      "identifier": "iPad16,10",
+      "cpu": "M4",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 12
+    },
+    {
+      "identifier": "iPad2,5",
+      "cpu": "A5",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPad4,4",
+      "cpu": "A7",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPad4,7",
+      "cpu": "A7",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPad5,1",
+      "cpu": "A8",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 0
+    },
+    {
+      "identifier": "iPad11,1",
+      "cpu": "A12 Bionic",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 1
+    },
+    {
+      "identifier": "iPad14,1",
+      "cpu": "A15 Bionic",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 6
+    },
+    {
+      "identifier": "iPad16,1",
+      "cpu": "A17 Pro",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 12
+    },
+    {
+      "identifier": "iPad6,3",
+      "cpu": "A9X",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 1
+    },
+    {
+      "identifier": "iPad6,7",
+      "cpu": "A9X",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 1
+    },
+    {
+      "identifier": "iPad7,1",
+      "cpu": "A10X Fusion",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 1
+    },
+    {
+      "identifier": "iPad7,3",
+      "cpu": "A10X Fusion",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 1
+    },
+    {
+      "identifier": "iPad8,1",
+      "cpu": "A12X Bionic",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 6
+    },
+    {
+      "identifier": "iPad8,5",
+      "cpu": "A12X Bionic",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 6
+    },
+    {
+      "identifier": "iPad8,9",
+      "cpu": "A12Z Bionic",
+      "cameras": [
+        "wide",
+        "ultraWide"
+      ],
+      "pencil": 6
+    },
+    {
+      "identifier": "iPad8,11",
+      "cpu": "A12Z Bionic",
+      "cameras": [
+        "wide",
+        "ultraWide"
+      ],
+      "pencil": 6
+    },
+    {
+      "identifier": "iPad13,4",
+      "cpu": "M1",
+      "cameras": [
+        "wide",
+        "ultraWide"
+      ],
+      "pencil": 6
+    },
+    {
+      "identifier": "iPad13,8",
+      "cpu": "M1",
+      "cameras": [
+        "wide",
+        "ultraWide"
+      ],
+      "pencil": 6
+    },
+    {
+      "identifier": "iPad14,3",
+      "cpu": "M2",
+      "cameras": [
+        "wide",
+        "ultraWide"
+      ],
+      "pencil": 6
+    },
+    {
+      "identifier": "iPad14,5",
+      "cpu": "M2",
+      "cameras": [
+        "wide",
+        "ultraWide"
+      ],
+      "pencil": 6
+    },
+    {
+      "identifier": "iPad16,3",
+      "cpu": "M4",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 12
+    },
+    {
+      "identifier": "iPad16,5",
+      "cpu": "M4",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 12
+    },
+    {
+      "identifier": "iPad17,1",
+      "cpu": "M5",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 14
+    },
+    {
+      "identifier": "iPad17,3",
+      "cpu": "M5",
+      "cameras": [
+        "wide"
+      ],
+      "pencil": 14
+    },
+    {
+      "identifier": "AudioAccessory1,1",
+      "cpu": "A8",
+      "cameras": [],
+      "pencil": 0
+    }
+  ],
+  "groups": {
+    "allPods": [
+      "iPod5,1",
+      "iPod7,1",
+      "iPod9,1"
+    ],
+    "allPhones": [
+      "iPhone3,1",
+      "iPhone4,1",
+      "iPhone5,1",
+      "iPhone5,3",
+      "iPhone6,1",
+      "iPhone7,2",
+      "iPhone7,1",
+      "iPhone8,1",
+      "iPhone8,2",
+      "iPhone9,1",
+      "iPhone9,2",
+      "iPhone8,4",
+      "iPhone10,1",
+      "iPhone10,2",
+      "iPhone10,3",
+      "iPhone11,2",
+      "iPhone11,4",
+      "iPhone11,8",
+      "iPhone12,1",
+      "iPhone12,3",
+      "iPhone12,5",
+      "iPhone12,8",
+      "iPhone13,2",
+      "iPhone13,1",
+      "iPhone13,3",
+      "iPhone13,4",
+      "iPhone14,5",
+      "iPhone14,4",
+      "iPhone14,2",
+      "iPhone14,3",
+      "iPhone14,6",
+      "iPhone14,7",
+      "iPhone14,8",
+      "iPhone15,2",
+      "iPhone15,3",
+      "iPhone15,4",
+      "iPhone15,5",
+      "iPhone16,1",
+      "iPhone16,2",
+      "iPhone17,3",
+      "iPhone17,4",
+      "iPhone17,1",
+      "iPhone17,2",
+      "iPhone17,5",
+      "iPhone18,3",
+      "iPhone18,1",
+      "iPhone18,2",
+      "iPhone18,4",
+      "iPhone18,5",
+      "iPhone19,2",
+      "iPhone19,3",
+      "iPhone19,4"
+    ],
+    "allPads": [
+      "iPad2,1",
+      "iPad3,1",
+      "iPad3,4",
+      "iPad4,1",
+      "iPad5,3",
+      "iPad6,11",
+      "iPad7,5",
+      "iPad11,3",
+      "iPad7,11",
+      "iPad11,6",
+      "iPad12,1",
+      "iPad13,18",
+      "iPad15,7",
+      "iPad13,1",
+      "iPad13,16",
+      "iPad14,8",
+      "iPad14,10",
+      "iPad15,3",
+      "iPad15,5",
+      "iPad16,8",
+      "iPad16,10",
+      "iPad2,5",
+      "iPad4,4",
+      "iPad4,7",
+      "iPad5,1",
+      "iPad11,1",
+      "iPad14,1",
+      "iPad16,1",
+      "iPad6,3",
+      "iPad6,7",
+      "iPad7,1",
+      "iPad7,3",
+      "iPad8,1",
+      "iPad8,5",
+      "iPad8,9",
+      "iPad8,11",
+      "iPad13,4",
+      "iPad13,8",
+      "iPad14,3",
+      "iPad14,5",
+      "iPad16,3",
+      "iPad16,5",
+      "iPad17,1",
+      "iPad17,3"
+    ],
+    "allPlusSizedDevices": [
+      "iPhone7,1",
+      "iPhone8,2",
+      "iPhone9,2",
+      "iPhone10,2",
+      "iPhone11,4",
+      "iPhone12,5",
+      "iPhone13,4",
+      "iPhone14,3",
+      "iPhone14,8",
+      "iPhone15,3",
+      "iPhone15,5",
+      "iPhone16,2",
+      "iPhone17,4",
+      "iPhone17,2",
+      "iPhone18,2",
+      "iPhone18,4",
+      "iPhone19,3"
+    ],
+    "allProDevices": [
+      "iPhone12,3",
+      "iPhone12,5",
+      "iPhone13,3",
+      "iPhone13,4",
+      "iPhone14,2",
+      "iPhone14,3",
+      "iPhone15,2",
+      "iPhone15,3",
+      "iPhone16,1",
+      "iPhone16,2",
+      "iPhone17,1",
+      "iPhone17,2",
+      "iPhone18,1",
+      "iPhone18,2",
+      "iPhone19,2",
+      "iPhone19,3",
+      "iPad6,3",
+      "iPad6,7",
+      "iPad7,1",
+      "iPad7,3",
+      "iPad8,1",
+      "iPad8,5",
+      "iPad8,9",
+      "iPad8,11",
+      "iPad13,4",
+      "iPad13,8",
+      "iPad14,3",
+      "iPad14,5",
+      "iPad16,3",
+      "iPad16,5",
+      "iPad17,1",
+      "iPad17,3"
+    ],
+    "allMiniDevices": [
+      "iPad2,5",
+      "iPad4,4",
+      "iPad4,7",
+      "iPad5,1",
+      "iPad11,1",
+      "iPad14,1",
+      "iPad16,1"
+    ],
+    "allTouchIDCapableDevices": [
+      "iPhone6,1",
+      "iPhone7,2",
+      "iPhone7,1",
+      "iPhone8,1",
+      "iPhone8,2",
+      "iPhone9,1",
+      "iPhone9,2",
+      "iPhone8,4",
+      "iPhone10,1",
+      "iPhone10,2",
+      "iPhone12,8",
+      "iPhone14,6",
+      "iPhone19,4",
+      "iPad5,3",
+      "iPad6,11",
+      "iPad7,5",
+      "iPad11,3",
+      "iPad7,11",
+      "iPad11,6",
+      "iPad12,1",
+      "iPad13,18",
+      "iPad15,7",
+      "iPad13,1",
+      "iPad13,16",
+      "iPad14,8",
+      "iPad14,10",
+      "iPad15,3",
+      "iPad15,5",
+      "iPad16,8",
+      "iPad16,10",
+      "iPad4,7",
+      "iPad5,1",
+      "iPad11,1",
+      "iPad14,1",
+      "iPad16,1",
+      "iPad6,3",
+      "iPad6,7",
+      "iPad7,1",
+      "iPad7,3"
+    ],
+    "allFaceIDCapableDevices": [
+      "iPhone10,3",
+      "iPhone11,2",
+      "iPhone11,4",
+      "iPhone11,8",
+      "iPhone12,1",
+      "iPhone12,3",
+      "iPhone12,5",
+      "iPhone13,2",
+      "iPhone13,1",
+      "iPhone13,3",
+      "iPhone13,4",
+      "iPhone14,5",
+      "iPhone14,4",
+      "iPhone14,2",
+      "iPhone14,3",
+      "iPhone14,7",
+      "iPhone14,8",
+      "iPhone15,2",
+      "iPhone15,3",
+      "iPhone15,4",
+      "iPhone15,5",
+      "iPhone16,1",
+      "iPhone16,2",
+      "iPhone17,3",
+      "iPhone17,4",
+      "iPhone17,1",
+      "iPhone17,2",
+      "iPhone17,5",
+      "iPhone18,3",
+      "iPhone18,1",
+      "iPhone18,2",
+      "iPhone18,4",
+      "iPhone18,5",
+      "iPhone19,2",
+      "iPhone19,3",
+      "iPad8,1",
+      "iPad8,5",
+      "iPad8,9",
+      "iPad8,11",
+      "iPad13,4",
+      "iPad13,8",
+      "iPad14,3",
+      "iPad14,5",
+      "iPad16,3",
+      "iPad16,5",
+      "iPad17,1",
+      "iPad17,3"
+    ],
+    "allBiometricAuthenticationCapableDevices": [
+      "iPhone6,1",
+      "iPhone7,2",
+      "iPhone7,1",
+      "iPhone8,1",
+      "iPhone8,2",
+      "iPhone9,1",
+      "iPhone9,2",
+      "iPhone8,4",
+      "iPhone10,1",
+      "iPhone10,2",
+      "iPhone10,3",
+      "iPhone11,2",
+      "iPhone11,4",
+      "iPhone11,8",
+      "iPhone12,1",
+      "iPhone12,3",
+      "iPhone12,5",
+      "iPhone12,8",
+      "iPhone13,2",
+      "iPhone13,1",
+      "iPhone13,3",
+      "iPhone13,4",
+      "iPhone14,5",
+      "iPhone14,4",
+      "iPhone14,2",
+      "iPhone14,3",
+      "iPhone14,6",
+      "iPhone14,7",
+      "iPhone14,8",
+      "iPhone15,2",
+      "iPhone15,3",
+      "iPhone15,4",
+      "iPhone15,5",
+      "iPhone16,1",
+      "iPhone16,2",
+      "iPhone17,3",
+      "iPhone17,4",
+      "iPhone17,1",
+      "iPhone17,2",
+      "iPhone17,5",
+      "iPhone18,3",
+      "iPhone18,1",
+      "iPhone18,2",
+      "iPhone18,4",
+      "iPhone18,5",
+      "iPhone19,2",
+      "iPhone19,3",
+      "iPhone19,4",
+      "iPad5,3",
+      "iPad6,11",
+      "iPad7,5",
+      "iPad11,3",
+      "iPad7,11",
+      "iPad11,6",
+      "iPad12,1",
+      "iPad13,18",
+      "iPad15,7",
+      "iPad13,1",
+      "iPad13,16",
+      "iPad14,8",
+      "iPad14,10",
+      "iPad15,3",
+      "iPad15,5",
+      "iPad16,8",
+      "iPad16,10",
+      "iPad4,7",
+      "iPad5,1",
+      "iPad11,1",
+      "iPad14,1",
+      "iPad16,1",
+      "iPad6,3",
+      "iPad6,7",
+      "iPad7,1",
+      "iPad7,3",
+      "iPad8,1",
+      "iPad8,5",
+      "iPad8,9",
+      "iPad8,11",
+      "iPad13,4",
+      "iPad13,8",
+      "iPad14,3",
+      "iPad14,5",
+      "iPad16,3",
+      "iPad16,5",
+      "iPad17,1",
+      "iPad17,3"
+    ],
+    "allDevicesWithSensorHousing": [
+      "iPhone10,3",
+      "iPhone11,2",
+      "iPhone11,4",
+      "iPhone11,8",
+      "iPhone12,1",
+      "iPhone12,3",
+      "iPhone12,5",
+      "iPhone13,2",
+      "iPhone13,1",
+      "iPhone13,3",
+      "iPhone13,4",
+      "iPhone14,5",
+      "iPhone14,4",
+      "iPhone14,2",
+      "iPhone14,3",
+      "iPhone14,7",
+      "iPhone14,8",
+      "iPhone15,2",
+      "iPhone15,3",
+      "iPhone15,4",
+      "iPhone15,5",
+      "iPhone16,1",
+      "iPhone16,2",
+      "iPhone17,3",
+      "iPhone17,4",
+      "iPhone17,1",
+      "iPhone17,2",
+      "iPhone17,5",
+      "iPhone18,3",
+      "iPhone18,1",
+      "iPhone18,2",
+      "iPhone18,4",
+      "iPhone18,5",
+      "iPhone19,2",
+      "iPhone19,3",
+      "iPhone19,4"
+    ],
+    "allDevicesWithRoundedDisplayCorners": [
+      "iPhone10,3",
+      "iPhone11,2",
+      "iPhone11,4",
+      "iPhone11,8",
+      "iPhone12,1",
+      "iPhone12,3",
+      "iPhone12,5",
+      "iPhone13,2",
+      "iPhone13,1",
+      "iPhone13,3",
+      "iPhone13,4",
+      "iPhone14,5",
+      "iPhone14,4",
+      "iPhone14,2",
+      "iPhone14,3",
+      "iPhone14,7",
+      "iPhone14,8",
+      "iPhone15,2",
+      "iPhone15,3",
+      "iPhone15,4",
+      "iPhone15,5",
+      "iPhone16,1",
+      "iPhone16,2",
+      "iPhone17,3",
+      "iPhone17,4",
+      "iPhone17,1",
+      "iPhone17,2",
+      "iPhone17,5",
+      "iPhone18,3",
+      "iPhone18,1",
+      "iPhone18,2",
+      "iPhone18,4",
+      "iPhone18,5",
+      "iPhone19,2",
+      "iPhone19,3",
+      "iPhone19,4",
+      "iPad13,18",
+      "iPad15,7",
+      "iPad13,1",
+      "iPad13,16",
+      "iPad14,8",
+      "iPad14,10",
+      "iPad15,3",
+      "iPad15,5",
+      "iPad16,8",
+      "iPad16,10",
+      "iPad14,1",
+      "iPad16,1",
+      "iPad8,1",
+      "iPad8,5",
+      "iPad8,9",
+      "iPad8,11",
+      "iPad13,4",
+      "iPad13,8",
+      "iPad14,3",
+      "iPad14,5",
+      "iPad16,3",
+      "iPad16,5",
+      "iPad17,1",
+      "iPad17,3"
+    ],
+    "allDevicesWithDynamicIsland": [
+      "iPhone15,2",
+      "iPhone15,3",
+      "iPhone15,4",
+      "iPhone15,5",
+      "iPhone16,1",
+      "iPhone16,2",
+      "iPhone17,3",
+      "iPhone17,4",
+      "iPhone17,1",
+      "iPhone17,2",
+      "iPhone18,3",
+      "iPhone18,1",
+      "iPhone18,2",
+      "iPhone18,4",
+      "iPhone19,2",
+      "iPhone19,3",
+      "iPhone19,4"
+    ],
+    "allDevicesWith3dTouchSupport": [
+      "iPhone8,1",
+      "iPhone8,2",
+      "iPhone9,1",
+      "iPhone9,2",
+      "iPhone10,1",
+      "iPhone10,2",
+      "iPhone10,3",
+      "iPhone11,2",
+      "iPhone11,4"
+    ],
+    "allDevicesWithWirelessChargingSupport": [
+      "iPhone10,1",
+      "iPhone10,2",
+      "iPhone10,3",
+      "iPhone11,2",
+      "iPhone11,4",
+      "iPhone11,8",
+      "iPhone12,1",
+      "iPhone12,3",
+      "iPhone12,5",
+      "iPhone12,8",
+      "iPhone13,2",
+      "iPhone13,1",
+      "iPhone13,3",
+      "iPhone13,4",
+      "iPhone14,5",
+      "iPhone14,4",
+      "iPhone14,2",
+      "iPhone14,3",
+      "iPhone14,6",
+      "iPhone14,7",
+      "iPhone14,8",
+      "iPhone15,2",
+      "iPhone15,3",
+      "iPhone15,4",
+      "iPhone15,5",
+      "iPhone16,1",
+      "iPhone16,2",
+      "iPhone17,3",
+      "iPhone17,4",
+      "iPhone17,1",
+      "iPhone17,2",
+      "iPhone17,5",
+      "iPhone18,3",
+      "iPhone18,1",
+      "iPhone18,2",
+      "iPhone18,4",
+      "iPhone18,5",
+      "iPhone19,2",
+      "iPhone19,3",
+      "iPhone19,4"
+    ],
+    "allDevicesWith5gSupport": [
+      "iPhone13,2",
+      "iPhone13,1",
+      "iPhone13,3",
+      "iPhone13,4",
+      "iPhone14,5",
+      "iPhone14,4",
+      "iPhone14,2",
+      "iPhone14,3",
+      "iPhone14,6",
+      "iPhone14,7",
+      "iPhone14,8",
+      "iPhone15,2",
+      "iPhone15,3",
+      "iPhone15,4",
+      "iPhone15,5",
+      "iPhone16,1",
+      "iPhone16,2",
+      "iPhone17,3",
+      "iPhone17,4",
+      "iPhone17,1",
+      "iPhone17,2",
+      "iPhone17,5",
+      "iPhone18,3",
+      "iPhone18,1",
+      "iPhone18,2",
+      "iPhone18,4",
+      "iPhone18,5",
+      "iPhone19,2",
+      "iPhone19,3",
+      "iPhone19,4",
+      "iPad13,18",
+      "iPad15,7",
+      "iPad13,16",
+      "iPad14,8",
+      "iPad14,10",
+      "iPad15,3",
+      "iPad15,5",
+      "iPad16,8",
+      "iPad16,10",
+      "iPad14,1",
+      "iPad16,1",
+      "iPad13,4",
+      "iPad13,8",
+      "iPad14,3",
+      "iPad14,5",
+      "iPad16,3",
+      "iPad16,5",
+      "iPad17,1",
+      "iPad17,3"
+    ],
+    "allDevicesWithEsimSupport": [
+      "iPhone11,2",
+      "iPhone11,4",
+      "iPhone11,8",
+      "iPhone12,1",
+      "iPhone12,3",
+      "iPhone12,5",
+      "iPhone12,8",
+      "iPhone13,2",
+      "iPhone13,1",
+      "iPhone13,3",
+      "iPhone13,4",
+      "iPhone14,5",
+      "iPhone14,4",
+      "iPhone14,2",
+      "iPhone14,3",
+      "iPhone14,6",
+      "iPhone14,7",
+      "iPhone14,8",
+      "iPhone15,2",
+      "iPhone15,3",
+      "iPhone15,4",
+      "iPhone15,5",
+      "iPhone16,1",
+      "iPhone16,2",
+      "iPhone17,3",
+      "iPhone17,4",
+      "iPhone17,1",
+      "iPhone17,2",
+      "iPhone17,5",
+      "iPhone18,3",
+      "iPhone18,1",
+      "iPhone18,2",
+      "iPhone18,4",
+      "iPhone18,5",
+      "iPhone19,2",
+      "iPhone19,3",
+      "iPhone19,4",
+      "iPad11,3",
+      "iPad7,11",
+      "iPad11,6",
+      "iPad12,1",
+      "iPad13,18",
+      "iPad15,7",
+      "iPad13,1",
+      "iPad13,16",
+      "iPad14,8",
+      "iPad14,10",
+      "iPad15,3",
+      "iPad15,5",
+      "iPad16,8",
+      "iPad16,10",
+      "iPad11,1",
+      "iPad14,1",
+      "iPad16,1",
+      "iPad8,1",
+      "iPad8,5",
+      "iPad8,9",
+      "iPad8,11",
+      "iPad13,4",
+      "iPad13,8",
+      "iPad14,3",
+      "iPad14,5",
+      "iPad16,3",
+      "iPad16,5",
+      "iPad17,1",
+      "iPad17,3"
+    ],
+    "allDevicesWithDualEsimSupport": [
+      "iPhone14,5",
+      "iPhone14,4",
+      "iPhone14,2",
+      "iPhone14,3",
+      "iPhone14,6",
+      "iPhone14,7",
+      "iPhone14,8",
+      "iPhone15,2",
+      "iPhone15,3",
+      "iPhone15,4",
+      "iPhone15,5",
+      "iPhone16,1",
+      "iPhone16,2",
+      "iPhone17,3",
+      "iPhone17,4",
+      "iPhone17,1",
+      "iPhone17,2",
+      "iPhone17,5",
+      "iPhone18,3",
+      "iPhone18,1",
+      "iPhone18,2",
+      "iPhone18,4",
+      "iPhone18,5",
+      "iPhone19,2",
+      "iPhone19,3",
+      "iPhone19,4"
+    ],
+    "allDevicesWithALidarSensor": [
+      "iPhone13,3",
+      "iPhone13,4",
+      "iPhone14,2",
+      "iPhone14,3",
+      "iPhone15,2",
+      "iPhone15,3",
+      "iPhone16,1",
+      "iPhone16,2",
+      "iPhone17,1",
+      "iPhone17,2",
+      "iPhone18,1",
+      "iPhone18,2",
+      "iPhone19,2",
+      "iPhone19,3",
+      "iPad8,9",
+      "iPad8,11",
+      "iPad13,4",
+      "iPad13,8",
+      "iPad14,3",
+      "iPad14,5",
+      "iPad16,3",
+      "iPad16,5",
+      "iPad17,1",
+      "iPad17,3"
+    ],
+    "allDevicesWithUSBCConnectivity": [
+      "iPhone15,4",
+      "iPhone15,5",
+      "iPhone16,1",
+      "iPhone16,2",
+      "iPhone17,3",
+      "iPhone17,4",
+      "iPhone17,1",
+      "iPhone17,2",
+      "iPhone17,5",
+      "iPhone18,3",
+      "iPhone18,1",
+      "iPhone18,2",
+      "iPhone18,4",
+      "iPhone18,5",
+      "iPhone19,2",
+      "iPhone19,3",
+      "iPhone19,4",
+      "iPad13,18",
+      "iPad15,7",
+      "iPad13,1",
+      "iPad13,16",
+      "iPad14,8",
+      "iPad14,10",
+      "iPad15,3",
+      "iPad15,5",
+      "iPad16,8",
+      "iPad16,10",
+      "iPad14,1",
+      "iPad16,1",
+      "iPad8,1",
+      "iPad8,5",
+      "iPad8,9",
+      "iPad8,11",
+      "iPad13,4",
+      "iPad13,8",
+      "iPad14,3",
+      "iPad14,5",
+      "iPad16,3",
+      "iPad16,5",
+      "iPad17,1",
+      "iPad17,3"
+    ],
+    "allApplePencilCapableDevices": [
+      "iPhone19,4",
+      "iPad7,5",
+      "iPad11,3",
+      "iPad7,11",
+      "iPad11,6",
+      "iPad12,1",
+      "iPad13,18",
+      "iPad15,7",
+      "iPad13,1",
+      "iPad13,16",
+      "iPad14,8",
+      "iPad14,10",
+      "iPad15,3",
+      "iPad15,5",
+      "iPad16,8",
+      "iPad16,10",
+      "iPad11,1",
+      "iPad14,1",
+      "iPad16,1",
+      "iPad6,3",
+      "iPad6,7",
+      "iPad7,1",
+      "iPad7,3",
+      "iPad8,1",
+      "iPad8,5",
+      "iPad8,9",
+      "iPad8,11",
+      "iPad13,4",
+      "iPad13,8",
+      "iPad14,3",
+      "iPad14,5",
+      "iPad16,3",
+      "iPad16,5",
+      "iPad17,1",
+      "iPad17,3"
+    ],
+    "allDevicesWithCamera": [
+      "iPod5,1",
+      "iPod7,1",
+      "iPod9,1",
+      "iPhone3,1",
+      "iPhone4,1",
+      "iPhone5,1",
+      "iPhone5,3",
+      "iPhone6,1",
+      "iPhone7,2",
+      "iPhone7,1",
+      "iPhone8,1",
+      "iPhone8,2",
+      "iPhone9,1",
+      "iPhone9,2",
+      "iPhone8,4",
+      "iPhone10,1",
+      "iPhone10,2",
+      "iPhone10,3",
+      "iPhone11,2",
+      "iPhone11,4",
+      "iPhone11,8",
+      "iPhone12,1",
+      "iPhone12,3",
+      "iPhone12,5",
+      "iPhone12,8",
+      "iPhone13,2",
+      "iPhone13,1",
+      "iPhone13,3",
+      "iPhone13,4",
+      "iPhone14,5",
+      "iPhone14,4",
+      "iPhone14,2",
+      "iPhone14,3",
+      "iPhone14,6",
+      "iPhone14,7",
+      "iPhone14,8",
+      "iPhone15,2",
+      "iPhone15,3",
+      "iPhone15,4",
+      "iPhone15,5",
+      "iPhone16,1",
+      "iPhone16,2",
+      "iPhone17,3",
+      "iPhone17,4",
+      "iPhone17,1",
+      "iPhone17,2",
+      "iPhone17,5",
+      "iPhone18,3",
+      "iPhone18,1",
+      "iPhone18,2",
+      "iPhone18,4",
+      "iPhone18,5",
+      "iPhone19,2",
+      "iPhone19,3",
+      "iPhone19,4",
+      "iPad2,1",
+      "iPad3,1",
+      "iPad3,4",
+      "iPad4,1",
+      "iPad5,3",
+      "iPad6,11",
+      "iPad7,5",
+      "iPad11,3",
+      "iPad7,11",
+      "iPad11,6",
+      "iPad12,1",
+      "iPad13,18",
+      "iPad15,7",
+      "iPad13,1",
+      "iPad13,16",
+      "iPad14,8",
+      "iPad14,10",
+      "iPad15,3",
+      "iPad15,5",
+      "iPad16,8",
+      "iPad16,10",
+      "iPad2,5",
+      "iPad4,4",
+      "iPad4,7",
+      "iPad5,1",
+      "iPad11,1",
+      "iPad14,1",
+      "iPad16,1",
+      "iPad6,3",
+      "iPad6,7",
+      "iPad7,1",
+      "iPad7,3",
+      "iPad8,1",
+      "iPad8,5",
+      "iPad8,9",
+      "iPad8,11",
+      "iPad13,4",
+      "iPad13,8",
+      "iPad14,3",
+      "iPad14,5",
+      "iPad16,3",
+      "iPad16,5",
+      "iPad17,1",
+      "iPad17,3"
+    ],
+    "allDevicesWithWideCamera": [
+      "iPod5,1",
+      "iPod7,1",
+      "iPod9,1",
+      "iPhone3,1",
+      "iPhone4,1",
+      "iPhone5,1",
+      "iPhone5,3",
+      "iPhone6,1",
+      "iPhone7,2",
+      "iPhone7,1",
+      "iPhone8,1",
+      "iPhone8,2",
+      "iPhone9,1",
+      "iPhone9,2",
+      "iPhone8,4",
+      "iPhone10,1",
+      "iPhone10,2",
+      "iPhone10,3",
+      "iPhone11,2",
+      "iPhone11,4",
+      "iPhone11,8",
+      "iPhone12,1",
+      "iPhone12,3",
+      "iPhone12,5",
+      "iPhone12,8",
+      "iPhone13,2",
+      "iPhone13,1",
+      "iPhone13,3",
+      "iPhone13,4",
+      "iPhone14,5",
+      "iPhone14,4",
+      "iPhone14,2",
+      "iPhone14,3",
+      "iPhone14,6",
+      "iPhone14,7",
+      "iPhone14,8",
+      "iPhone15,2",
+      "iPhone15,3",
+      "iPhone15,4",
+      "iPhone15,5",
+      "iPhone16,1",
+      "iPhone16,2",
+      "iPhone17,3",
+      "iPhone17,4",
+      "iPhone17,1",
+      "iPhone17,2",
+      "iPhone17,5",
+      "iPhone18,3",
+      "iPhone18,1",
+      "iPhone18,2",
+      "iPhone18,4",
+      "iPhone18,5",
+      "iPhone19,2",
+      "iPhone19,3",
+      "iPhone19,4",
+      "iPad2,1",
+      "iPad3,1",
+      "iPad3,4",
+      "iPad4,1",
+      "iPad5,3",
+      "iPad6,11",
+      "iPad7,5",
+      "iPad11,3",
+      "iPad7,11",
+      "iPad11,6",
+      "iPad12,1",
+      "iPad13,18",
+      "iPad15,7",
+      "iPad13,1",
+      "iPad13,16",
+      "iPad14,8",
+      "iPad14,10",
+      "iPad15,3",
+      "iPad15,5",
+      "iPad16,8",
+      "iPad16,10",
+      "iPad2,5",
+      "iPad4,4",
+      "iPad4,7",
+      "iPad5,1",
+      "iPad11,1",
+      "iPad14,1",
+      "iPad16,1",
+      "iPad6,3",
+      "iPad6,7",
+      "iPad7,1",
+      "iPad7,3",
+      "iPad8,1",
+      "iPad8,5",
+      "iPad8,9",
+      "iPad8,11",
+      "iPad13,4",
+      "iPad13,8",
+      "iPad14,3",
+      "iPad14,5",
+      "iPad16,3",
+      "iPad16,5",
+      "iPad17,1",
+      "iPad17,3"
+    ],
+    "allDevicesWithTelephotoCamera": [
+      "iPhone9,2",
+      "iPhone10,2",
+      "iPhone10,3",
+      "iPhone11,2",
+      "iPhone11,4",
+      "iPhone12,3",
+      "iPhone12,5",
+      "iPhone13,3",
+      "iPhone13,4",
+      "iPhone14,2",
+      "iPhone14,3",
+      "iPhone15,2",
+      "iPhone15,3",
+      "iPhone16,1",
+      "iPhone16,2",
+      "iPhone17,1",
+      "iPhone17,2",
+      "iPhone18,1",
+      "iPhone18,2",
+      "iPhone19,2",
+      "iPhone19,3"
+    ],
+    "allDevicesWithUltraWideCamera": [
+      "iPhone12,1",
+      "iPhone12,3",
+      "iPhone12,5",
+      "iPhone13,2",
+      "iPhone13,1",
+      "iPhone13,3",
+      "iPhone13,4",
+      "iPhone14,5",
+      "iPhone14,4",
+      "iPhone14,2",
+      "iPhone14,3",
+      "iPhone14,7",
+      "iPhone14,8",
+      "iPhone15,2",
+      "iPhone15,3",
+      "iPhone15,4",
+      "iPhone15,5",
+      "iPhone16,1",
+      "iPhone16,2",
+      "iPhone17,3",
+      "iPhone17,4",
+      "iPhone17,1",
+      "iPhone17,2",
+      "iPhone18,3",
+      "iPhone18,1",
+      "iPhone18,2",
+      "iPhone19,2",
+      "iPhone19,3",
+      "iPhone19,4",
+      "iPad8,9",
+      "iPad8,11",
+      "iPad13,4",
+      "iPad13,8",
+      "iPad14,3",
+      "iPad14,5"
+    ]
+  }
+}
