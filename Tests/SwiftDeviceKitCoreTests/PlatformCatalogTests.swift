@@ -54,6 +54,22 @@ struct PlatformCatalogTests {
     }
   }
 
+  @Test func simulatorGroupsContainOnlySupportedSimulatorsInCatalogOrder() {
+    let groups: [([Device], [Device])] = [
+      (Device.allSimulatorMiniDevices, Device.allMiniDevices),
+      (Device.allSimulatorProDevices, Device.allProDevices),
+      (Device.allSimulatorPlusSizedDevices, Device.allPlusSizedDevices),
+      (Device.allSimulatorDevicesWithSensorHousing, Device.allDevicesWithSensorHousing),
+      (Device.allSimulatorXSeriesDevices, Device.allDevicesWithSensorHousing),
+    ]
+    let simulators = Device.allSimulators
+    #expect(!simulators.contains { $0.isMac })
+    for (group, hardware) in groups {
+      let expected = hardware.map(Device.simulator).filter(simulators.contains)
+      #expect(group == expected)
+    }
+  }
+
   @Test func platformCapabilitiesAndLists() {
     #expect(Device.allWatches.count == 22)
     #expect(Device.allTVs.count == 5)

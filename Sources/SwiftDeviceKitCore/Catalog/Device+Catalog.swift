@@ -151,30 +151,30 @@ extension Device {
     return allPads.map(Device.simulator)
   }
 
-  /// All simulator iPad mini
+  /// All simulatable mini models
   public static var allSimulatorMiniDevices: [Device] {
-    return allMiniDevices.map(Device.simulator)
+    simulators(for: allMiniDevices)
   }
 
   /// All simulator X series Devices
   @available(*, deprecated, renamed: "allSimulatorDevicesWithSensorHousing")
   public static var allSimulatorXSeriesDevices: [Device] {
-    return allDevicesWithSensorHousing.map(Device.simulator)
+    allSimulatorDevicesWithSensorHousing
   }
 
   /// All simulator Plus and Max-Sized Devices
   public static var allSimulatorPlusSizedDevices: [Device] {
-    return allPlusSizedDevices.map(Device.simulator)
+    simulators(for: allPlusSizedDevices)
   }
 
   /// All simulator Pro Devices
   public static var allSimulatorProDevices: [Device] {
-    return allProDevices.map(Device.simulator)
+    simulators(for: allProDevices)
   }
 
   /// All simulator devices that feature a sensor housing in the screen
   public static var allSimulatorDevicesWithSensorHousing: [Device] {
-    return allDevicesWithSensorHousing.map(Device.simulator)
+    simulators(for: allDevicesWithSensorHousing)
   }
 
   /// All real devices (i.e. all devices except for all simulators)
@@ -184,7 +184,11 @@ extension Device {
 
   /// All simulators
   public static var allSimulators: [Device] {
-    allRealDevices.filter { $0.family != .mac }.map(Device.simulator)
+    simulators(for: allRealDevices)
+  }
+
+  private static func simulators(for models: [Device]) -> [Device] {
+    models.filter { $0.family != .mac }.map(Device.simulator)
   }
 
   /// All devices that feature a normal camera
