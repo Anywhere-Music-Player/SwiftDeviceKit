@@ -60,6 +60,8 @@ iPods and HomePod resolve to `.unknown(identifier)`.
   or passes the current-device guard.
 - Screen ratios consistently use portrait orientation; M5 iPad Pro no longer
   advertises second-generation Pencil support. See [catalog corrections](CatalogCorrections.md).
+- Battery ordering compares percentages, then places unplugged before charging
+  at equal percentages; full remains last. Different charging states stay unequal.
 - Every disk-capacity query starts with a fresh URL resource cache.
 - `isZoomed` uses `nativeScale > scale` for the supported iOS 18+ catalog. Standard
   mini downsampling and iPad More Space are not enlarged modes. The removed

@@ -88,29 +88,20 @@ extension Device {
 // MARK: Device.Batterystate: Comparable
 
 extension Device.BatteryState: Comparable {
-  /// Tells if two battery states are equal.
-  ///
-  /// - parameter lhs: A battery state.
-  /// - parameter rhs: Another battery state.
-  ///
-  /// - returns: `true` iff they are equal, otherwise `false`
-  public static func == (lhs: Device.BatteryState, rhs: Device.BatteryState) -> Bool {
-    return lhs.description == rhs.description
-  }
-
   /// Compares two battery states.
   ///
   /// - parameter lhs: A battery state.
   /// - parameter rhs: Another battery state.
   ///
-  /// - returns: `true` if rhs is `.Full`, `false` when lhs is `.Full` otherwise their battery level is compared.
+  /// Full sorts last. Otherwise compare charge percentages, with unplugged before charging
+  /// at the same percentage. Equality retains both the state and its associated percentage.
   public static func < (lhs: Device.BatteryState, rhs: Device.BatteryState) -> Bool {
     switch (lhs, rhs) {
     case (.full, _): return false  // return false (even if both are `.Full` -> they are equal)
     case (_, .full): return true  // lhs is *not* `.Full`, rhs is
     case (.charging(let lhsLevel), .charging(let rhsLevel)): return lhsLevel < rhsLevel
     case (.charging(let lhsLevel), .unplugged(let rhsLevel)): return lhsLevel < rhsLevel
-    case (.unplugged(let lhsLevel), .charging(let rhsLevel)): return lhsLevel < rhsLevel
+    case (.unplugged(let lhsLevel), .charging(let rhsLevel)): return lhsLevel <= rhsLevel
     case (.unplugged(let lhsLevel), .unplugged(let rhsLevel)): return lhsLevel < rhsLevel
     }
   }

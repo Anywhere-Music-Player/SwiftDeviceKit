@@ -48,6 +48,24 @@ final class SystemIssueRegressionTests: XCTestCase {
     }
   }
 
+  func testBatteryOrderingIsTotalAndTransitive() {
+    let states: [Device.BatteryState] = [0, 50, 75, 100].flatMap {
+      [.unplugged($0), .charging($0)]
+    } + [.full]
+    for a in states {
+      for b in states {
+        XCTAssertEqual([a == b, a < b, b < a].filter { $0 }.count, 1, "\(a); \(b)")
+        XCTAssertEqual(a <= b, a < b || a == b)
+        XCTAssertEqual(a >= b, b < a || a == b)
+        for c in states where a < b && b < c { XCTAssertLessThan(a, c) }
+      }
+    }
+    for level in [0, 50, 75, 100] {
+      XCTAssertLessThan(Device.BatteryState.unplugged(level), .charging(level))
+      XCTAssertLessThan(Device.BatteryState.charging(level), .full)
+    }
+  }
+
   func testCapacityRefreshesWithinOneSynchronousOperation() throws {
     let before = try XCTUnwrap(Device.volumeAvailableCapacity)
     _ = Device.volumes
