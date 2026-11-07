@@ -66,12 +66,12 @@ xcodebuild test -scheme DeviceKitComparison-Package \
   -parallel-testing-enabled NO \
   -resultBundlePath "$run_dir/Comparison.xcresult" > "$run_dir/test.log" 2>&1 || run_status=$?
 
-# Export even on assertion failure, so the unexpected differences remain reviewable.
-xcrun xcresulttool export attachments --path "$run_dir/Comparison.xcresult" \
-  --output-path "$run_dir/attachments"
-if [[ "$run_status" != 0 && -z "$(find "$run_dir/attachments" -type f ! -name manifest.json -print -quit)" ]]; then
-  print -u2 "XCTest produced no report (xcodebuild $run_status). See $run_dir/test.log"
-  exit "$run_status"
+# Attachments describe catalog differences. Only the completed xcodebuild test command
+# knows whether the entire suite passed, including assertions outside that catalog.
+print -r -- "$run_status" > "$run_dir/xcodebuild-exit-code.txt"
+if ! xcrun xcresulttool export attachments --path "$run_dir/Comparison.xcresult" \
+  --output-path "$run_dir/attachments"; then
+  [[ "$run_status" != 0 ]] || exit 1
 fi
 xcrun swift Scripts/export-report.swift stamp ../.. "$run_dir/source-stamp-after.json"
 cmp "$run_dir/source-stamp.json" "$run_dir/source-stamp-after.json"

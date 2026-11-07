@@ -37,6 +37,10 @@ The two libraries execute their own mapping and property getters.
 - tvOS covers the four shared Apple TVs and the newer fourth-generation 4K model.
   It checks identifiers, names, CPU, screen metadata, groups and current-device getters.
 
+The exported Markdown shows the overall XCTest result above the catalog counts.
+In JSON, `testRun.status` and `testRun.xcodebuildExitCode` record the same result.
+A failed run without complete comparison attachments exports a status-only report.
+
 The xcresult retains the original and replacement values for every recorded
 difference. An unexpected difference or a failing XCTest assertion fails the run.
 The six-family Core catalog and the Mac and Vision checks are covered by the parent

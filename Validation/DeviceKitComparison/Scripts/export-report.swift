@@ -32,22 +32,42 @@ if args[1] == "stamp" {
     let attachments: [Attachment]
   }
   let attachmentsURL = input.appending(path: "attachments")
-  let manifest = try JSONDecoder().decode(
-    [Entry].self, from: Data(contentsOf: attachmentsURL.appending(path: "manifest.json")))
-  let attachments = manifest.flatMap(\.attachments)
-  try fm.createDirectory(at: output, withIntermediateDirectories: true)
-  for ext in ["json", "md"] {
+  let statusText = try String(contentsOf: input.appending(path: "xcodebuild-exit-code.txt"), encoding: .utf8)
+  guard let exitCode = Int(statusText.trimmingCharacters(in: .whitespacesAndNewlines)) else {
+    fatalError("Invalid xcodebuild test exit code")
+  }
+  let status = exitCode == 0 ? "Passed" : "Failed"
+  let manifestURL = attachmentsURL.appending(path: "manifest.json")
+  let entries = fm.fileExists(atPath: manifestURL.path)
+    ? try JSONDecoder().decode([Entry].self, from: Data(contentsOf: manifestURL)) : []
+  let attachments = entries.flatMap(\.attachments)
+  func attachment(_ ext: String) throws -> Data? {
     let matches = attachments.filter {
       let name = $0.suggestedHumanReadableName
       return name == "catalog-comparison.\(ext)"
         || (name.hasPrefix("catalog-comparison_") && name.hasSuffix(".\(ext)"))
     }
-    guard matches.count == 1 else {
-      fatalError("Expected exactly one comparison \(ext) attachment, found \(matches.count)")
-    }
-    let data = try Data(contentsOf: attachmentsURL.appending(path: matches[0].exportedFileName))
-    try data.write(to: output.appending(path: "latest.\(ext)"), options: .atomic)
+    guard matches.count <= 1 else { fatalError("Duplicate comparison \(ext) attachments") }
+    guard let match = matches.first else { return nil }
+    return try Data(contentsOf: attachmentsURL.appending(path: match.exportedFileName))
   }
+
+  var json: [String: Any]
+  var report: String
+  if let jsonData = try attachment("json"), let md = try attachment("md") {
+    guard let object = try JSONSerialization.jsonObject(with: jsonData) as? [String: Any],
+          let markdown = String(data: md, encoding: .utf8) else { fatalError("Invalid catalog report") }
+    json = object
+    report = markdown
+  } else {
+    guard exitCode != 0 else { fatalError("Successful test run is missing its catalog report") }
+    json = [:]
+    report = "# DeviceKit comparison\n\nThe test run did not produce a complete catalog report.\n"
+  }
+  json["testRun"] = ["status": status, "xcodebuildExitCode": exitCode] as [String: Any]
+  let header = report.firstIndex(of: "\n") ?? report.endIndex
+  report.insert(contentsOf: "\n\n**XCTest run: \(status)** (xcodebuild exit \(exitCode)).\n", at: header)
+  try fm.createDirectory(at: output, withIntermediateDirectories: true)
   let head = try String(contentsOf: input.appending(path: "swiftdevicekit-head.txt"), encoding: .utf8)
     .trimmingCharacters(in: .whitespacesAndNewlines)
   let sourceDiff = try String(contentsOf: input.appending(path: "swiftdevicekit-source.diff"), encoding: .utf8)
@@ -64,7 +84,6 @@ if args[1] == "stamp" {
   try JSONSerialization.data(withJSONObject: provenance, options: [.prettyPrinted, .sortedKeys])
     .write(to: output.appending(path: "provenance.json"), options: .atomic)
   let reportURL = output.appending(path: "latest.md")
-  var report = try String(contentsOf: reportURL, encoding: .utf8)
   report += """
 
   ## Source provenance
@@ -74,6 +93,8 @@ if args[1] == "stamp" {
   Source hashes were checked before and after the run.
 
   """
+  try JSONSerialization.data(withJSONObject: json, options: [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes])
+    .write(to: output.appending(path: "latest.json"), options: .atomic)
   try report.write(to: reportURL, atomically: true, encoding: .utf8)
 } else {
   fatalError("Unknown command \(args[1])")
