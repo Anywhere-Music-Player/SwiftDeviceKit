@@ -367,8 +367,10 @@ final class DeviceKitTests: XCTestCase {
       let level = Device.current.batteryLevel
       XCTAssertEqual(UIDevice.current.isBatteryMonitoringEnabled, accepted)
       #if targetEnvironment(simulator)
-        XCTAssertNotNil(state)
-        XCTAssertNotNil(level)
+        if !Device.current.isVision {
+          XCTAssertNotNil(state)
+          XCTAssertNotNil(level)
+        }
       #endif
     }
   }

@@ -3,7 +3,7 @@
 ## Unreleased
 
 - Preserve the iPhone-only membership and order of deprecated `allXSeriesDevices` when migrating to `allPhonesWithSensorHousing`.
-- Read the Mac battery through IOKit in Mac Catalyst, including the `BatteryState.pluggedInNotCharging(Int)` case. Designed for iPad/iPhone apps on Mac return `nil` for battery readings.
+- Read the Mac battery through IOKit in Mac Catalyst, including the `BatteryState.pluggedInNotCharging(Int)` case. Designed for iPad/iPhone apps on Mac return `nil` for battery readings. An unavailable battery reading in an iPad app on a Vision simulator also returns `nil`.
 - On iOS and Mac Catalyst, `screenBrightness` now returns `Int?`. Unwrap the percentage before display. UIKit readings outside 0...1 return `nil`.
 
 - Add Apple Watch (watchOS 11), Apple TV (tvOS 18), native Mac (macOS 15) and Apple Vision Pro (visionOS 2) to Core and System. The shared catalog covers all six device families on each platform.

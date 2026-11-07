@@ -46,7 +46,7 @@ extension Device {
     #endif
 
     @MainActor
-    fileprivate init?() {
+    fileprivate init?(for model: Device) {
       #if os(watchOS)
         let device = WKInterfaceDevice.current()
       #else
@@ -55,15 +55,10 @@ extension Device {
       let previous = device.isBatteryMonitoringEnabled
       device.isBatteryMonitoringEnabled = true
       defer { device.isBatteryMonitoringEnabled = previous }
-      #if targetEnvironment(simulator)
-        let isSimulator = true
-      #else
-        let isSimulator = false
-      #endif
-      self.init(reportedState: device.batteryState, level: device.batteryLevel, isSimulator: isSimulator)
+      self.init(reportedState: device.batteryState, level: device.batteryLevel, model: model)
     }
 
-    init?(reportedState: ReportedState, level: Float, isSimulator: Bool) {
+    init?(reportedState: ReportedState, level: Float, model: Device) {
       switch reportedState {
       case .charging, .unplugged:
         guard (0...1).contains(level) else { return nil }
@@ -74,7 +69,7 @@ extension Device {
         #if os(visionOS)
           return nil
         #else
-          guard isSimulator else { return nil }
+          guard model.isSimulator, !model.isVision else { return nil }
           self = .full
         #endif
       @unknown default: return nil
@@ -126,7 +121,7 @@ extension Device {
       // UIKit reports a synthetic battery for iOS apps running directly on a Mac.
       guard !DeviceHost.isIOSAppOnMac else { return nil }
       #endif
-      return BatteryState()
+      return BatteryState(for: self)
     #endif
   }
 
