@@ -62,11 +62,18 @@ UIKit zoom inputs, structural identity, Pencil exclusions, portrait screen ratio
 battery ordering, nested simulators and the new mini. Donor fixtures remain frozen;
 the comparator rejects corruption beyond the documented corrections.
 
-Those runs do not establish execution on iOS 18 or physical hardware behavior.
-In particular, [Display Zoom hardware acceptance](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/issues/2)
-remains pending; passing substituted UIKit getters does not verify actual display modes.
+Those simulator runs used iOS/iPadOS 27.2. Separate physical tests subsequently verified
+standard and enlarged Display Zoom on iPhone 13 Pro, and standard, enlarged and More Space
+on iPad Pro 12.9-inch (5th generation). Physical iPhone mini coverage is still welcome
+in [issue #2](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/issues/2).
 Matching DeviceKit establishes compatibility with its data; new or corrected
 specifications need independent source checks. See
 [Apple's guidance on simulated and physical devices](https://developer.apple.com/documentation/Xcode/running-your-app-on-simulated-or-physical-devices).
+
+For 2026.1.1, all 68 tests passed without skips on each of the iPhone 18 Pro and
+iPad Pro 13-inch (M5) simulators running iOS/iPadOS 27.2. An iPhone-only app on
+the iPad simulator reproduced the conflicting family flags before the fix and
+reported only iPad afterward. A separate hosted XCTest ran an iOS app directly
+on an Apple silicon Mac and verified its hardware identifier, macOS version and family flags.
 
 [Back to README](../README.md)

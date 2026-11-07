@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026.1.1 — 2026-11-07
+
+- Keep a known iPad classified as an iPad when it runs an iPhone-only app. [#9](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/issues/9)
+- Report the Mac hardware identifier and macOS version when an iOS app runs directly on Apple silicon. [#10](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/issues/10)
+- Correct the 13-inch iPad Pro (M5) specifications link and use locale-neutral Apple Support links for the affected iPads. [#11](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/issues/11)
+
 ## 2026.1.0 — 2026-11-07
 
 - Refresh disk-capacity measurements between synchronous reads.
