@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="-11 -6 139 139">
+  <title>SwiftDeviceKit — folded iPhone Duo</title>
+  <desc>The outer display of a folded iPhone Duo faces up on three blue tiles. The front camera is in the rounded upper right corner of the display.</desc>
+  <!-- The tile contours are adapted from DeviceKit.svg, Dennis Weissmann and the DeviceKit project authors (MIT). -->
+  <defs>
+    <linearGradient id="base" x2=".95" y2=".65">
+      <stop stop-color="#3270c6"/><stop offset=".52" stop-color="#345bc3"/><stop offset="1" stop-color="#353f99"/>
+    </linearGradient>
+    <linearGradient id="middle" x2=".9" y2=".8">
+      <stop stop-color="#419ff2"/><stop offset=".52" stop-color="#397ae8"/><stop offset="1" stop-color="#365dcb"/>
+    </linearGradient>
+    <linearGradient id="face" x1=".12" y1="0" x2=".82" y2="1">
+      <stop stop-color="#66cafb"/><stop offset=".48" stop-color="#369cef"/><stop offset="1" stop-color="#3574dc"/>
+    </linearGradient>
+  </defs>
+  <g>
+    <path fill="url(#base)" d="M43.613,123.175L4.813,91.675C-1.687,86.375 -1.587,77.875 5.013,72.575L44.213,41.375C51.913,35.175 64.513,35.175 72.213,41.175L111.813,72.475C118.513,77.775 118.513,86.475 111.813,91.875L71.913,123.475C64.013,129.575 51.313,129.475 43.613,123.175Z"/>
+    <path fill="url(#middle)" d="M43.613,104.875L4.813,73.375C-1.687,68.075 -1.587,59.575 5.013,54.275L44.213,23.075C51.913,16.875 64.513,16.875 72.213,22.875L111.813,54.175C118.513,59.475 118.513,68.175 111.813,73.575L71.913,105.175C64.013,111.175 51.313,111.075 43.613,104.875Z"/>
+    <path fill="url(#face)" d="M43.613,86.475L4.813,54.975C-1.687,49.675 -1.587,41.175 5.013,35.875L44.213,4.675C51.913,-1.525 64.513,-1.525 72.213,4.475L111.813,35.775C118.513,41.075 118.513,49.775 111.813,55.175L71.913,86.775C64.013,92.875 51.313,92.775 43.613,86.475Z"/>
+  </g>
+  <g id="folded-duo-front" transform="matrix(.8 -.64 .8 .64 59.214453125 42.685546875)"
+     fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round">
+    <!-- One exposed lower edge shows the depth of the closed phone. -->
+    <path stroke-width="1.45" d="M-18.72 -26.18
+      C-20.24 -24.9 -21.35 -23.65 -21.35 -21.9 V26.25
+      Q-21.35 29 -18.7 29 H8.2
+      C12.65 29 16 26.8 18.1 22.9"/>
+    <!-- The hinge has tight corners. The free edge has a much larger radius. -->
+    <path stroke-width="2" d="M-17.4 -26.6 H10.45
+      C15.85 -26.6 19 -23.38 19 -18 V18
+      C19 23.38 15.85 26.6 10.45 26.6 H-17.4
+      Q-19 26.6 -19 25 V-25 Q-19 -26.6 -17.4 -26.6 Z"/>
+    <circle id="outer-front-camera" cx="12.35" cy="-20.05" r="1.77" fill="white" stroke="none"/>
+  </g>
+</svg>

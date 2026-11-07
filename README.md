@@ -1,120 +1,200 @@
-# SwiftDeviceKit
+<p align="center">
+  <img src="SwiftDeviceKit.svg" width="112" height="112" alt="SwiftDeviceKit icon">
+</p>
+<h1 align="center">SwiftDeviceKit</h1>
+<p align="center">
+  <a href="https://github.com/Anywhere-Music-Player/SwiftDeviceKit/releases/latest"><img src="https://img.shields.io/github/v/release/Anywhere-Music-Player/SwiftDeviceKit?label=release" alt="Latest GitHub release"></a>
+  <a href="Package.swift"><img src="https://img.shields.io/badge/Swift_tools-6.4%2B-F05138" alt="Swift tools 6.4+"></a>
+  <a href="Package.swift"><img src="https://img.shields.io/badge/iOS_%7C_iPadOS-18%2B-2463A2" alt="iOS and iPadOS 18+"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT license"></a>
+</p>
 
-A modern Swift library for identifying iPhones and iPads and reading their
-hardware capabilities. Based on [DeviceKit](https://github.com/devicekit/DeviceKit),
-built for **iOS and iPadOS 18+** with **Swift 6**.
+SwiftDeviceKit identifies the iPhone or iPad running your app and describes its hardware. Based on [DeviceKit](https://github.com/devicekit/DeviceKit), it keeps the familiar `Device` cases for models that support iOS or iPadOS 18 and later. The hardware catalog is written in Swift and can be used independently of the system APIs.
 
-SwiftDeviceKit combines a device catalog written entirely in Swift with optional
-system utilities. It has no external dependencies, uses `Sendable` value types
-and provides `@MainActor` isolation for UIKit-backed APIs.
+## Features
 
-~~~swift
-import SwiftDeviceKitCore
+Choose **SwiftDeviceKitCore** for the hardware catalog without UIKit. Choose **SwiftDeviceKitSystem** when you also need live readings. System includes every Core feature through the same `Device` type.
 
-let device = Device.current
+| Feature | Core | System |
+| :--- | :---: | :---: |
+| [Model name, processor and simulator detection](#get-the-current-device) | ✓ | ✓ |
+| SwiftUI preview detection in debug builds | ✓ | ✓ |
+| [Screen size, pixel density and both iPhone Duo panels](#show-display-sizes-on-iphone-and-iphone-duo) | ✓ | ✓ |
+| [Camera lenses and catalog groups](#find-iphones-with-a-telephoto-camera), LiDAR, Dynamic Island | ✓ | ✓ |
+| [Face ID and Touch ID hardware](#identify-the-biometric-sensor) | ✓ | ✓ |
+| [Apple Pencil and wireless charging support](#check-accessory-support-on-iphone-and-ipad), USB-C | ✓ | ✓ |
+| 5G, eSIM and dual eSIM capabilities | ✓ | ✓ |
+| Current device family (`isPhone`, `isPad`), [OS name and version](#include-the-model-and-os-in-a-support-report) | — | ✓ |
+| [Battery percentage and charging state](#display-battery-percentage-and-charging-status) | — | ✓ |
+| [Low Power Mode and thermal state](#defer-background-work-when-power-or-cooling-is-limited) | — | ✓ |
+| [Available and total storage capacity](#check-space-before-a-download) | — | ✓ |
+| [Screen brightness and Display Zoom](#read-the-current-display-settings), orientation and Guided Access | — | ✓ |
 
-print(device.realDevice.description)
-print(device.cpu)
-print(device.hasDynamicIsland)
-~~~
+## Requirements
+
+- iOS 18+ or iPadOS 18+
+- Swift tools 6.4+ (Swift 6 language mode)
 
 ## Installation
 
-Requires **iOS / iPadOS 18+** and a toolchain with **Swift 6.4 or newer**.
+In Xcode, choose **File → Add Package Dependencies…** and paste this URL.
 
-Add this repository in Xcode's package dependencies:
+```text
+https://github.com/Anywhere-Music-Player/SwiftDeviceKit.git
+```
 
-~~~text
-https://github.com/Anywhere-Music-Player/SwiftDeviceKit
-~~~
+Add one [product](#features) to your app target.
 
-Then select the product you need.
+## Usage
 
-## Modules
+### SwiftDeviceKitCore
 
-| Module | What it provides |
-| --- | --- |
-| `SwiftDeviceKitCore` | Device identification, simulator and preview detection, model names, screens, cameras, processors and hardware capabilities. |
-| `SwiftDeviceKitSystem` | Core plus battery, thermal state, storage, orientation, brightness and system information. |
+#### Get the current device
 
-Choose **Core** for device identification and catalog data. Choose **System**
-when you also need the current device's state.
-
-System includes Core and exposes the same `Device` type, so a single
-`import SwiftDeviceKitSystem` gives access to both. Both modules share one
-package version. Core can be used without UIKit.
-
-## Device capabilities
-
-Look up a model by its hardware identifier or work with `Device.current`:
-
-~~~swift
+```swift
 import SwiftDeviceKitCore
 
-let device = Device.mapToDevice(identifier: "iPhone19,2")
+let device = Device.current
+print(device.realDevice)   // e.g. iPhone 17
+print(device.cpu)          // A19 on iPhone 17
+print(device.isSimulator)  // true in Simulator
+```
 
-print(device.description)           // iPhone 18 Pro
-print(device.hasUSBCConnectivity)   // true
-print(device.hasLidarSensor)        // true
-print(device.cameras)               // wide, telephoto, ultraWide
+#### Show display sizes on iPhone and iPhone Duo
 
-let phones = Device.allPhones
-let iPads = Device.allPads
-let devicesWithFaceID = Device.allFaceIDCapableDevices
-~~~
+Use `realDevice` to match the same model on hardware and in Simulator.
 
-The catalog covers iPhone and iPad models supporting iOS / iPadOS 18 or later.
-Unknown identifiers are preserved as `.unknown(identifier)`. Simulator models
-expose the hardware capabilities of the device they represent.
-
-## Screens
-
-Each device exposes its built-in screen specifications:
-
-~~~swift
+```swift
 import SwiftDeviceKitCore
 
-for screen in Device.current.screens {
-    print(screen.role, screen.diagonal, screen.ppi)
+let model = Device.current.realDevice
+if model == .iPhoneDuo {
+    for screen in model.screens {
+        print("\(screen.role) display · \(screen.diagonal)″")
+    }
+} else if let screen = model.screen(.main) {
+    print("\(model) · \(screen.diagonal)″ display")
 }
-~~~
+```
 
-Single-screen models have one `.main` screen. iPhone Duo exposes `.outer` and
-`.inner` screens, each with its own specifications. These describe the hardware;
-use your app's view geometry for the current layout.
+On iPhone Duo this prints `outer display · 5.4″` and `inner display · 7.6″`. On iPhone 17 it prints `iPhone 17 · 6.3″ display`. For the current window size, use your view’s geometry.
 
-See [screen specifications](Docs/Screens.md) for panel selection, pixel dimensions
-and the behavior of `diagonal`, `ppi` and `screenRatio`.
+#### Identify the biometric sensor
 
-## System state
+```swift
+import SwiftDeviceKitCore
 
-~~~swift
+let model = Device.current
+if model.isFaceIDCapable {
+    print("Face ID")
+} else if model.isTouchIDCapable {
+    print("Touch ID")
+}
+```
+
+#### Find iPhones with a telephoto camera
+
+```swift
+import SwiftDeviceKitCore
+
+let phones = Device.allPhones.filter(\.hasTelephotoCamera)
+for phone in phones {
+    print(phone)
+}
+```
+
+### SwiftDeviceKitSystem
+
+Import System alone to use these examples. Access UIKit-backed properties on the main actor.
+
+#### Check accessory support on iPhone and iPad
+
+```swift
+import SwiftDeviceKitSystem
+
+let device = Device.current
+if device.isPhone && device.supportsWirelessCharging {
+    print("This iPhone supports wireless charging.")
+}
+if device.isPad && device.applePencilSupport.contains(.pro) {
+    print("This iPad supports Apple Pencil Pro.")
+}
+```
+
+#### Include the model and OS in a support report
+
+```swift
+import SwiftDeviceKitSystem
+
+let device = Device.current
+if let name = device.systemName, let version = device.systemVersion {
+    print("\(device.realDevice) · \(name) \(version)")
+}
+```
+
+#### Display battery percentage and charging status
+
+```swift
 import SwiftDeviceKitSystem
 
 @MainActor
-func readDeviceState() {
-    let device = Device.current
-
-    print(device.systemName ?? "Unknown")
-    print(device.batteryState?.description ?? "Unavailable")
-    print(device.thermalState as Any)
-    print(Device.volumeAvailableCapacity as Any)
+func batteryLabel() -> String {
+    switch Device.current.batteryState {
+    case .charging(let percent): "\(percent)% · Charging"
+    case .unplugged(let percent): "\(percent)%"
+    case .full: "Fully charged"
+    case nil: "Battery unavailable"
+    }
 }
-~~~
+```
 
-UIKit-backed properties such as battery state, brightness and orientation are
-accessed on the main actor. Catalog data remains available across concurrency
-boundaries.
+For a percentage alone, use `Device.current.batteryLevel` on the main actor.
+
+#### Defer background work when power or cooling is limited
+
+```swift
+import SwiftDeviceKitSystem
+
+@MainActor
+func shouldDeferBackgroundWork() -> Bool {
+    let device = Device.current
+    if device.batteryState?.lowPowerMode == true { return true }
+    switch device.thermalState {
+    case .serious, .critical: return true
+    default: return false
+    }
+}
+```
+
+#### Check space before a download
+
+```swift
+import SwiftDeviceKitSystem
+
+func hasSpaceForDownload(bytes: Int64) -> Bool? {
+    Device.volumeAvailableCapacityForImportantUsage.map { $0 >= bytes }
+}
+```
+
+For a user-requested download, compare the expected file size in bytes. A `nil` result means the capacity reading is unavailable.
+
+#### Read the current display settings
+
+```swift
+import SwiftDeviceKitSystem
+
+let device = Device.current
+print("Brightness: \(device.screenBrightness)%")
+if device.isZoomed == true {
+    print("Display Zoom is enabled.")
+}
+```
 
 ## Documentation
 
 - [Migrating from DeviceKit](Docs/Migration.md)
 - [Screen specifications](Docs/Screens.md)
-- [Adding a device to the catalog](Docs/Catalog.md)
-- [Testing and optional DeviceKit comparison](Docs/Testing.md)
+- [Adding a model](Docs/Catalog.md) and [testing the catalog](Docs/Testing.md)
 - [Changelog](CHANGELOG.md)
 
-## License
-
-[MIT](LICENSE). Based on DeviceKit, with the original authors' notices preserved.
-See [attribution](ATTRIBUTION.md).
+SwiftDeviceKit is distributed under the [MIT license](LICENSE). See [attribution](ATTRIBUTION.md) for the original authors and sources.
