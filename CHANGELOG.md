@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- Add Apple Watch (watchOS 11), Apple TV (tvOS 18), native Mac (macOS 15) and Apple Vision Pro (visionOS 2) to Core and System. The shared catalog covers all six device families on each platform.
+- Add `Device.Family`, new cases in `Device`, `Device.CPU` and `Device.CameraType`, and spatial display specifications for Vision Pro. Update exhaustive switches when migrating.
+- Correct the 2024 Mac mini chip identifiers and limit simulator groups to models with simulator runtimes.
+- Return 64-bit storage byte counts on watchOS and preserve the measured battery percentage on Mac. Unknown battery readings on physical iPhones, iPads and watches return `nil`.
+- Expose Low Power Mode through `Device.current.isLowPowerModeEnabled`, including on Macs without an internal battery.
 - Add `hasActionButton` and `Device.allDevicesWithActionButton` for models with a customizable Action button.
 - Add `hasVariableAperture` and `Device.allDevicesWithVariableAperture` for models with a variable-aperture camera lens.
 

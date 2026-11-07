@@ -63,6 +63,7 @@ biometrics supplied by an optional keyboard are outside the built-in catalog.
 Measured with Xcode 27.2, Release, arm64, disabled signing and generic device
 destinations. Values are byte lengths of the linked Mach-O executables. The
 baseline uses the same client programs built against commit `5077c8c`. The
+after column records the initial six-platform implementation at `f40aa7e`. The
 old manifest declared iOS only. Core also built for the other destinations
 as a phone/tablet catalog. The old System product had a supported build only
 for iOS/iPadOS. iPhone and iPad share the same iOS executable.
@@ -109,7 +110,8 @@ measured 269,584 and 295,312 bytes respectively.
 
 ## Verification on 7 November 2026
 
-The standalone clients linked in Release for every SDK in the size table.
+These results cover the initial platform implementation at `f40aa7e`. The
+standalone clients linked in Release for every SDK in the size table.
 Tests used Xcode 27.2 and OS 27.2. The deployment targets above also describe
 older supported releases; the runtime tests exercised 27.2.
 
