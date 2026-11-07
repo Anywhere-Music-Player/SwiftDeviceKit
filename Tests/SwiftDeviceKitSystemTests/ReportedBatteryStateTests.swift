@@ -1,4 +1,4 @@
-#if os(iOS) || os(watchOS) || os(visionOS)
+#if (os(iOS) && !targetEnvironment(macCatalyst)) || os(watchOS) || os(visionOS)
 import Testing
 @testable import SwiftDeviceKitSystem
 

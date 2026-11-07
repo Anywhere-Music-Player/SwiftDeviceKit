@@ -29,7 +29,9 @@ In a Designed for iPhone/iPad app on Apple silicon, `Device.current` resolves th
 Mac hardware identifier just as a native macOS process does. For an unlisted
 Mac the result is `.unknown(identifier)`. System reports macOS, its version when
 available, and Mac as the model. An explicit lookup of `iPad8,6` still resolves
-the third-generation 12.9-inch iPad Pro.
+the third-generation 12.9-inch iPad Pro. Mac Catalyst reads the host battery through IOKit.
+Designed for iPhone/iPad on Mac returns `nil` for battery level and state because the iOS SDK
+has no public Mac power-source API.
 
 An iPad or iPhone app running on Apple Vision reports the visionOS host when its
 headset identifier is recognized, or when the OS identifies the compatibility

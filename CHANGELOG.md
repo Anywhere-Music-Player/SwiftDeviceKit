@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Read the Mac battery through IOKit in Mac Catalyst, including the `BatteryState.pluggedInNotCharging(Int)` case. Designed for iPad/iPhone apps on Mac return `nil` for battery readings.
+
 - Add Apple Watch (watchOS 11), Apple TV (tvOS 18), native Mac (macOS 15) and Apple Vision Pro (visionOS 2) to Core and System. The shared catalog covers all six device families on each platform.
 - Report the visionOS host in Designed for iPad or iPhone apps. Handle the new `Device.unidentifiedVision(reportedIdentifier:)` case when the OS identifies a headset but masks its hardware model.
 - Add `Device.Family`, new cases in `Device`, `Device.CPU` and `Device.CameraType`, and spatial display specifications for Vision Pro. Update exhaustive switches when migrating.

@@ -3,7 +3,7 @@
 
 public import SwiftDeviceKitCore
 import Foundation
-#if os(macOS)
+#if os(macOS) || targetEnvironment(macCatalyst)
 import IOKit.ps
 #elseif os(watchOS)
 import WatchKit
@@ -30,7 +30,7 @@ extension Device {
     /// The battery is charging.
     /// The associated value is in percent (0-100).
     case charging(Int)
-    #if os(macOS)
+    #if os(macOS) || targetEnvironment(macCatalyst)
     /// External power is connected and the battery is not charging, for example during an optimized charging hold.
     case pluggedInNotCharging(Int)
     #endif
@@ -38,7 +38,7 @@ extension Device {
     /// The associated value is in percent (0-100).
     case unplugged(Int)
 
-    #if !os(macOS)
+    #if !os(macOS) && !targetEnvironment(macCatalyst)
     #if os(watchOS)
     typealias ReportedState = WKInterfaceDeviceBatteryState
     #else
@@ -98,12 +98,12 @@ extension Device {
       switch self {
       case .charging(let batteryLevel):
         return "Battery level: \(batteryLevel)%, device is plugged in."
-      #if os(macOS)
+      #if os(macOS) || targetEnvironment(macCatalyst)
       case .pluggedInNotCharging(let level):
         return "Battery level: \(level)%, device is plugged in and not charging."
       #endif
       case .full:
-        #if os(macOS)
+        #if os(macOS) || targetEnvironment(macCatalyst)
           return "Battery is charged, device is plugged in."
         #else
           return "Battery level: 100 % (Full), device is plugged in."
@@ -119,9 +119,13 @@ extension Device {
   @MainActor
   public var batteryState: BatteryState? {
     guard isCurrent else { return nil }
-    #if os(macOS)
+    #if os(macOS) || targetEnvironment(macCatalyst)
       return MacBatteryReading.current?.state
     #else
+      #if os(iOS)
+      // UIKit reports a synthetic battery for iOS apps running directly on a Mac.
+      guard !DeviceHost.isIOSAppOnMac else { return nil }
+      #endif
       return BatteryState()
     #endif
   }
@@ -129,7 +133,7 @@ extension Device {
   /// Battery level ranges from 0 (fully discharged) to 100 (100% charged).
   @MainActor
   public var batteryLevel: Int? {
-    #if os(macOS)
+    #if os(macOS) || targetEnvironment(macCatalyst)
       guard isCurrent else { return nil }
       return MacBatteryReading.current?.level
     #else
@@ -144,7 +148,7 @@ extension Device {
 
 }
 
-#if os(macOS)
+#if os(macOS) || targetEnvironment(macCatalyst)
 struct MacBatteryReading {
   let state: Device.BatteryState?
   let level: Int
@@ -205,7 +209,7 @@ extension Device.BatteryState: Comparable {
   private var sortKey: (level: Int, state: Int) {
     switch self {
     case .unplugged(let level): (level, 0)
-    #if os(macOS)
+    #if os(macOS) || targetEnvironment(macCatalyst)
     case .pluggedInNotCharging(let level): (level, 1)
     #endif
     case .charging(let level): (level, 2)
