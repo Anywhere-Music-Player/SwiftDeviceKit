@@ -229,6 +229,10 @@ if device.isZoomed == true {
 #endif
 ```
 
+To read physical orientation on iPhone or iPad, call `Device.beginOrientationUpdates()`,
+read `Device.current.orientation` after a device orientation notification, and call
+`Device.endOrientationUpdates()` when finished. [Orientation lifecycle](Docs/Screens.md#physical-orientation-on-ios-and-ipados)
+
 ## Documentation
 
 - [Platform support and verification](Docs/PlatformSupport.md)

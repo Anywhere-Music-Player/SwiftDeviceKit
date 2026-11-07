@@ -19,14 +19,27 @@ extension Device {
     case unknown
   }
 
+  /// Starts UIKit's physical orientation notifications for the current device.
+  /// Balance each call with `endOrientationUpdates()` when the reading is no longer needed.
+  @MainActor
+  public static func beginOrientationUpdates() {
+    UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+  }
+
+  /// Ends one request for orientation updates. Other UIKit observers keep their own requests.
+  @MainActor
+  public static func endOrientationUpdates() {
+    UIDevice.current.endGeneratingDeviceOrientationNotifications()
+  }
+
+  /// Physical orientation of the current device. Start updates before reading this property.
+  /// It can be unknown before the first reading and while the device is face up or face down.
   @MainActor
   public var orientation: Orientation {
-    if UIDevice.current.orientation.isLandscape {
-      return .landscape
-    } else if UIDevice.current.orientation.isPortrait {
-      return .portrait
-    } else {
-      return .unknown
+    switch UIDevice.current.orientation {
+    case .landscapeLeft, .landscapeRight: .landscape
+    case .portrait, .portraitUpsideDown: .portrait
+    default: .unknown
     }
   }
 }

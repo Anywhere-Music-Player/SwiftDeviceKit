@@ -56,4 +56,15 @@ rates through `spatialDisplay`. Apple publishes those values for the stereoscopi
 display system. [M2 specifications](https://support.apple.com/en-us/117810) ·
 [M5 specifications](https://support.apple.com/en-us/125436)
 
+## Physical orientation on iOS and iPadOS
+
+Register for `UIDevice.orientationDidChangeNotification` and call
+`Device.beginOrientationUpdates()` when the screen needs orientation readings.
+Read `Device.current.orientation` after each notification. UIKit can return
+`.unknown` before its first reading. A face-up or face-down device also maps to
+`.unknown`. The value follows physical rotation even when the interface is locked.
+
+Balance each start with `Device.endOrientationUpdates()` and remove the observer
+when leaving the screen. UIKit supports nested requests. [UIDevice orientation](https://developer.apple.com/documentation/uikit/uidevice/orientation)
+
 [Back to README](../README.md)
