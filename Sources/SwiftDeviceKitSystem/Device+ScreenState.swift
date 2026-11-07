@@ -31,15 +31,15 @@ extension Device {
 }
 
 extension Device {
+  /// Whether the current screen uses an enlarged rendering scale.
+  /// Downsampled standard modes (including iPhone mini) and iPad More Space are not zoomed.
+  /// This describes display scaling, not the Accessibility Zoom magnifier or a view's geometry.
   @MainActor
   public var isZoomed: Bool? {
     guard isCurrent else { return nil }
-    if Int(UIScreen.main.scale.rounded()) == 3 {
-      // Plus-sized
-      return UIScreen.main.nativeScale > 2.7 && UIScreen.main.nativeScale < 3
-    } else {
-      return UIScreen.main.nativeScale > UIScreen.main.scale
-    }
+    // The old 1080p Plus pipeline is outside this package's iOS 18+ catalog.
+    // A 3x rendering scale does not identify that pipeline.
+    return UIScreen.main.nativeScale > UIScreen.main.scale
   }
 
   /// The brightness level of the screen.

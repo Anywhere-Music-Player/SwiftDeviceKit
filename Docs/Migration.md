@@ -56,6 +56,10 @@ iPods and HomePod resolve to `.unknown(identifier)`.
 ## Corrections after 2026.0.0
 
 - Every disk-capacity query starts with a fresh URL resource cache.
+- `isZoomed` uses `nativeScale > scale` for the supported iOS 18+ catalog. Standard
+  mini downsampling and iPad More Space are not enlarged modes. The removed
+  legacy Plus heuristic applied to unsupported 1080p Plus models. This API does
+  not detect Accessibility Zoom; use view geometry for layout decisions.
 
 ## System resources
 
