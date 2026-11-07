@@ -31,7 +31,7 @@ extension Device {
     public let screenRatio: AspectRatio
 
     /// Published pixel dimensions, or nil when the catalog has no verified resolution.
-    /// Both iPhone Duo panels have a resolution. Other models currently retain their existing metrics.
+    /// iPhone Duo and iPad mini (A20 Pro) have verified resolutions.
     public let resolution: Resolution?
   }
 

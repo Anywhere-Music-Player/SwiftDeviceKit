@@ -85,4 +85,47 @@ final class CatalogIssueRegressionTests: XCTestCase {
       }
     }
   }
+
+  func testMiniA20ProVerifiedIdentifiersAndSpecifications() throws {
+    // IDs: Apple's Xcode 27.2 iPad mini (A20 Pro) profile, representedModelIdentifiers.
+    // Hardware: https://www.apple.com/ipad-mini/specs/ (7 November 2026).
+    for identifier in ["iPad19,1", "iPad19,2"] {
+      let model = Device.mapToDevice(identifier: identifier)
+      XCTAssertEqual(model, .iPadMiniA20Pro)
+      XCTAssertEqual(model.description, "iPad mini (A20 Pro)")
+      XCTAssertTrue(Device.allPads.contains(model))
+      XCTAssertTrue(Device.allMiniDevices.contains(model))
+      XCTAssertTrue(Device.allApplePencilCapableDevices.contains(model))
+      XCTAssertTrue(Device.allSimulatorMiniDevices.contains(.simulator(model)))
+      XCTAssertFalse(Device.allProDevices.contains(model))
+      XCTAssertFalse(Device.allPlusSizedDevices.contains(model))
+      for value in [model, .simulator(model), .simulator(.simulator(model))] {
+        XCTAssertEqual(value.cpu, .a20Pro)
+        XCTAssertEqual(value.cameras, [.wide])
+        XCTAssertEqual(value.applePencilSupport, [.firstGenerationUsbC, .pro])
+        XCTAssertTrue(value.isTouchIDCapable)
+        XCTAssertTrue(value.hasRoundedDisplayCorners)
+        XCTAssertTrue(value.has5gSupport)
+        XCTAssertTrue(value.hasEsimSupport)
+        XCTAssertTrue(value.hasUSBCConnectivity)
+        XCTAssertFalse(value.isFaceIDCapable)
+        XCTAssertFalse(value.hasDualEsimSupport)
+        XCTAssertFalse(value.hasLidarSensor)
+        XCTAssertFalse(value.isFoldable)
+        XCTAssertFalse(value.hasDynamicIsland)
+        XCTAssertFalse(value.supportsWirelessCharging)
+        let screen = try XCTUnwrap(value.screen(.main))
+        XCTAssertEqual(value.screens.count, 1)
+        XCTAssertEqual(screen.diagonal, 8.5)
+        XCTAssertEqual(screen.ppi, 326)
+        XCTAssertEqual(screen.resolution?.width, 1512)
+        XCTAssertEqual(screen.resolution?.height, 2316)
+        XCTAssertEqual(screen.screenRatio.width, 126)
+        XCTAssertEqual(screen.screenRatio.height, 193)
+      }
+    }
+    for identifier in ["iPad19,0", "iPad19,3", "iPad19,1 ", "iPad mini (A20 Pro)"] {
+      XCTAssertEqual(Device.mapToDevice(identifier: identifier), .unknown(identifier))
+    }
+  }
 }

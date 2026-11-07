@@ -410,7 +410,7 @@ final class DeviceKitTests: XCTestCase {
       .iPadAir11M4,
       .iPadAir13M4,
       .iPadMini6,
-      .iPadMiniA17Pro,
+      .iPadMiniA17Pro, .iPadMiniA20Pro,
       .iPadPro11Inch3,
       .iPadPro12Inch5,
       .iPadPro11Inch4,
@@ -453,7 +453,7 @@ final class DeviceKitTests: XCTestCase {
     ]
     let pads: [Device] = [
       .iPadAir11M2, .iPadAir13M2, .iPadPro11M4, .iPadPro13M4,
-      .iPadMiniA17Pro, .iPadA16, .iPadAir11M3, .iPadAir13M3,
+      .iPadMiniA17Pro, .iPadMiniA20Pro, .iPadA16, .iPadAir11M3, .iPadAir13M3,
       .iPadPro11M5, .iPadPro13M5, .iPadAir11M4, .iPadAir13M4,
     ]
     for model in phones + pads {
@@ -596,7 +596,7 @@ final class DeviceKitTests: XCTestCase {
       .iPadAir11M4,
       .iPadAir13M4,
       .iPadMini6,
-      .iPadMiniA17Pro,
+      .iPadMiniA17Pro, .iPadMiniA20Pro,
       .iPadPro11Inch,
       .iPadPro12Inch3,
       .iPadPro11Inch2,

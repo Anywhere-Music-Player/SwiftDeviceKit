@@ -59,7 +59,8 @@ at test time. No Python, GYB execution or copied library implementation is used.
 The input corpus is the union of those IDs and every registered local catalog ID.
 Coverage gates check it against both executable public model lists, reject
 duplicates and assert the explicit iOS 18 catalog policy. The current union has
-172 IDs: 104 shared, 67 deliberately excluded and one newly supported Duo ID.
+174 IDs: 104 shared, 67 deliberately excluded, one newly supported Duo ID and
+two mini A20 Pro IDs.
 
 For every ID, tests compare both the hardware model and its simulator wrapper:
 
@@ -86,6 +87,7 @@ The comparison records these changes rather than hiding their rows:
 | --- | --- |
 | outside-ios18-catalog | The explicitly listed old models must have exactly the replacement's unknown-device behavior; their removal from groups is expected. |
 | duo-absent-in-devicekit-5.9.0 | Original 5.9.0 returns unknown for iPhone19,4. The replacement must resolve it to iPhoneDuo; all value differences are visible but have no upstream oracle. |
+| mini-a20-pro-absent-in-devicekit-5.9.0 | Original returns unknown for iPad19,1 and iPad19,2. The replacement must resolve both to iPadMiniA20Pro; independent specification checks live in the parent package. |
 | portrait-reference-orientation | Only the exact width/height swap for the nine documented iPad records is permitted. |
 | m5-pencil-compatibility | Only removal of second-generation Pencil support from the two M5 iPad Pro records is permitted. |
 | simulator-camera-metadata | Only camera fields changing from empty/false to the original real model's values are permitted. Other simulator differences still fail. |

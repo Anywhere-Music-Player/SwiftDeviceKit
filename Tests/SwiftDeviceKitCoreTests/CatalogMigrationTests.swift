@@ -66,7 +66,7 @@ struct CatalogMigrationTests {
     #expect(Set(actualGroups.keys) == Set(expectedGroups.keys))
     for (name, identifiers) in expectedGroups {
       #expect(
-        actualGroups[name]
+        actualGroups[name]?.filter { $0 != .iPadMiniA20Pro }
           == identifiers.filter { !excluded.contains($0) }.map {
             Device.mapToDevice(identifier: $0)
           },
@@ -78,9 +78,9 @@ struct CatalogMigrationTests {
   func definitionsHaveUniqueIdentifiersAndMatchTheirRegisteredCase() {
     let definitions = DeviceCatalog.all
     let identifiers = definitions.flatMap(\.identifiers)
-    #expect(definitions.count == 66)
+    #expect(definitions.count == 67)
     #expect(Set(identifiers).count == identifiers.count)
-    #expect(identifiers.count == 105)
+    #expect(identifiers.count == 107)
     #expect(Set(definitions.map { $0.model.description }).count == definitions.count)
     for definition in definitions {
       #expect(!definition.identifiers.isEmpty)

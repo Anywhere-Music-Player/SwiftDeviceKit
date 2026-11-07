@@ -58,6 +58,7 @@ enum DeviceCatalog {
     .iPadMini5,
     .iPadMini6,
     .iPadMiniA17Pro,
+    .iPadMiniA20Pro,
     .iPadPro11Inch,
     .iPadPro12Inch3,
     .iPadPro11Inch2,
@@ -141,6 +142,7 @@ extension Device {
     case .iPadMini5: return .iPadMini5
     case .iPadMini6: return .iPadMini6
     case .iPadMiniA17Pro: return .iPadMiniA17Pro
+    case .iPadMiniA20Pro: return .iPadMiniA20Pro
     case .iPadPro11Inch: return .iPadPro11Inch
     case .iPadPro12Inch3: return .iPadPro12Inch3
     case .iPadPro11Inch2: return .iPadPro11Inch2

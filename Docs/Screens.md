@@ -19,7 +19,8 @@ The screen values are immutable, `Sendable` and `Hashable`, and can be read outs
 the main actor. `screen(_:)` returns `nil` when the requested role is absent.
 Single-screen iPhones and iPads expose one `.main` screen. All ratios and pixel
 dimensions use portrait reference orientation (width <= height), independently
-of UI rotation. Single-screen models retain `nil` resolution until verified
+of UI rotation. iPad mini (A20 Pro) has a verified 1512 × 2316 resolution and
+126:193 ratio; other single-screen models retain `nil` resolution until verified
 pixel dimensions are added. Unknown models have an empty `screens` array.
 
 iPhone Duo has two panels, listed in stable outer-then-inner order. Values come
@@ -42,6 +43,6 @@ current view's geometry for layout. Simulator wrappers return the same catalog
 specifications as their hardware model.
 
 See [catalog corrections](CatalogCorrections.md) for the nine normalized iPad
-ratios.
+ratios and the sources for iPad mini (A20 Pro).
 
 [Back to README](../README.md)

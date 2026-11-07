@@ -37,7 +37,7 @@ struct CatalogBaselineTests {
     let supported = baseline.filter {
       !CatalogSupportPolicy.excludedCaseNames.contains($0.caseName)
     }
-    #expect(supported.count == 65)  // Duo is covered separately.
+    #expect(supported.count == 65)  // Duo and mini A20 Pro are covered separately.
     for expected in supported {
       for identifier in expected.identifiers {
         let device = Device.mapToDevice(identifier: identifier)
@@ -74,7 +74,7 @@ struct CatalogBaselineTests {
       Device.allPhones.filter { $0 != .iPhoneDuo }.map(\.description)
         == supported.filter { $0.family == "phone" }.map(\.description))
     #expect(
-      Device.allPads.map(\.description)
+      Device.allPads.filter { $0 != .iPadMiniA20Pro }.map(\.description)
         == supported.filter { $0.family == "pad" }.map(\.description)
     )
   }
@@ -113,7 +113,7 @@ struct CatalogBaselineTests {
     // iPad 7 supports iPadOS 18 despite using an older chip than iPhone XS/XR.
     #expect(Device.iPad7.cpu == .a10Fusion)
     #expect(Device.allPhones.count == 37)
-    #expect(Device.allPads.count == 29)
+    #expect(Device.allPads.count == 30)
   }
 
   @Test

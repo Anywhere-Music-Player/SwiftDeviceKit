@@ -181,6 +181,8 @@ public enum Device: Sendable {
   ///
   /// ![Image](https://cdsassets.apple.com/live/7WUAS350/images/tech-specs/iPad_mini_A17_Pro_Wi-Fi_Lineup_Print__USEN.png)
   case iPadMiniA17Pro
+  /// Device is an [iPad mini (A20 Pro)](https://www.apple.com/ipad-mini/specs/).
+  case iPadMiniA20Pro
   /// Device is an [iPad Pro 11-inch](https://support.apple.com/kb/SP784)
   ///
   /// ![Image](https://support.apple.com/library/APPLE/APPLECARE_ALLGEOS/SP784/ipad-pro-11-2018_2x.png)

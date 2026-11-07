@@ -8,6 +8,8 @@
 - Correct M5 iPad Pro Pencil compatibility and normalize nine iPad screen ratios to portrait.
 - Give battery states a total ordering with deterministic equal-percentage ties.
 - Preserve all catalog capabilities and family classification through nested simulator wrappers.
+- Add iPad mini (A20 Pro), with two verified identifiers and documented screen specifications.
+- Add regression coverage and explicit comparison allowances without changing frozen donor fixtures.
 
 ## 2026.0.0 — 2026-10-21
 

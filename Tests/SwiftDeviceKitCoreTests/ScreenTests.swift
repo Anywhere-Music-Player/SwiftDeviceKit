@@ -13,7 +13,12 @@ struct ScreenTests {
       #expect(screen.ppi == device.ppi)
       #expect(screen.screenRatio.width == device.screenRatio.width)
       #expect(screen.screenRatio.height == device.screenRatio.height)
-      #expect(screen.resolution == nil)
+      if device == .iPadMiniA20Pro {
+        #expect(screen.resolution?.width == 1512)
+        #expect(screen.resolution?.height == 2316)
+      } else {
+        #expect(screen.resolution == nil)
+      }
       #expect(device.screen(.outer) == nil)
       #expect(device.screen(.inner) == nil)
     }

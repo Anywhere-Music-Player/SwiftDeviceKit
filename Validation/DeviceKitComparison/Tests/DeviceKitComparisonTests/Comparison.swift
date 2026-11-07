@@ -34,10 +34,12 @@ enum ExpectedDifferences {
 
   static func reason(
     field: String, original: String, replacement: String,
-    simulator: Bool, originalReal: Snapshot, excludedAndUnknown: Bool, addedDuo: Bool
+    simulator: Bool, originalReal: Snapshot, excludedAndUnknown: Bool, addedDuo: Bool,
+    addedMini: Bool
   ) -> String? {
     if excludedAndUnknown { return "outside-ios18-catalog" }
     if addedDuo { return "duo-absent-in-devicekit-5.9.0" }
+    if addedMini { return "mini-a20-pro-absent-in-devicekit-5.9.0" }
     let name = originalReal.fields["description"] ?? ""
     if let (width, height) = portraitRatios[name] {
       if field == "screenRatio.width", original == String(height), replacement == String(width) {
@@ -83,7 +85,8 @@ struct ComparisonReport: Codable {
 
   mutating func compare(
     identifier: String, variant: String, original: Snapshot, replacement: Snapshot,
-    originalReal: Snapshot, excludedAndUnknown: Bool = false, addedDuo: Bool = false
+    originalReal: Snapshot, excludedAndUnknown: Bool = false, addedDuo: Bool = false,
+    addedMini: Bool = false
   ) {
     for field in Set(original.fields.keys).union(replacement.fields.keys).sorted() {
       comparisons += 1
@@ -94,7 +97,8 @@ struct ComparisonReport: Codable {
         identifier: identifier, variant: variant, field: field, original: old, replacement: new,
         reason: ExpectedDifferences.reason(
           field: field, original: old, replacement: new, simulator: variant != "hardware",
-          originalReal: originalReal, excludedAndUnknown: excludedAndUnknown, addedDuo: addedDuo)))
+          originalReal: originalReal, excludedAndUnknown: excludedAndUnknown, addedDuo: addedDuo,
+          addedMini: addedMini)))
     }
   }
 
@@ -119,6 +123,7 @@ struct ComparisonReport: Codable {
       "- Matching fields establish compatibility with DeviceKit, not independent hardware truth.",
       "- Excluded models must resolve to exactly the replacement's unknown-device behavior.",
       "- Duo has no reference model in 5.9.0; its differences are reported, not independently validated here.",
+      "- Mini A20 Pro also has no reference model; independent specifications are tested in the parent package.",
       "- Nine iPad ratios use portrait orientation; M5 Pencil compatibility excludes second generation.",
       "- Simulator cameras intentionally forward the model's metadata; 5.9.0 returns no cameras.",
       "- Unknown simulator detection intentionally returns true in the replacement.",
