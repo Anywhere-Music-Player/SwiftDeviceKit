@@ -53,6 +53,10 @@ and [iPadOS 18 announcement](https://www.apple.com/ie/newsroom/2024/09/ipados-18
 Models introduced with newer OS versions are included too. Older hardware,
 iPods and HomePod resolve to `.unknown(identifier)`.
 
+## Corrections after 2026.0.0
+
+- Every disk-capacity query starts with a fresh URL resource cache.
+
 ## System resources
 
 Core has no resource bundle. System includes the disk-space privacy manifest.

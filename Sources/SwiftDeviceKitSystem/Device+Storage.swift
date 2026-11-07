@@ -10,7 +10,9 @@ extension Device {
   /// Return the root url
   ///
   /// - returns: the NSHomeDirectory() url
-  private static let rootURL = URL(fileURLWithPath: NSHomeDirectory())
+  // URL resource values are cached per instance. Each query must start with a fresh URL,
+  // including consecutive reads before the main run loop has a chance to clear its cache.
+  private static var rootURL: URL { URL(fileURLWithPath: NSHomeDirectory()) }
 
   /// The volume’s total capacity in bytes.
   public static var volumeTotalCapacity: Int? {

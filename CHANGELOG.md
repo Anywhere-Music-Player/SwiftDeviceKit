@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Refresh disk-capacity measurements between synchronous reads.
+
 ## 2026.0.0 — 2026-10-21
 
 Initial release of SwiftDeviceKit, based on DeviceKit.
