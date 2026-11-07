@@ -4,6 +4,7 @@
 
 - Refresh disk-capacity measurements between synchronous reads.
 - Correct 3x display-scale zoom detection and remove the unsupported legacy Plus heuristic.
+- Use structural device identity, preserving unknown identifiers even when they match display names.
 
 ## 2026.0.0 — 2026-10-21
 

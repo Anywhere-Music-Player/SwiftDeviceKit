@@ -12,6 +12,16 @@ final class SystemIssueRegressionTests: XCTestCase {
     continueAfterFailure = false
   }
 
+  func testUnknownDisplayNameCannotReadCurrentDeviceState() {
+    let unknown = Device.unknown(Device.current.description)
+    XCTAssertNotEqual(unknown, Device.current)
+    XCTAssertNil(unknown.systemVersion)
+    XCTAssertNil(unknown.batteryState)
+    XCTAssertNil(unknown.isZoomed)
+    XCTAssertFalse(unknown.isPhone)
+    XCTAssertFalse(unknown.isPad)
+  }
+
   func testZoomUsesActualScaleWithoutLegacyPlusAssumptions() throws {
     let scaleMethod = try XCTUnwrap(class_getInstanceMethod(UIScreen.self, #selector(getter: UIScreen.scale)))
     let nativeMethod = try XCTUnwrap(class_getInstanceMethod(UIScreen.self, #selector(getter: UIScreen.nativeScale)))

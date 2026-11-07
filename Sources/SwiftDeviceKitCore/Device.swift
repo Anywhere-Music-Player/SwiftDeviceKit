@@ -242,16 +242,5 @@ public enum Device: Sendable {
 
 }
 
-extension Device: Equatable {
-
-  /// Compares two devices
-  ///
-  /// - parameter lhs: A device.
-  /// - parameter rhs: Another device.
-  ///
-  /// - returns: `true` iff the underlying identifier is the same.
-  public static func == (lhs: Device, rhs: Device) -> Bool {
-    return lhs.description == rhs.description
-  }
-
-}
+// Identity includes the enum case and associated values, independently of display names.
+extension Device: Equatable {}
