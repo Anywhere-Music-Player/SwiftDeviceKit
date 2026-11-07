@@ -170,7 +170,7 @@ extension Device {
   ///
   /// - parameter device: A device.
   ///
-  /// - returns: the underlying device If the `device` is a `simulator`,
+  /// - returns: the fully unwrapped device if `device` is a `simulator`,
   /// otherwise return the `device`.
   public var realDevice: Device {
     return Device.realDevice(from: self)
@@ -185,14 +185,12 @@ extension Device {
 
   /// Returns whether or not the device has Touch ID
   public var isTouchIDCapable: Bool {
-    return isOneOf(Device.allTouchIDCapableDevices)
-      || isOneOf(Device.allTouchIDCapableDevices.map(Device.simulator))
+    return definition?.capabilities.contains(.touchID) ?? false
   }
 
   /// Returns whether or not the device has Face ID
   public var isFaceIDCapable: Bool {
-    return isOneOf(Device.allFaceIDCapableDevices)
-      || isOneOf(Device.allFaceIDCapableDevices.map(Device.simulator))
+    return definition?.capabilities.contains(.faceID) ?? false
   }
 
   /// Returns whether or not the device has any biometric sensor (i.e. Touch ID or Face ID)
@@ -202,64 +200,54 @@ extension Device {
 
   /// Returns whether or not the device has a sensor housing
   public var hasSensorHousing: Bool {
-    return isOneOf(Device.allDevicesWithSensorHousing)
-      || isOneOf(Device.allDevicesWithSensorHousing.map(Device.simulator))
+    return definition?.capabilities.contains(.sensorHousing) ?? false
   }
 
   /// Returns whether or not the device has a screen with rounded corners.
   public var hasRoundedDisplayCorners: Bool {
-    return isOneOf(Device.allDevicesWithRoundedDisplayCorners)
-      || isOneOf(Device.allDevicesWithRoundedDisplayCorners.map(Device.simulator))
+    return definition?.capabilities.contains(.roundedDisplayCorners) ?? false
   }
 
   /// Returns whether or not the device has the Dynamic Island.
   public var hasDynamicIsland: Bool {
-    return isOneOf(Device.allDevicesWithDynamicIsland)
-      || isOneOf(Device.allDevicesWithDynamicIsland.map(Device.simulator))
+    return definition?.capabilities.contains(.dynamicIsland) ?? false
   }
 
   /// Returns whether or not the device has 3D Touch support.
   public var has3dTouchSupport: Bool {
-    return isOneOf(Device.allDevicesWith3dTouchSupport)
-      || isOneOf(Device.allDevicesWith3dTouchSupport.map(Device.simulator))
+    return definition?.capabilities.contains(.force3DTouch) ?? false
   }
 
   /// Returns whether or not the device supports wireless charging.
   public var supportsWirelessCharging: Bool {
-    return isOneOf(Device.allDevicesWithWirelessChargingSupport)
-      || isOneOf(Device.allDevicesWithWirelessChargingSupport.map(Device.simulator))
+    return definition?.capabilities.contains(.wirelessCharging) ?? false
   }
 
   /// Returns whether or not the device has 5G support.
   public var has5gSupport: Bool {
-    return isOneOf(Device.allDevicesWith5gSupport)
-      || isOneOf(Device.allDevicesWith5gSupport.map(Device.simulator))
+    return definition?.capabilities.contains(.fiveG) ?? false
   }
 
   /// Returns whether the device model supports eSIM. Simulators use their simulated model.
   /// See `allDevicesWithEsimSupport` for regional and cellular-variant limitations.
   public var hasEsimSupport: Bool {
-    return isOneOf(Device.allDevicesWithEsimSupport)
-      || isOneOf(Device.allDevicesWithEsimSupport.map(Device.simulator))
+    return definition?.capabilities.contains(.eSIM) ?? false
   }
 
   /// Returns whether the device model supports two active eSIMs simultaneously.
   /// Simulators use their simulated model. See `allDevicesWithDualEsimSupport` for limitations.
   public var hasDualEsimSupport: Bool {
-    return isOneOf(Device.allDevicesWithDualEsimSupport)
-      || isOneOf(Device.allDevicesWithDualEsimSupport.map(Device.simulator))
+    return definition?.capabilities.contains(.dualESIM) ?? false
   }
 
   /// Returns whether or not the device has a LiDAR sensor.
   public var hasLidarSensor: Bool {
-    return isOneOf(Device.allDevicesWithALidarSensor)
-      || isOneOf(Device.allDevicesWithALidarSensor.map(Device.simulator))
+    return definition?.capabilities.contains(.lidar) ?? false
   }
 
   /// Returns whether or not the device has a USB-C power supply.
   public var hasUSBCConnectivity: Bool {
-    return isOneOf(Device.allDevicesWithUSBCConnectivity)
-      || isOneOf(Device.allDevicesWithUSBCConnectivity.map(Device.simulator))
+    return definition?.capabilities.contains(.usbC) ?? false
   }
 
   /// Get the real device from a device.
@@ -268,13 +256,14 @@ extension Device {
   ///
   /// - parameter device: A device.
   ///
-  /// - returns: the underlying device If the `device` is a `simulator`,
+  /// - returns: the fully unwrapped device if `device` is a `simulator`,
   /// otherwise return the `device`.
   public static func realDevice(from device: Device) -> Device {
-    if case .simulator(let model) = device {
-      return model
+    var model = device
+    while case .simulator(let wrapped) = model {
+      model = wrapped
     }
-    return device
+    return model
   }
 
   /**

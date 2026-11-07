@@ -22,6 +22,14 @@ final class SystemIssueRegressionTests: XCTestCase {
     XCTAssertFalse(unknown.isPad)
   }
 
+  func testNestedSimulatorFamilyMatchesUnderlyingModel() {
+    for model in Device.allRealDevices + [.unknown("future-model")] {
+      let wrapped = Device.simulator(.simulator(.simulator(model)))
+      XCTAssertEqual(wrapped.isPhone, model.isPhone)
+      XCTAssertEqual(wrapped.isPad, model.isPad)
+    }
+  }
+
   func testZoomUsesActualScaleWithoutLegacyPlusAssumptions() throws {
     let scaleMethod = try XCTUnwrap(class_getInstanceMethod(UIScreen.self, #selector(getter: UIScreen.scale)))
     let nativeMethod = try XCTUnwrap(class_getInstanceMethod(UIScreen.self, #selector(getter: UIScreen.nativeScale)))

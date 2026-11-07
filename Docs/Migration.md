@@ -58,6 +58,8 @@ iPods and HomePod resolve to `.unknown(identifier)`.
 - `Device` equality compares enum cases and associated values, not descriptions.
   An unknown identifier matching a model name no longer acquires its capabilities
   or passes the current-device guard.
+- Nested simulator wrappers fully unwrap through `realDevice` and expose the
+  underlying catalog capabilities and phone/pad family at every depth.
 - Screen ratios consistently use portrait orientation; M5 iPad Pro no longer
   advertises second-generation Pencil support. See [catalog corrections](CatalogCorrections.md).
 - Battery ordering compares percentages, then places unplugged before charging

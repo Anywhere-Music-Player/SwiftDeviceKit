@@ -25,6 +25,32 @@ final class CatalogIssueRegressionTests: XCTestCase {
     }
   }
 
+  func testNestedSimulatorsPreserveEveryCatalogCapability() {
+    let capabilities: [KeyPath<Device, Bool>] = [
+      \.isTouchIDCapable, \.isFaceIDCapable, \.hasBiometricSensor, \.hasSensorHousing,
+      \.hasRoundedDisplayCorners, \.hasDynamicIsland, \.has3dTouchSupport,
+      \.supportsWirelessCharging, \.has5gSupport, \.hasEsimSupport, \.hasDualEsimSupport,
+      \.hasLidarSensor, \.hasUSBCConnectivity, \.isFoldable,
+      \.hasCamera, \.hasWideCamera, \.hasUltraWideCamera, \.hasTelephotoCamera,
+    ]
+    for model in Device.allRealDevices + [.unknown("future-model"), .unknown("iPhone 16 Pro")] {
+      var wrapped = model
+      for _ in 0..<8 {
+        wrapped = .simulator(wrapped)
+        XCTAssertTrue(wrapped.isSimulator)
+        XCTAssertEqual(wrapped.realDevice, model)
+        XCTAssertEqual(Device.realDevice(from: wrapped), model)
+        XCTAssertEqual(wrapped.cpu, model.cpu)
+        XCTAssertEqual(wrapped.screens, model.screens)
+        XCTAssertEqual(wrapped.cameras, model.cameras)
+        XCTAssertEqual(wrapped.applePencilSupport, model.applePencilSupport)
+        for capability in capabilities {
+          XCTAssertEqual(wrapped[keyPath: capability], model[keyPath: capability], "\(model)")
+        }
+      }
+    }
+  }
+
   func testM5PencilCompatibilityExcludesSecondGeneration() {
     for model in [Device.iPadPro11M5, .iPadPro13M5] {
       for value in [model, .simulator(model), .simulator(.simulator(model))] {

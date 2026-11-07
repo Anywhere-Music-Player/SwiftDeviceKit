@@ -10,16 +10,14 @@ extension Device {
   /// Returns whether the device is an iPhone (real or simulator)
   @MainActor
   public var isPhone: Bool {
-    return isOneOf(Device.allPhones)
-      || isOneOf(Device.allSimulatorPhones)
+    return realDevice.isOneOf(Device.allPhones)
       || (UIDevice.current.userInterfaceIdiom == .phone && isCurrent)
   }
 
   /// Returns whether the device is an iPad (real or simulator)
   @MainActor
   public var isPad: Bool {
-    return isOneOf(Device.allPads)
-      || isOneOf(Device.allSimulatorPads)
+    return realDevice.isOneOf(Device.allPads)
       || (UIDevice.current.userInterfaceIdiom == .pad && isCurrent)
   }
 
