@@ -148,6 +148,9 @@ final class DeviceKitTests: XCTestCase {
     if ProcessInfo.processInfo.isiOSAppOnMac {
       XCTAssertFalse(device.isPhone)
       XCTAssertFalse(device.isPad)
+    } else if device.isVision {
+      XCTAssertFalse(device.isPhone)
+      XCTAssertFalse(device.isPad)
     } else if Device.allPads.contains(device.realDevice) {
       XCTAssertTrue(device.isPad)
       XCTAssertFalse(device.isPhone)
@@ -173,6 +176,11 @@ final class DeviceKitTests: XCTestCase {
       XCTAssertEqual(device.localizedModel, "Mac")
       XCTAssertNotNil(device.systemVersion)
       XCTAssertEqual(Device.mapToDevice(identifier: "iPad8,6"), .iPadPro12Inch3)
+    } else if device.isVision {
+      XCTAssertEqual(device.systemName, "visionOS")
+      XCTAssertNotNil(device.systemVersion)
+      XCTAssertTrue(device.model?.hasPrefix("Apple Vision") == true)
+      XCTAssertEqual(device.localizedModel, device.model)
     } else if Device.allPads.contains(device.realDevice) {
       XCTAssertEqual(device.systemName, "iPadOS")
     } else if Device.allPhones.contains(device.realDevice) {

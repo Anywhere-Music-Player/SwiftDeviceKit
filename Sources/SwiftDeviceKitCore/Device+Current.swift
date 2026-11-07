@@ -9,18 +9,18 @@ extension Device {
   public static var current: Device {
     #if targetEnvironment(simulator)
       let model = ProcessInfo.processInfo.environment["SIMULATOR_MODEL_IDENTIFIER"] ?? identifier
-      return .simulator(hardware(model))
+      return .simulator(currentHardware(model, iOSAppOnVision: DeviceHost.isIOSAppOnVision))
     #else
-      return hardware(identifier)
+      return currentHardware(identifier, iOSAppOnVision: DeviceHost.isIOSAppOnVision)
     #endif
   }
 
   /// The raw hardware identifier, or the simulator's architecture as reported by uname.
   public static let identifier: String = {
     #if os(macOS) || targetEnvironment(macCatalyst)
-      return MacHost.model ?? "Mac"
+      return DeviceHost.macModel ?? "Mac"
     #else
-      if MacHost.isIOSAppOnMac { return MacHost.model ?? "Mac" }
+      if DeviceHost.isIOSAppOnMac { return DeviceHost.macModel ?? "Mac" }
       var info = utsname()
       uname(&info)
       return withUnsafeBytes(of: &info.machine) {
@@ -31,6 +31,14 @@ extension Device {
 
   private static func hardware(_ identifier: String) -> Device {
     DeviceCatalog.byIdentifier[identifier] ?? .unknown(identifier)
+  }
+
+  static func currentHardware(_ identifier: String, iOSAppOnVision: Bool) -> Device {
+    let model = hardware(identifier)
+    if iOSAppOnVision && model.family != .vision {
+      return .unidentifiedVision(reportedIdentifier: identifier)
+    }
+    return model
   }
 
   /// Architecture aliases require an actual simulated model supplied by CoreSimulator.
@@ -58,8 +66,15 @@ extension Device {
   }
 }
 
-/// Host information shared by native Mac and iOS compatibility processes.
-package enum MacHost {
+/// Host information for native and iOS compatibility processes.
+package enum DeviceHost {
+  static var isIOSAppOnVision: Bool {
+    #if os(iOS) && !targetEnvironment(macCatalyst)
+      if #available(iOS 26.1, *) { return ProcessInfo.processInfo.isiOSAppOnVision }
+    #endif
+    return false
+  }
+
   package static var isIOSAppOnMac: Bool {
     #if targetEnvironment(macCatalyst)
       true
@@ -70,7 +85,7 @@ package enum MacHost {
     #endif
   }
 
-  static let model = string(for: "hw.model")
+  static let macModel = string(for: "hw.model")
   package static let systemVersion = string(for: "kern.osproductversion")
 
   private static func string(for key: String) -> String? {

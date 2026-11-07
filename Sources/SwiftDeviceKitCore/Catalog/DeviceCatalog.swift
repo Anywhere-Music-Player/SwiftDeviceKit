@@ -372,7 +372,7 @@ extension Device {
     case .iMac24M4TwoPorts: return .iMac24M4TwoPorts
     case .iMac24M6: return .iMac24M6
     case .simulator(let model): return model.definition
-    case .unknown: return nil
+    case .unknown, .unidentifiedVision: return nil
     }
   }
 }

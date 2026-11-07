@@ -344,6 +344,9 @@ public enum Device: Sendable {
   /// ![Image](https://developer.apple.com/assets/elements/icons/256x256/xcode-6.png)
   indirect case simulator(Device)
 
+  /// An iOS compatibility app on Apple Vision whose reported identifier does not identify a known headset.
+  case unidentifiedVision(reportedIdentifier: String)
+
   /// Device is not yet known (implemented)
   /// You can still use this enum as before but the description equals the identifier (you can get multiple identifiers for the same product class
   /// (e.g. "iPhone6,1" or "iPhone 6,2" do both mean "iPhone 5s"))

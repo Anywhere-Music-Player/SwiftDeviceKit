@@ -2,9 +2,13 @@
 // SPDX-License-Identifier: MIT
 
 extension Device {
-  /// Product family from the hardware catalog. An unrecognized identifier has no known family.
+  /// Product family from the catalog or a host explicitly identified by the OS.
   public enum Family: Sendable { case phone, pad, watch, tv, mac, vision }
-  public var family: Family? { definition?.family }
+  public var family: Family? {
+    let model = realDevice
+    if case .unidentifiedVision = model { return .vision }
+    return model.definition?.family
+  }
 
   public static var allWatches: [Device] { DeviceCatalog.models(in: .watch) }
   public static var allTVs: [Device] { DeviceCatalog.models(in: .tv) }

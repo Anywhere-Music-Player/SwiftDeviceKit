@@ -8,6 +8,7 @@ extension Device: CustomStringConvertible {
     switch self {
     case .simulator(let model): return "Simulator (\(model.description))"
     case .unknown(let identifier): return identifier
+    case .unidentifiedVision: return "Apple Vision"
     default: preconditionFailure("Every known Device case must have a catalog definition")
     }
   }
@@ -21,6 +22,7 @@ extension Device: CustomStringConvertible {
     switch self {
     case .simulator(let model): return "Simulator (\(model.safeDescription))"
     case .unknown(let identifier): return identifier
+    case .unidentifiedVision: return description
     default: preconditionFailure("Every known Device case must have a catalog definition")
     }
   }

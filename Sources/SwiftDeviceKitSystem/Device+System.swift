@@ -23,7 +23,7 @@ extension Device {
   public var isPhone: Bool {
     if let family { return family == .phone }
     #if os(iOS)
-      return isCurrent && !MacHost.isIOSAppOnMac && UIDevice.current.userInterfaceIdiom == .phone
+      return isCurrent && !DeviceHost.isIOSAppOnMac && UIDevice.current.userInterfaceIdiom == .phone
     #else
       return false
     #endif
@@ -33,7 +33,7 @@ extension Device {
   public var isPad: Bool {
     if let family { return family == .pad }
     #if os(iOS)
-      return isCurrent && !MacHost.isIOSAppOnMac && UIDevice.current.userInterfaceIdiom == .pad
+      return isCurrent && !DeviceHost.isIOSAppOnMac && UIDevice.current.userInterfaceIdiom == .pad
     #else
       return false
     #endif
@@ -62,7 +62,10 @@ extension Device {
     #if os(macOS)
       return "macOS"
     #else
-      if MacHost.isIOSAppOnMac { return "macOS" }
+      if DeviceHost.isIOSAppOnMac { return "macOS" }
+      #if os(iOS)
+        if isVision { return "visionOS" }
+      #endif
       if isPad, systemDevice.systemName == "iOS" { return "iPadOS" }
       return systemDevice.systemName
     #endif
@@ -72,12 +75,34 @@ extension Device {
   public var systemVersion: String? {
     guard isCurrent else { return nil }
     #if os(macOS)
-      return MacHost.systemVersion
+      return DeviceHost.systemVersion
     #else
-      if MacHost.isIOSAppOnMac { return MacHost.systemVersion }
+      if DeviceHost.isIOSAppOnMac { return DeviceHost.systemVersion }
+      #if os(iOS)
+        if isVision {
+          #if targetEnvironment(simulator)
+            return ProcessInfo.processInfo.environment["SIMULATOR_RUNTIME_VERSION"]
+          #else
+            return DeviceHost.systemVersion
+          #endif
+        }
+      #endif
       return systemDevice.systemVersion
     #endif
   }
+
+  #if !os(macOS)
+  private var compatibilityModel: String? {
+    #if os(iOS)
+      if DeviceHost.isIOSAppOnMac { return "Mac" }
+      if isVision {
+        if case .unidentifiedVision = realDevice { return "Apple Vision" }
+        return "Apple Vision Pro"
+      }
+    #endif
+    return nil
+  }
+  #endif
 
   @MainActor
   public var model: String? {
@@ -85,7 +110,7 @@ extension Device {
     #if os(macOS)
       return "Mac"
     #else
-      return MacHost.isIOSAppOnMac ? "Mac" : systemDevice.model
+      return compatibilityModel ?? systemDevice.model
     #endif
   }
 
@@ -95,7 +120,7 @@ extension Device {
     #if os(macOS)
       return "Mac"
     #else
-      return MacHost.isIOSAppOnMac ? "Mac" : systemDevice.localizedModel
+      return compatibilityModel ?? systemDevice.localizedModel
     #endif
   }
 

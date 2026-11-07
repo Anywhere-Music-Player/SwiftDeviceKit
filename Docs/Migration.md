@@ -31,6 +31,13 @@ Mac the result is `.unknown(identifier)`. System reports macOS, its version when
 available, and Mac as the model. An explicit lookup of `iPad8,6` still resolves
 the third-generation 12.9-inch iPad Pro.
 
+An iPad or iPhone app running on Apple Vision reports the visionOS host when its
+headset identifier is recognized, or when the OS identifies the compatibility
+process through `isiOSAppOnVision` (26.1 and later). If that process reports a
+masked or uncatalogued model, `Device.current.realDevice` returns
+`.unidentifiedVision(reportedIdentifier:)`. Its family is `.vision` and its
+chip is unknown. Explicit identifier lookups still use the hardware catalog.
+
 ```swift
 import SwiftDeviceKitSystem
 
