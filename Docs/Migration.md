@@ -58,6 +58,8 @@ iPods and HomePod resolve to `.unknown(identifier)`.
 - `Device` equality compares enum cases and associated values, not descriptions.
   An unknown identifier matching a model name no longer acquires its capabilities
   or passes the current-device guard.
+- M5 iPad Pro no longer advertises second-generation Pencil support.
+  See [catalog corrections](CatalogCorrections.md).
 - Every disk-capacity query starts with a fresh URL resource cache.
 - `isZoomed` uses `nativeScale > scale` for the supported iOS 18+ catalog. Standard
   mini downsampling and iPad More Space are not enlarged modes. The removed

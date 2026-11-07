@@ -24,4 +24,13 @@ final class CatalogIssueRegressionTests: XCTestCase {
       XCTAssertNotEqual(Device.simulator(model), .simulator(.simulator(model)))
     }
   }
+
+  func testM5PencilCompatibilityExcludesSecondGeneration() {
+    for model in [Device.iPadPro11M5, .iPadPro13M5] {
+      for value in [model, .simulator(model), .simulator(.simulator(model))] {
+        XCTAssertEqual(value.applePencilSupport, [.firstGenerationUsbC, .pro])
+        XCTAssertFalse(value.applePencilSupport.contains(.secondGeneration))
+      }
+    }
+  }
 }

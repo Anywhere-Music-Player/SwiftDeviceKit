@@ -30,6 +30,12 @@ enum ExpectedDifferences {
   ) -> String? {
     if excludedAndUnknown { return "outside-ios18-catalog" }
     if addedDuo { return "duo-absent-in-devicekit-5.9.0" }
+    let name = originalReal.fields["description"] ?? ""
+    if ["iPad Pro (11-inch) (M5)", "iPad Pro (13-inch) (M5)"].contains(name),
+       field == "applePencilSupport", original == "secondGeneration,firstGenerationUsbC,pro",
+       replacement == "firstGenerationUsbC,pro" {
+      return "m5-pencil-compatibility"
+    }
     // Permit only the documented field/value change, not all simulator differences.
     if simulator, cameraFields.contains(field),
        original == (field == "cameras" ? "" : "false"),
@@ -97,6 +103,7 @@ struct ComparisonReport: Codable {
       "- Matching fields establish compatibility with DeviceKit, not independent hardware truth.",
       "- Excluded models must resolve to exactly the replacement's unknown-device behavior.",
       "- Duo has no reference model in 5.9.0; its differences are reported, not independently validated here.",
+      "- M5 Pencil compatibility excludes second generation.",
       "- Simulator cameras intentionally forward the model's metadata; 5.9.0 returns no cameras.",
       "- Unknown simulator detection intentionally returns true in the replacement.",
       "- Group membership changes are reported; common-model order is compared without filtering other differences.",

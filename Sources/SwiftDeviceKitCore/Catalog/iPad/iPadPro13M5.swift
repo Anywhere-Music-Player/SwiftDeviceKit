@@ -9,7 +9,7 @@ extension DeviceDefinition {
     cpu: .m5,
     capabilities: [.pro, .faceID, .roundedDisplayCorners, .fiveG, .eSIM, .lidar, .usbC],
     cameras: [.wide],
-    applePencilSupport: [.secondGeneration, .firstGenerationUsbC, .pro],
+    applePencilSupport: [.firstGenerationUsbC, .pro],
     screens: [
       .init(
         role: .main, diagonal: 13, ppi: 264,

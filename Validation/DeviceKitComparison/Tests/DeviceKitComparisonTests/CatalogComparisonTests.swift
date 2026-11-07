@@ -190,4 +190,23 @@ final class CatalogComparisonTests: XCTestCase {
     XCTAssertEqual(report.unexpected.map(\.field), ["hasUltraWideCamera"])
     XCTAssertFalse(report.differences.filter { $0.reason == "simulator-camera-metadata" }.isEmpty)
   }
+
+  func testCorrectionsDoNotHideOtherCatalogRegressions() {
+    for model in [Original.iPadPro11M5] {
+      let original = Snapshots.read(model)
+      let replacement = Replacement.mapToDevice(identifier: model == .iPadAir11M3 ? "iPad15,3" : "iPad17,1")
+      var correct = ComparisonReport()
+      correct.compare(identifier: "control", variant: "hardware", original: original,
+                      replacement: Snapshots.read(replacement), originalReal: original)
+      XCTAssertTrue(correct.unexpected.isEmpty)
+      for field in ["screenRatio.width", "applePencilSupport", "description"] {
+        var corrupted = Snapshots.read(replacement)
+        corrupted.fields[field] = "invalid"
+        var report = ComparisonReport()
+        report.compare(identifier: "corrupted", variant: "hardware", original: original,
+                       replacement: corrupted, originalReal: original)
+        XCTAssertEqual(report.unexpected.map(\.field), [field])
+      }
+    }
+  }
 }

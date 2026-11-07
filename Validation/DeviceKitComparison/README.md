@@ -86,6 +86,7 @@ The comparison records these changes rather than hiding their rows:
 | --- | --- |
 | outside-ios18-catalog | The explicitly listed old models must have exactly the replacement's unknown-device behavior; their removal from groups is expected. |
 | duo-absent-in-devicekit-5.9.0 | Original 5.9.0 returns unknown for iPhone19,4. The replacement must resolve it to iPhoneDuo; all value differences are visible but have no upstream oracle. |
+| m5-pencil-compatibility | Only removal of second-generation Pencil support from the two M5 iPad Pro records is permitted. |
 | simulator-camera-metadata | Only camera fields changing from empty/false to the original real model's values are permitted. Other simulator differences still fail. |
 | unknown-simulator-detection | Only isSimulator changing false to true for an unknown simulated model is permitted. |
 

@@ -29,7 +29,12 @@ struct CatalogMigrationTests {
       for device in [model, .simulator(model)] {
         #expect(device.cpu.description == expected.cpu)
         #expect(device.cameras.map { String(describing: $0) } == expected.cameras)
-        #expect(device.applePencilSupport.rawValue == expected.pencil)
+        if ["iPad17,1", "iPad17,3"].contains(expected.identifier) {
+          #expect(expected.pencil == 14)  // Frozen donor incorrectly includes second generation.
+          #expect(device.applePencilSupport == [.firstGenerationUsbC, .pro])
+        } else {
+          #expect(device.applePencilSupport.rawValue == expected.pencil)
+        }
       }
     }
     let actualGroups: [String: [Device]] = [
