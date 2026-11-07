@@ -41,6 +41,20 @@ struct CurrentDeviceTests {
     }
   }
 
+  @Test func missingAndEmptySimulatorModelsKeepTheRawIdentifier() {
+    for model: String? in [nil, ""] {
+      for raw in ["arm64", "x86_64"] {
+        #expect(Device.currentSimulator(rawIdentifier: raw, modelIdentifier: model, iOSAppOnVision: false)
+          == .simulator(.unknown(raw)))
+        #expect(Device.resolve(identifier: raw, simulatorModelIdentifier: model) == .unknown(raw))
+      }
+      #expect(Device.currentSimulator(rawIdentifier: "arm64", modelIdentifier: model, iOSAppOnVision: true)
+        == .simulator(.unidentifiedVision(reportedIdentifier: "arm64")))
+    }
+    #expect(Device.currentSimulator(rawIdentifier: "arm64", modelIdentifier: "iPhone19,4", iOSAppOnVision: false)
+      == .simulator(.iPhoneDuo))
+  }
+
   @Test
   func hardwareIdentifiersIgnoreSimulatorEnvironment() {
     #expect(
@@ -52,10 +66,10 @@ struct CurrentDeviceTests {
   }
 
   @Test
-  func currentDeviceMatchesTheSimulatorProvidedModel() throws {
+  func currentDeviceMatchesTheSimulatorProvidedModel() {
     #if targetEnvironment(simulator)
-      let identifier = try #require(
-        ProcessInfo.processInfo.environment["SIMULATOR_MODEL_IDENTIFIER"])
+      let supplied = ProcessInfo.processInfo.environment["SIMULATOR_MODEL_IDENTIFIER"]
+      let identifier = supplied.flatMap { $0.isEmpty ? nil : $0 } ?? Device.identifier
       if case .unidentifiedVision(let reported) = Device.current.realDevice {
         #expect(DeviceHost.isIOSAppOnVision && reported == identifier && Device.current.isSimulator)
       } else {

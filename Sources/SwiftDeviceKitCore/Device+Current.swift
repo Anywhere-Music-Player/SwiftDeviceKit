@@ -8,8 +8,9 @@ extension Device {
   /// Returns a `Device` representing the current device this software runs on.
   public static var current: Device {
     #if targetEnvironment(simulator)
-      let model = ProcessInfo.processInfo.environment["SIMULATOR_MODEL_IDENTIFIER"] ?? identifier
-      return .simulator(currentHardware(model, iOSAppOnVision: DeviceHost.isIOSAppOnVision))
+      return currentSimulator(rawIdentifier: identifier,
+                              modelIdentifier: ProcessInfo.processInfo.environment["SIMULATOR_MODEL_IDENTIFIER"],
+                              iOSAppOnVision: DeviceHost.isIOSAppOnVision)
     #else
       return currentHardware(identifier, iOSAppOnVision: DeviceHost.isIOSAppOnVision)
     #endif
@@ -39,6 +40,16 @@ extension Device {
       return .unidentifiedVision(reportedIdentifier: identifier)
     }
     return model
+  }
+
+  static func currentSimulator(rawIdentifier: String, modelIdentifier: String?, iOSAppOnVision: Bool) -> Device {
+    let identifier: String
+    if let modelIdentifier, !modelIdentifier.isEmpty {
+      identifier = modelIdentifier
+    } else {
+      identifier = rawIdentifier
+    }
+    return .simulator(currentHardware(identifier, iOSAppOnVision: iOSAppOnVision))
   }
 
   /// Architecture aliases require an actual simulated model supplied by CoreSimulator.
