@@ -51,3 +51,11 @@ hardware and Pencil pairing were not tested.
 The comparison with DeviceKit reports this model as a deliberate addition;
 DeviceKit 5.9.0 has no matching model. Hardware specifications are independently
 asserted in the package's regression tests.
+
+## Apple Watch Ultra 2
+
+For `Watch7,5`, `description` and `safeDescription` use the product name
+“Apple Watch Ultra 2”. Clients that persisted “Apple Watch Ultra2” as a key
+can migrate that value to the corrected spelling. The watchOS comparison
+records this exact name correction for hardware and simulator wrappers.
+[Apple specifications](https://support.apple.com/en-us/111832)

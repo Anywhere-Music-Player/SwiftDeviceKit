@@ -34,7 +34,9 @@ final class WatchTVComparisonTests: XCTestCase {
     #if os(watchOS)
       XCTAssertEqual(models.count, 22)
       XCTAssertEqual(localIDs.count, 40)
-      XCTAssertEqual(oldModels.filter { !isExcluded($0.description) }.map(\.description), models.map(\.description))
+      let supported = oldModels.filter { !isExcluded($0.description) }
+      XCTAssertEqual(supported.map { $0 == .appleWatchUltra2 ? "Apple Watch Ultra 2" : $0.description },
+                     models.map(\.description))
     #else
       XCTAssertEqual(models.count, 5)
       XCTAssertEqual(oldModels.map(\.description), models.filter { $0 != .appleTV4K4 }.map(\.description))
@@ -70,13 +72,23 @@ final class WatchTVComparisonTests: XCTestCase {
         let variant = wrapped ? "simulator" : "hardware"
         let a: Original = wrapped ? .simulator(old) : old
         let b: Local = wrapped ? .simulator(local) : local
-        check(id, variant, "name", a.description, b.description, correction: reason)
-        check(id, variant, "safeName", a.safeDescription, b.safeDescription, correction: reason)
+        for (field, originalName, localName) in [("name", a.description, b.description),
+                                                  ("safeName", a.safeDescription, b.safeDescription)] {
+          var nameReason = reason
+          #if os(watchOS)
+            let oldUltra2 = wrapped ? "Simulator (Apple Watch Ultra2)" : "Apple Watch Ultra2"
+            let newUltra2 = wrapped ? "Simulator (Apple Watch Ultra 2)" : "Apple Watch Ultra 2"
+            if id == "Watch7,5", originalName == oldUltra2, localName == newUltra2 {
+              nameReason = "official-Ultra-2-name"
+            }
+          #endif
+          check(id, variant, field, originalName, localName, correction: nameReason)
+        }
         check(id, variant, "CPU", a.cpu.description, b.cpu.description, correction: reason)
         check(id, variant, "isSimulator", a.isSimulator, b.isSimulator)
         #if os(watchOS)
           check(id, variant, "Force Touch", a.hasForceTouchSupport, b.hasForceTouchSupport, correction: reason)
-          let pixels = panelPixels(for: local.description)
+          let pixels = panelPixels(for: local)
           if local.family == .watch {
             let panel = try XCTUnwrap(pixels)
             XCTAssertEqual(b.screen(.main)?.resolution?.width, panel.0)
@@ -121,16 +133,18 @@ final class WatchTVComparisonTests: XCTestCase {
   }
 
   // Physical pixel dimensions from Apple's Watch technical specifications and CoreSimulator profiles.
-  private func panelPixels(for name: String) -> (Int, Int)? {
-    if name.hasSuffix("40mm") { return (324, 394) }
-    if name.hasSuffix("44mm") { return (368, 448) }
-    if name.hasSuffix("41mm") { return (352, 430) }
-    if name.hasSuffix("45mm") { return (396, 484) }
-    if name.hasSuffix("42mm") { return (374, 446) }
-    if name.hasSuffix("46mm") { return (416, 496) }
-    if ["Apple Watch Ultra", "Apple Watch Ultra2"].contains(name) { return (410, 502) }
-    if ["Apple Watch Ultra 3", "Apple Watch Ultra 4"].contains(name) { return (422, 514) }
-    return nil
+  private func panelPixels(for model: Local) -> (Int, Int)? {
+    switch model {
+    case .appleWatchSeries6_40mm, .appleWatchSE2_40mm, .appleWatchSE3_40mm: (324, 394)
+    case .appleWatchSeries6_44mm, .appleWatchSE2_44mm, .appleWatchSE3_44mm: (368, 448)
+    case .appleWatchSeries7_41mm, .appleWatchSeries8_41mm, .appleWatchSeries9_41mm: (352, 430)
+    case .appleWatchSeries7_45mm, .appleWatchSeries8_45mm, .appleWatchSeries9_45mm: (396, 484)
+    case .appleWatchSeries10_42mm, .appleWatchSeries11_42mm, .appleWatchSeries12_42mm: (374, 446)
+    case .appleWatchSeries10_46mm, .appleWatchSeries11_46mm, .appleWatchSeries12_46mm: (416, 496)
+    case .appleWatchUltra, .appleWatchUltra2: (410, 502)
+    case .appleWatchUltra3, .appleWatchUltra4: (422, 514)
+    default: nil
+    }
   }
   #endif
 }

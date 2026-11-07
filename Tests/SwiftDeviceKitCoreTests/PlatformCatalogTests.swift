@@ -70,6 +70,14 @@ struct PlatformCatalogTests {
     }
   }
 
+  @Test func ultra2UsesApplesProductName() {
+    let watch = Device.mapToDevice(identifier: "Watch7,5")
+    #expect(watch == .appleWatchUltra2)
+    #expect(watch.description == "Apple Watch Ultra 2")
+    #expect(watch.safeDescription == "Apple Watch Ultra 2")
+    #expect(Device.simulator(watch).safeDescription == "Simulator (Apple Watch Ultra 2)")
+  }
+
   @Test func platformCapabilitiesAndLists() {
     #expect(Device.allWatches.count == 22)
     #expect(Device.allTVs.count == 5)

@@ -1,8 +1,8 @@
-// DeviceKit 5.10.0 and the Apple CoreSimulator device profile for this case size.
+// https://support.apple.com/en-us/111832
 extension DeviceDefinition {
   static let appleWatchUltra2 = DeviceDefinition(
     model: .appleWatchUltra2, family: .watch,
-    name: "Apple Watch Ultra2",
+    name: "Apple Watch Ultra 2",
     identifiers: ["Watch7,5"], cpu: .s9,
     capabilities: [.roundedDisplayCorners, .wirelessCharging, .eSIM, .actionButton],
     screens: [
