@@ -14,6 +14,28 @@ extension Device {
   // including consecutive reads before the main run loop has a chance to clear its cache.
   private static var rootURL: URL { URL(fileURLWithPath: NSHomeDirectory()) }
 
+  #if os(watchOS)
+  // URLResourceValues exposes these byte counts as Int, which is 32 bits on arm64_32.
+  static func volumeCapacity(for key: URLResourceKey, at url: NSURL) -> Int64? {
+    var value: AnyObject?
+    do {
+      try url.getResourceValue(&value, forKey: key)
+      return (value as? NSNumber)?.int64Value
+    } catch {
+      return nil
+    }
+  }
+
+  /// The volume’s total capacity in bytes.
+  public static var volumeTotalCapacity: Int64? {
+    volumeCapacity(for: .volumeTotalCapacityKey, at: rootURL as NSURL)
+  }
+
+  /// The volume’s available capacity in bytes.
+  public static var volumeAvailableCapacity: Int64? {
+    volumeCapacity(for: .volumeAvailableCapacityKey, at: rootURL as NSURL)
+  }
+  #else
   /// The volume’s total capacity in bytes.
   public static var volumeTotalCapacity: Int? {
     return (try? Device.rootURL.resourceValues(forKeys: [.volumeTotalCapacityKey]))?
@@ -25,6 +47,8 @@ extension Device {
     return (try? rootURL.resourceValues(forKeys: [.volumeAvailableCapacityKey]))?
       .volumeAvailableCapacity
   }
+
+  #endif
 
   #if !os(watchOS) && !os(tvOS)
   /// The volume’s available capacity in bytes for storing important resources.

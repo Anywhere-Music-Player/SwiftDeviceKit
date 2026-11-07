@@ -202,12 +202,12 @@ func shouldDeferBackgroundWork() -> Bool {
 ```swift
 import SwiftDeviceKitSystem
 
-func hasSpaceForDownload(bytes: Int) -> Bool? {
-    Device.volumeAvailableCapacity.map { $0 >= bytes }
+func hasSpaceForDownload(bytes: Int64) -> Bool? {
+    Device.volumeAvailableCapacity.map { Int64($0) >= bytes }
 }
 ```
 
-This works on all six platforms, including Apple TV. For a user-requested download on iPhone, iPad, Mac or Vision Pro, `volumeAvailableCapacityForImportantUsage` also accounts for space the OS can reclaim.
+On watchOS both capacity properties return `Int64?`, including on arm64_32 watches. On the other platforms their return type is `Int?`. For a user-requested download on iPhone, iPad, Mac or Vision Pro, `volumeAvailableCapacityForImportantUsage` also accounts for space the OS can reclaim.
 
 #### Read the current display settings
 
