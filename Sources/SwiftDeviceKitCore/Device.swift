@@ -177,7 +177,7 @@ public enum Device: Sendable {
   ///
   /// ![Image](https://km.support.apple.com/resources/sites/APPLE/content/live/IMAGES/1000/IM1097/en_US/ipad-mini-6gen-240.png)
   case iPadMini6
-  /// Device is an [iPad mini (A17 Pro)](https://support.apple.com/en-us/121456)
+  /// Device is an [iPad mini (A17 Pro)](https://support.apple.com/121456)
   ///
   /// ![Image](https://cdsassets.apple.com/live/7WUAS350/images/tech-specs/iPad_mini_A17_Pro_Wi-Fi_Lineup_Print__USEN.png)
   case iPadMiniA17Pro
@@ -215,19 +215,19 @@ public enum Device: Sendable {
   ///
   /// ![Image](https://support.apple.com/library/APPLE/APPLECARE_ALLGEOS/SP882/ipad-pro-4gen-mainimage_2x.png)
   case iPadPro12Inch6
-  /// Device is an [iPad Pro 11-inch (M4)](https://support.apple.com/en-us/119892)
+  /// Device is an [iPad Pro 11-inch (M4)](https://support.apple.com/119892)
   ///
   /// ![Image](https://cdsassets.apple.com/content/services/pub/image?productid=301031&size=240x240)
   case iPadPro11M4
-  /// Device is an [iPad Pro 13-inch (M4)](https://support.apple.com/en-us/119891)
+  /// Device is an [iPad Pro 13-inch (M4)](https://support.apple.com/119891)
   ///
   /// ![Image](https://cdsassets.apple.com/content/services/pub/image?productid=301033&size=240x240)
   case iPadPro13M4
-  /// Device is an [iPad Pro 11-inch (M5)](https://support.apple.com/en-us/125406)
+  /// Device is an [iPad Pro 11-inch (M5)](https://support.apple.com/125406)
   ///
   /// ![Image](https://cdsassets.apple.com/content/services/pub/image?productid=301271&size=240x240)
   case iPadPro11M5
-  /// Device is an [iPad Pro 13-inch (M5)](https://support.apple.com/en-us/125406)
+  /// Device is an [iPad Pro 13-inch (M5)](https://support.apple.com/125407)
   ///
   /// ![Image](https://cdsassets.apple.com/content/services/pub/image?productid=301273&size=240x240)
   case iPadPro13M5
