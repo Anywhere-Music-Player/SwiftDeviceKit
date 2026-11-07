@@ -170,14 +170,14 @@ func batteryLabel() -> String {
     switch Device.current.batteryState {
     case .charging(let percent): "\(percent)% · Charging"
     case .unplugged(let percent): "\(percent)%"
-    case .full: "Fully charged"
+    case .full: "Charged"
     case nil: "Battery unavailable"
     }
 }
 #endif
 ```
 
-For a percentage alone, use `Device.current.batteryLevel` on the main actor.
+Use `Device.current.batteryLevel` for the measured percentage. On Mac, IOKit can report a plugged-in battery as charged at 95–99%.
 
 #### Defer background work when power or cooling is limited
 

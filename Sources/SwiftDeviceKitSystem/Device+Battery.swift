@@ -19,12 +19,12 @@ extension Device {
   /**
    This enum describes the state of the battery.
 
-   - Full:      The device is plugged into power and the battery is 100% charged or the device is the iOS Simulator.
+   - Full:      The OS reports the battery as charged. On Mac, batteryLevel can still be below 100%.
    - Charging:  The device is plugged into power and the battery is less than 100% charged.
    - Unplugged: The device is not plugged into power; the battery is discharging.
    */
   public enum BatteryState: CustomStringConvertible, Equatable, Sendable {
-    /// The device is plugged into power and the battery is 100% charged or the device is the iOS Simulator.
+    /// The OS reports the battery as charged. On Mac, batteryLevel can still be below 100%.
     case full
     /// The device is plugged into power and the battery is less than 100% charged.
     /// The associated value is in percent (0-100).
@@ -33,55 +33,32 @@ extension Device {
     /// The associated value is in percent (0-100).
     case unplugged(Int)
 
+    #if !os(macOS)
     @MainActor
     fileprivate init?() {
-      #if os(macOS)
-        guard let snapshot = IOPSCopyPowerSourcesInfo()?.takeRetainedValue(),
-              let sources = IOPSCopyPowerSourcesList(snapshot)?.takeRetainedValue() as? [CFTypeRef]
-        else { return nil }
-        for source in sources {
-          guard let info = IOPSGetPowerSourceDescription(snapshot, source)?.takeUnretainedValue()
-                  as? [String: Any],
-                info[kIOPSTypeKey] as? String == kIOPSInternalBatteryType,
-                let capacity = info[kIOPSCurrentCapacityKey] as? Int,
-                let maximum = info[kIOPSMaxCapacityKey] as? Int, maximum > 0
-          else { continue }
-          let percent = Int((Double(capacity) * 100 / Double(maximum)).rounded())
-          if info[kIOPSPowerSourceStateKey] as? String == kIOPSBatteryPowerValue {
-            self = .unplugged(percent)
-          } else if info[kIOPSIsChargedKey] as? Bool == true {
-            self = .full
-          } else {
-            // BatteryState describes external power, including optimized charging holds.
-            self = .charging(percent)
-          }
-          return
-        }
-        return nil
+      #if os(watchOS)
+        let device = WKInterfaceDevice.current()
       #else
-        #if os(watchOS)
-          let device = WKInterfaceDevice.current()
-        #else
-          let device = UIDevice.current
-        #endif
-        let previous = device.isBatteryMonitoringEnabled
-        device.isBatteryMonitoringEnabled = true
-        defer { device.isBatteryMonitoringEnabled = previous }
-        let percent = Int((device.batteryLevel * 100).rounded())
-        switch device.batteryState {
-        case .charging: self = .charging(percent)
-        case .unplugged: self = .unplugged(percent)
-        case .full: self = .full
-        case .unknown:
-          #if os(visionOS)
-            return nil
-          #else
-            self = .full  // DeviceKit compatibility on iOS and watchOS simulators.
-          #endif
-        @unknown default: return nil
-        }
+        let device = UIDevice.current
       #endif
+      let previous = device.isBatteryMonitoringEnabled
+      device.isBatteryMonitoringEnabled = true
+      defer { device.isBatteryMonitoringEnabled = previous }
+      let percent = Int((device.batteryLevel * 100).rounded())
+      switch device.batteryState {
+      case .charging: self = .charging(percent)
+      case .unplugged: self = .unplugged(percent)
+      case .full: self = .full
+      case .unknown:
+        #if os(visionOS)
+          return nil
+        #else
+          self = .full  // DeviceKit compatibility on iOS and watchOS simulators.
+        #endif
+      @unknown default: return nil
+      }
     }
+    #endif
 
     /// The user enabled Low Power mode
     public var lowPowerMode: Bool {
@@ -99,7 +76,12 @@ extension Device {
       switch self {
       case .charging(let batteryLevel):
         return "Battery level: \(batteryLevel)%, device is plugged in."
-      case .full: return "Battery level: 100 % (Full), device is plugged in."
+      case .full:
+        #if os(macOS)
+          return "Battery is charged, device is plugged in."
+        #else
+          return "Battery level: 100 % (Full), device is plugged in."
+        #endif
       case .unplugged(let batteryLevel):
         return "Battery level: \(batteryLevel)%, device is unplugged."
       }
@@ -111,21 +93,68 @@ extension Device {
   @MainActor
   public var batteryState: BatteryState? {
     guard isCurrent else { return nil }
-    return BatteryState()
+    #if os(macOS)
+      return MacBatteryReading.current?.state
+    #else
+      return BatteryState()
+    #endif
   }
 
   /// Battery level ranges from 0 (fully discharged) to 100 (100% charged).
   @MainActor
   public var batteryLevel: Int? {
-    switch batteryState {
-    case nil: return nil
-    case .charging(let value): return value
-    case .full: return 100
-    case .unplugged(let value): return value
-    }
+    #if os(macOS)
+      guard isCurrent else { return nil }
+      return MacBatteryReading.current?.level
+    #else
+      switch batteryState {
+      case nil: return nil
+      case .charging(let value): return value
+      case .full: return 100
+      case .unplugged(let value): return value
+      }
+    #endif
   }
 
 }
+
+#if os(macOS)
+struct MacBatteryReading {
+  let state: Device.BatteryState
+  let level: Int
+
+  init?(source: [String: Any]) {
+    guard source[kIOPSTypeKey] as? String == kIOPSInternalBatteryType,
+          let capacity = source[kIOPSCurrentCapacityKey] as? Int,
+          let maximum = source[kIOPSMaxCapacityKey] as? Int, maximum > 0,
+          (0...maximum).contains(capacity)
+    else { return nil }
+
+    level = Int((Double(capacity) * 100 / Double(maximum)).rounded())
+    if source[kIOPSPowerSourceStateKey] as? String == kIOPSBatteryPowerValue {
+      state = .unplugged(level)
+    } else if source[kIOPSIsChargedKey] as? Bool == true {
+      // IOKit may consider a battery charged while its measured level is 95–99%.
+      state = .full
+    } else {
+      state = .charging(level)
+    }
+  }
+
+  static var current: Self? {
+    guard let snapshot = IOPSCopyPowerSourcesInfo()?.takeRetainedValue(),
+          let sources = IOPSCopyPowerSourcesList(snapshot)?.takeRetainedValue() as? [CFTypeRef]
+    else { return nil }
+    for source in sources {
+      if let info = IOPSGetPowerSourceDescription(snapshot, source)?.takeUnretainedValue() as? [String: Any],
+         let reading = Self(source: info) {
+        return reading
+      }
+    }
+    return nil
+  }
+}
+#endif
 
 // MARK: Device.Batterystate: Comparable
 
