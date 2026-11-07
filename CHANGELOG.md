@@ -1,11 +1,11 @@
 # Changelog
 
-## Unreleased
+## 2026.2.0 — 2026-11-07
 
 - Preserve the iPhone-only membership and order of deprecated `allXSeriesDevices` when migrating to `allPhonesWithSensorHousing`.
 - Read the Mac battery through IOKit in Mac Catalyst, including the `BatteryState.pluggedInNotCharging(Int)` case. Designed for iPad/iPhone apps on Mac return `nil` for battery readings. An unavailable battery reading in an iPad app on a Vision simulator also returns `nil`.
 - On iOS and Mac Catalyst, `screenBrightness` now returns `Int?`. Unwrap the percentage before display. UIKit readings outside 0...1 return `nil`.
-
+- On iPhone and iPad, use `Device.beginOrientationUpdates()` and `Device.endOrientationUpdates()` to start and stop physical orientation notifications.
 - Add Apple Watch (watchOS 11), Apple TV (tvOS 18), native Mac (macOS 15) and Apple Vision Pro (visionOS 2) to Core and System. The shared catalog covers all six device families on each platform.
 - Report the visionOS host in Designed for iPad or iPhone apps. Handle the new `Device.unidentifiedVision(reportedIdentifier:)` case when the OS identifies a headset but masks its hardware model.
 - Add `Device.Family`, new cases in `Device`, `Device.CPU` and `Device.CameraType`, and spatial display specifications for Vision Pro. Update exhaustive switches when migrating.

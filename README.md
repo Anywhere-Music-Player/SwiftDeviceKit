@@ -44,7 +44,7 @@ In Xcode, choose **File → Add Package Dependencies…** and paste this URL.
 https://github.com/Anywhere-Music-Player/SwiftDeviceKit.git
 ```
 
-For six-platform support, select the **Branch** dependency rule and enter `main`. Add one [product](#features) to your app target. The latest tagged release, [2026.1.1](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/releases/tag/2026.1.1), supports iPhone and iPad.
+Select the **Exact Version** dependency rule and enter `2026.2.0`. Add one [product](#features) to your app target. [Release notes](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/releases/tag/2026.2.0)
 
 ## Requirements
 
