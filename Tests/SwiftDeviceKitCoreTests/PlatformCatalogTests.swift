@@ -20,6 +20,16 @@ struct PlatformCatalogTests {
     #expect(Set(DeviceCatalog.all.filter { $0.family == .vision }.flatMap(\.identifiers)) == inventory.vision)
   }
 
+  @Test func macMini2024IdentifiersMatchTheirChips() {
+    // Apple macOS 15 Sequoia Validation Report, table 2 (A3238 and A3239).
+    let base = Device.mapToDevice(identifier: "Mac16,10")
+    let pro = Device.mapToDevice(identifier: "Mac16,11")
+    #expect(base == .macMiniM4)
+    #expect(base.cpu == .m4)
+    #expect(pro == .macMiniM4Pro)
+    #expect(pro.cpu == .m4Pro)
+  }
+
   @Test func boundariesAndAppleIdentifiers() {
     let examples: [(String, Device, Device.Family)] = [
       ("Watch6,3", .appleWatchSeries6_40mm, .watch),
