@@ -159,7 +159,7 @@ if let name = device.systemName, let version = device.systemVersion {
 
 #### Display battery percentage and charging status
 
-Available on iPhone, iPad, Apple Watch, Mac and Vision Pro. A desktop Mac without an internal battery returns `nil`.
+Available on iPhone, iPad, Apple Watch, Mac and Vision Pro. An unavailable battery reading returns `nil`, including on a desktop Mac without an internal battery. iPhone, iPad and Watch simulators retain the full-battery fallback for an unknown state.
 
 ```swift
 import SwiftDeviceKitSystem

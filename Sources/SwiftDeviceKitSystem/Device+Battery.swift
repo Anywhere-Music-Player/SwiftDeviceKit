@@ -34,6 +34,12 @@ extension Device {
     case unplugged(Int)
 
     #if !os(macOS)
+    #if os(watchOS)
+    typealias ReportedState = WKInterfaceDeviceBatteryState
+    #else
+    typealias ReportedState = UIDevice.BatteryState
+    #endif
+
     @MainActor
     fileprivate init?() {
       #if os(watchOS)
@@ -44,16 +50,27 @@ extension Device {
       let previous = device.isBatteryMonitoringEnabled
       device.isBatteryMonitoringEnabled = true
       defer { device.isBatteryMonitoringEnabled = previous }
-      let percent = Int((device.batteryLevel * 100).rounded())
-      switch device.batteryState {
-      case .charging: self = .charging(percent)
-      case .unplugged: self = .unplugged(percent)
+      #if targetEnvironment(simulator)
+        let isSimulator = true
+      #else
+        let isSimulator = false
+      #endif
+      self.init(reportedState: device.batteryState, level: device.batteryLevel, isSimulator: isSimulator)
+    }
+
+    init?(reportedState: ReportedState, level: Float, isSimulator: Bool) {
+      switch reportedState {
+      case .charging, .unplugged:
+        guard (0...1).contains(level) else { return nil }
+        let percent = Int((level * 100).rounded())
+        self = reportedState == .charging ? .charging(percent) : .unplugged(percent)
       case .full: self = .full
       case .unknown:
         #if os(visionOS)
           return nil
         #else
-          self = .full  // DeviceKit compatibility on iOS and watchOS simulators.
+          guard isSimulator else { return nil }
+          self = .full
         #endif
       @unknown default: return nil
       }
