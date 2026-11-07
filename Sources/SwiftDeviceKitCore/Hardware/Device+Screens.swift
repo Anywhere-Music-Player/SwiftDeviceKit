@@ -8,7 +8,7 @@ extension Device {
       case inner
     }
 
-    /// Physical pixel dimensions in the catalog's reference orientation, not UIKit points.
+    /// Physical pixel dimensions in portrait reference orientation (width <= height), not UIKit points.
     public struct Resolution: Sendable, Hashable {
       public let width: Int
       public let height: Int
@@ -27,7 +27,7 @@ extension Device {
     /// Physical pixels per inch.
     public let ppi: Int
 
-    /// Catalog width-to-height ratio. Duo uses the reduced ratio of its published pixel dimensions.
+    /// Portrait width-to-height ratio (width <= height), independent of current UI orientation.
     public let screenRatio: AspectRatio
 
     /// Published pixel dimensions, or nil when the catalog has no verified resolution.

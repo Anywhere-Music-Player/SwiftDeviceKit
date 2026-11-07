@@ -17,10 +17,10 @@ print(duo.screens.count)        // 2
 
 The screen values are immutable, `Sendable` and `Hashable`, and can be read outside
 the main actor. `screen(_:)` returns `nil` when the requested role is absent.
-Single-screen iPhones and iPads expose one `.main` screen with their existing
-diagonal, PPI and aspect ratio. Their `resolution` is currently `nil` because the
-catalog does not contain verified pixel dimensions for those models. Unknown
-models have an empty `screens` array.
+Single-screen iPhones and iPads expose one `.main` screen. All ratios and pixel
+dimensions use portrait reference orientation (width <= height), independently
+of UI rotation. Single-screen models retain `nil` resolution until verified
+pixel dimensions are added. Unknown models have an empty `screens` array.
 
 iPhone Duo has two panels, listed in stable outer-then-inner order. Values come
 from [Apple's technical specifications](https://www.apple.com/iphone-duo/specs/),
@@ -40,5 +40,8 @@ These are static hardware specifications. They do not determine the current fold
 state, active panel, orientation, window bounds or external displays. Use the
 current view's geometry for layout. Simulator wrappers return the same catalog
 specifications as their hardware model.
+
+See [catalog corrections](CatalogCorrections.md) for the nine normalized iPad
+ratios.
 
 [Back to README](../README.md)

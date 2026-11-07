@@ -192,7 +192,7 @@ final class CatalogComparisonTests: XCTestCase {
   }
 
   func testCorrectionsDoNotHideOtherCatalogRegressions() {
-    for model in [Original.iPadPro11M5] {
+    for model in [Original.iPadAir11M3, .iPadPro11M5] {
       let original = Snapshots.read(model)
       let replacement = Replacement.mapToDevice(identifier: model == .iPadAir11M3 ? "iPad15,3" : "iPad17,1")
       var correct = ComparisonReport()

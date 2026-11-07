@@ -303,7 +303,7 @@ extension Device {
   /// Default panel's advertised diagonal in inches, or -1 if unavailable. Duo defaults to outer.
   public var diagonal: Double { screens.first?.diagonal ?? -1 }
 
-  /// Default panel's catalog ratio. Duo defaults to outer, independently of fold state.
+  /// Default panel's portrait width-to-height ratio. Duo defaults to outer, independently of fold state.
   public var screenRatio: (width: Double, height: Double) {
     if let screen = screens.first { return (screen.screenRatio.width, screen.screenRatio.height) }
     return (-1, -1)

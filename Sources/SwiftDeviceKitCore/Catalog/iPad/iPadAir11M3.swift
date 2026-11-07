@@ -13,7 +13,7 @@ extension DeviceDefinition {
     screens: [
       .init(
         role: .main, diagonal: 10.9, ppi: 264,
-        screenRatio: .init(width: 59, height: 41), resolution: nil)
+        screenRatio: .init(width: 41, height: 59), resolution: nil)
     ]
   )
 }

@@ -23,6 +23,14 @@ enum ExpectedDifferences {
   static let cameraFields: Set<String> = [
     "cameras", "hasCamera", "hasWideCamera", "hasTelephotoCamera", "hasUltraWideCamera",
   ]
+  // Only these model/field/value corrections are allowed; keep the donor unchanged.
+  static let portraitRatios: [String: (Double, Double)] = [
+    "iPad Air (11-inch) (M3)": (41, 59), "iPad Air (11-inch) (M4)": (41, 59),
+    "iPad Air (13-inch) (M2)": (512, 683), "iPad Air (13-inch) (M3)": (512, 683),
+    "iPad Air (13-inch) (M4)": (512, 683),
+    "iPad Pro (11-inch) (M4)": (417, 605), "iPad Pro (11-inch) (M5)": (417, 605),
+    "iPad Pro (13-inch) (M4)": (3, 4), "iPad Pro (13-inch) (M5)": (3, 4),
+  ]
 
   static func reason(
     field: String, original: String, replacement: String,
@@ -31,6 +39,14 @@ enum ExpectedDifferences {
     if excludedAndUnknown { return "outside-ios18-catalog" }
     if addedDuo { return "duo-absent-in-devicekit-5.9.0" }
     let name = originalReal.fields["description"] ?? ""
+    if let (width, height) = portraitRatios[name] {
+      if field == "screenRatio.width", original == String(height), replacement == String(width) {
+        return "portrait-reference-orientation"
+      }
+      if field == "screenRatio.height", original == String(width), replacement == String(height) {
+        return "portrait-reference-orientation"
+      }
+    }
     if ["iPad Pro (11-inch) (M5)", "iPad Pro (13-inch) (M5)"].contains(name),
        field == "applePencilSupport", original == "secondGeneration,firstGenerationUsbC,pro",
        replacement == "firstGenerationUsbC,pro" {
@@ -103,7 +119,7 @@ struct ComparisonReport: Codable {
       "- Matching fields establish compatibility with DeviceKit, not independent hardware truth.",
       "- Excluded models must resolve to exactly the replacement's unknown-device behavior.",
       "- Duo has no reference model in 5.9.0; its differences are reported, not independently validated here.",
-      "- M5 Pencil compatibility excludes second generation.",
+      "- Nine iPad ratios use portrait orientation; M5 Pencil compatibility excludes second generation.",
       "- Simulator cameras intentionally forward the model's metadata; 5.9.0 returns no cameras.",
       "- Unknown simulator detection intentionally returns true in the replacement.",
       "- Group membership changes are reported; common-model order is compared without filtering other differences.",

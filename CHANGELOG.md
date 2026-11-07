@@ -5,7 +5,7 @@
 - Refresh disk-capacity measurements between synchronous reads.
 - Correct 3x display-scale zoom detection and remove the unsupported legacy Plus heuristic.
 - Use structural device identity, preserving unknown identifiers even when they match display names.
-- Correct M5 iPad Pro Pencil compatibility.
+- Correct M5 iPad Pro Pencil compatibility and normalize nine iPad screen ratios to portrait.
 
 ## 2026.0.0 — 2026-10-21
 

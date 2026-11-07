@@ -48,8 +48,12 @@ struct CatalogBaselineTests {
         for variant in [device, .simulator(device)] {
           #expect(variant.realDevice == device)
           #expect(variant.diagonal == expected.diagonal)
-          #expect(variant.screenRatio.width == expected.screenRatio[0])
-          #expect(variant.screenRatio.height == expected.screenRatio[1])
+          let corrected = CatalogSupportPolicy.portraitRatios[expected.caseName]
+          if let corrected {
+            #expect(expected.screenRatio == [corrected.1, corrected.0])
+          }
+          #expect(variant.screenRatio.width == (corrected?.0 ?? expected.screenRatio[0]))
+          #expect(variant.screenRatio.height == (corrected?.1 ?? expected.screenRatio[1]))
           #expect(variant.ppi == expected.ppi)
           #expect(variant.isTouchIDCapable == expected.hasTouchID)
           #expect(variant.isFaceIDCapable == expected.hasFaceID)

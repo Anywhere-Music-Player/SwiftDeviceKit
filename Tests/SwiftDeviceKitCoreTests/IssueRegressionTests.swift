@@ -33,4 +33,30 @@ final class CatalogIssueRegressionTests: XCTestCase {
       }
     }
   }
+
+  func testCatalogUsesPortraitReferenceDimensions() {
+    let expected: [(Device, Double, Double)] = [
+      (.iPadAir11M2, 41, 59), (.iPadAir11M3, 41, 59), (.iPadAir11M4, 41, 59),
+      (.iPadAir13M2, 512, 683), (.iPadAir13M3, 512, 683), (.iPadAir13M4, 512, 683),
+      (.iPadPro11M4, 417, 605), (.iPadPro11M5, 417, 605),
+      (.iPadPro13M4, 3, 4), (.iPadPro13M5, 3, 4),
+    ]
+    for (model, width, height) in expected {
+      for value in [model, .simulator(model), .simulator(.simulator(model))] {
+        XCTAssertEqual(value.screenRatio.width, width)
+        XCTAssertEqual(value.screenRatio.height, height)
+      }
+    }
+    for model in Device.allRealDevices {
+      for screen in model.screens {
+        XCTAssertGreaterThan(screen.screenRatio.width, 0)
+        XCTAssertLessThanOrEqual(screen.screenRatio.width, screen.screenRatio.height, "\(model)")
+        if let resolution = screen.resolution {
+          XCTAssertLessThanOrEqual(resolution.width, resolution.height)
+          XCTAssertEqual(Double(resolution.width) / Double(resolution.height),
+                         screen.screenRatio.width / screen.screenRatio.height, accuracy: 1e-12)
+        }
+      }
+    }
+  }
 }
