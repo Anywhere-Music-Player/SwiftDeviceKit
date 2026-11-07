@@ -337,6 +337,12 @@
       ]
     },
     {
+      "caseName" : "iPhoneDuo",
+      "identifiers" : [
+        "iPhone19,4"
+      ]
+    },
+    {
       "caseName" : "iPad2",
       "identifiers" : [
         "iPad2,1",
@@ -667,7 +673,7 @@
       ]
     }
   ],
-  "revision" : "19528aa07e1426626ea9fb2c4a161edf43c4f9e8",
-  "sourceSHA256" : "763aeba4fc67672d49e9a918eae56f0d3e12c60712dbcc71ed25447613b16fed",
-  "version" : "5.9.0"
+  "revision" : "fab82bd988405367c915143e293479f481e93ba0",
+  "sourceSHA256" : "84da76eeb5bc4641dc8f80e3ef2186413018c5c307dc835b1bfe05ce26085877",
+  "version" : "5.10.0"
 }

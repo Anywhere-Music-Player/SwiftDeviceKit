@@ -5,7 +5,7 @@ import Testing
 struct ScreenTests {
   @Test
   func singleScreenModelsKeepTheirCatalogMetrics() throws {
-    let models = Device.allRealDevices
+    let models = Device.allPhones + Device.allPads
     for device in models where device != .iPhoneDuo {
       #expect(device.screens.count == 1)
       let screen = try #require(device.screen(.main))

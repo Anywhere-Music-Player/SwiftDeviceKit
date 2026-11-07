@@ -66,7 +66,7 @@ struct CatalogMigrationTests {
     #expect(Set(actualGroups.keys) == Set(expectedGroups.keys))
     for (name, identifiers) in expectedGroups {
       #expect(
-        actualGroups[name]?.filter { $0 != .iPadMiniA20Pro }
+        actualGroups[name]?.filter { ($0.family == .phone || $0.family == .pad) && $0 != .iPadMiniA20Pro }
           == identifiers.filter { !excluded.contains($0) }.map {
             Device.mapToDevice(identifier: $0)
           },
@@ -78,9 +78,9 @@ struct CatalogMigrationTests {
   func definitionsHaveUniqueIdentifiersAndMatchTheirRegisteredCase() {
     let definitions = DeviceCatalog.all
     let identifiers = definitions.flatMap(\.identifiers)
-    #expect(definitions.count == 67)
+    #expect(definitions.count == 173)
     #expect(Set(identifiers).count == identifiers.count)
-    #expect(identifiers.count == 107)
+    #expect(identifiers.count == 235)
     #expect(Set(definitions.map { $0.model.description }).count == definitions.count)
     for definition in definitions {
       #expect(!definition.identifiers.isEmpty)
@@ -90,7 +90,7 @@ struct CatalogMigrationTests {
       }
       let roles = definition.screens.map(\.role)
       #expect(Set(roles).count == roles.count)
-      #expect(!roles.isEmpty)
+      if [.phone, .pad, .watch].contains(definition.family) { #expect(!roles.isEmpty) }
       for screen in definition.screens {
         #expect(screen.diagonal > 0)
         #expect(screen.ppi > 0)

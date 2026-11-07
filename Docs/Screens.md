@@ -20,7 +20,7 @@ the main actor. `screen(_:)` returns `nil` when the requested role is absent.
 Single-screen iPhones and iPads expose one `.main` screen. All ratios and pixel
 dimensions use portrait reference orientation (width <= height), independently
 of UI rotation. iPad mini (A20 Pro) has a verified 1512 × 2316 resolution and
-126:193 ratio; other single-screen models retain `nil` resolution until verified
+126:193 ratio; other single-screen iPhones and iPads retain `nil` resolution until verified
 pixel dimensions are added. Unknown models have an empty `screens` array.
 
 iPhone Duo has two panels, listed in stable outer-then-inner order. Values come
@@ -44,5 +44,16 @@ specifications as their hardware model.
 
 See [catalog corrections](CatalogCorrections.md) for the nine normalized iPad
 ratios and the sources for iPad mini (A20 Pro).
+
+Apple Watch records include the physical pixel dimensions. The diagonal uses the
+pixel diagonal divided by the panel density, rounded to two decimal places.
+Mac notebooks and iMacs have a built-in panel. Mac desktops without a built-in
+panel and Apple TV return an empty array. System exposes `currentDisplayPixels`
+for the main display on Mac, TV, Watch, iPhone and iPad.
+
+Vision Pro exposes its combined pixel count, pixel pitch and supported refresh
+rates through `spatialDisplay`. Apple publishes those values for the stereoscopic
+display system. [M2 specifications](https://support.apple.com/en-us/117810) ·
+[M5 specifications](https://support.apple.com/en-us/125436)
 
 [Back to README](../README.md)

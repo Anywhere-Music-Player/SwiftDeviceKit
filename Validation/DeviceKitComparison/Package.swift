@@ -4,9 +4,9 @@ import PackageDescription
 // A standalone test consumer. These dependencies are not part of SwiftDeviceKit.
 let package = Package(
   name: "DeviceKitComparison",
-  platforms: [.iOS(.v18)],
+  platforms: [.iOS(.v18), .watchOS(.v11), .tvOS(.v18)],
   dependencies: [
-    .package(url: "https://github.com/devicekit/DeviceKit.git", exact: "5.9.0"),
+    .package(url: "https://github.com/devicekit/DeviceKit.git", exact: "5.10.0"),
     .package(path: "../.."),
   ],
   targets: [

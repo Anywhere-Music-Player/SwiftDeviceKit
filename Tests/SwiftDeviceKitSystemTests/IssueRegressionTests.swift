@@ -1,3 +1,4 @@
+#if os(iOS)
 import Foundation
 import ObjectiveC
 import Security
@@ -125,3 +126,4 @@ final class SystemIssueRegressionTests: XCTestCase {
     XCTAssertLessThan(abs(try XCTUnwrap(volumes[.volumeAvailableCapacityKey]) - Int64(fresh)), 16 * 1024 * 1024)
   }
 }
+#endif

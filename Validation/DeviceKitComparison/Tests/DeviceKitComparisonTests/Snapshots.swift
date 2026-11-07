@@ -9,6 +9,7 @@ struct Snapshot: Equatable {
   var fields: [String: String]
 }
 
+#if os(iOS)
 private func text<T>(_ value: T?) -> String {
   value.map { String(describing: $0) } ?? "nil"
 }
@@ -143,40 +144,43 @@ enum Snapshots {
   }
   static var replacementGroups: [String: [String]] {
     [
-      "allPhones": SwiftDeviceKitCore.Device.allPhones.map(\.description),
-      "allPads": SwiftDeviceKitCore.Device.allPads.map(\.description),
-      "allPlusSizedDevices": SwiftDeviceKitCore.Device.allPlusSizedDevices.map(\.description),
-      "allProDevices": SwiftDeviceKitCore.Device.allProDevices.map(\.description),
-      "allMiniDevices": SwiftDeviceKitCore.Device.allMiniDevices.map(\.description),
-      "allXSeriesDevices": SwiftDeviceKitCore.Device.allXSeriesDevices.map(\.description),
-      "allTouchIDCapableDevices": SwiftDeviceKitCore.Device.allTouchIDCapableDevices.map(\.description),
-      "allFaceIDCapableDevices": SwiftDeviceKitCore.Device.allFaceIDCapableDevices.map(\.description),
-      "allBiometricAuthenticationCapableDevices": SwiftDeviceKitCore.Device.allBiometricAuthenticationCapableDevices.map(\.description),
-      "allDevicesWithSensorHousing": SwiftDeviceKitCore.Device.allDevicesWithSensorHousing.map(\.description),
-      "allDevicesWithRoundedDisplayCorners": SwiftDeviceKitCore.Device.allDevicesWithRoundedDisplayCorners.map(\.description),
-      "allDevicesWithDynamicIsland": SwiftDeviceKitCore.Device.allDevicesWithDynamicIsland.map(\.description),
-      "allDevicesWith3dTouchSupport": SwiftDeviceKitCore.Device.allDevicesWith3dTouchSupport.map(\.description),
-      "allDevicesWithWirelessChargingSupport": SwiftDeviceKitCore.Device.allDevicesWithWirelessChargingSupport.map(\.description),
-      "allDevicesWith5gSupport": SwiftDeviceKitCore.Device.allDevicesWith5gSupport.map(\.description),
-      "allDevicesWithEsimSupport": SwiftDeviceKitCore.Device.allDevicesWithEsimSupport.map(\.description),
-      "allDevicesWithDualEsimSupport": SwiftDeviceKitCore.Device.allDevicesWithDualEsimSupport.map(\.description),
-      "allDevicesWithALidarSensor": SwiftDeviceKitCore.Device.allDevicesWithALidarSensor.map(\.description),
-      "allDevicesWithUSBCConnectivity": SwiftDeviceKitCore.Device.allDevicesWithUSBCConnectivity.map(\.description),
-      "allApplePencilCapableDevices": SwiftDeviceKitCore.Device.allApplePencilCapableDevices.map(\.description),
-      "allDevicesWithCamera": SwiftDeviceKitCore.Device.allDevicesWithCamera.map(\.description),
-      "allDevicesWithNormalCamera": SwiftDeviceKitCore.Device.allDevicesWithNormalCamera.map(\.description),
-      "allDevicesWithWideCamera": SwiftDeviceKitCore.Device.allDevicesWithWideCamera.map(\.description),
-      "allDevicesWithTelephotoCamera": SwiftDeviceKitCore.Device.allDevicesWithTelephotoCamera.map(\.description),
-      "allDevicesWithUltraWideCamera": SwiftDeviceKitCore.Device.allDevicesWithUltraWideCamera.map(\.description),
-      "allSimulatorPhones": SwiftDeviceKitCore.Device.allSimulatorPhones.map(\.description),
-      "allSimulatorPads": SwiftDeviceKitCore.Device.allSimulatorPads.map(\.description),
-      "allSimulatorMiniDevices": SwiftDeviceKitCore.Device.allSimulatorMiniDevices.map(\.description),
-      "allSimulatorXSeriesDevices": SwiftDeviceKitCore.Device.allSimulatorXSeriesDevices.map(\.description),
-      "allSimulatorPlusSizedDevices": SwiftDeviceKitCore.Device.allSimulatorPlusSizedDevices.map(\.description),
-      "allSimulatorProDevices": SwiftDeviceKitCore.Device.allSimulatorProDevices.map(\.description),
-      "allSimulatorDevicesWithSensorHousing": SwiftDeviceKitCore.Device.allSimulatorDevicesWithSensorHousing.map(\.description),
-      "allRealDevices": SwiftDeviceKitCore.Device.allRealDevices.map(\.description),
-      "allSimulators": SwiftDeviceKitCore.Device.allSimulators.map(\.description),
-    ]
+      "allPhones": SwiftDeviceKitCore.Device.allPhones,
+      "allPads": SwiftDeviceKitCore.Device.allPads,
+      "allPlusSizedDevices": SwiftDeviceKitCore.Device.allPlusSizedDevices,
+      "allProDevices": SwiftDeviceKitCore.Device.allProDevices,
+      "allMiniDevices": SwiftDeviceKitCore.Device.allMiniDevices,
+      "allXSeriesDevices": SwiftDeviceKitCore.Device.allXSeriesDevices,
+      "allTouchIDCapableDevices": SwiftDeviceKitCore.Device.allTouchIDCapableDevices,
+      "allFaceIDCapableDevices": SwiftDeviceKitCore.Device.allFaceIDCapableDevices,
+      "allBiometricAuthenticationCapableDevices": SwiftDeviceKitCore.Device.allBiometricAuthenticationCapableDevices,
+      "allDevicesWithSensorHousing": SwiftDeviceKitCore.Device.allDevicesWithSensorHousing,
+      "allDevicesWithRoundedDisplayCorners": SwiftDeviceKitCore.Device.allDevicesWithRoundedDisplayCorners,
+      "allDevicesWithDynamicIsland": SwiftDeviceKitCore.Device.allDevicesWithDynamicIsland,
+      "allDevicesWith3dTouchSupport": SwiftDeviceKitCore.Device.allDevicesWith3dTouchSupport,
+      "allDevicesWithWirelessChargingSupport": SwiftDeviceKitCore.Device.allDevicesWithWirelessChargingSupport,
+      "allDevicesWith5gSupport": SwiftDeviceKitCore.Device.allDevicesWith5gSupport,
+      "allDevicesWithEsimSupport": SwiftDeviceKitCore.Device.allDevicesWithEsimSupport,
+      "allDevicesWithDualEsimSupport": SwiftDeviceKitCore.Device.allDevicesWithDualEsimSupport,
+      "allDevicesWithALidarSensor": SwiftDeviceKitCore.Device.allDevicesWithALidarSensor,
+      "allDevicesWithUSBCConnectivity": SwiftDeviceKitCore.Device.allDevicesWithUSBCConnectivity,
+      "allApplePencilCapableDevices": SwiftDeviceKitCore.Device.allApplePencilCapableDevices,
+      "allDevicesWithCamera": SwiftDeviceKitCore.Device.allDevicesWithCamera,
+      "allDevicesWithNormalCamera": SwiftDeviceKitCore.Device.allDevicesWithNormalCamera,
+      "allDevicesWithWideCamera": SwiftDeviceKitCore.Device.allDevicesWithWideCamera,
+      "allDevicesWithTelephotoCamera": SwiftDeviceKitCore.Device.allDevicesWithTelephotoCamera,
+      "allDevicesWithUltraWideCamera": SwiftDeviceKitCore.Device.allDevicesWithUltraWideCamera,
+      "allSimulatorPhones": SwiftDeviceKitCore.Device.allSimulatorPhones,
+      "allSimulatorPads": SwiftDeviceKitCore.Device.allSimulatorPads,
+      "allSimulatorMiniDevices": SwiftDeviceKitCore.Device.allSimulatorMiniDevices,
+      "allSimulatorXSeriesDevices": SwiftDeviceKitCore.Device.allSimulatorXSeriesDevices,
+      "allSimulatorPlusSizedDevices": SwiftDeviceKitCore.Device.allSimulatorPlusSizedDevices,
+      "allSimulatorProDevices": SwiftDeviceKitCore.Device.allSimulatorProDevices,
+      "allSimulatorDevicesWithSensorHousing": SwiftDeviceKitCore.Device.allSimulatorDevicesWithSensorHousing,
+      "allRealDevices": SwiftDeviceKitCore.Device.allRealDevices,
+      "allSimulators": SwiftDeviceKitCore.Device.allSimulators,
+    ].mapValues { devices in
+      devices.filter { $0.family == .phone || $0.family == .pad }.map(\.description)
+    }
   }
 }
+#endif

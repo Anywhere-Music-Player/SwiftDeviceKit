@@ -3,16 +3,14 @@
 
 /// An immutable model record. Model-specific files extend this type with static definitions.
 struct DeviceDefinition: Sendable {
-  enum Family: Sendable { case phone, pad }
-
   enum Capability: Sendable, Hashable {
     case plus, pro, mini, xSeries, touchID, faceID, sensorHousing, roundedDisplayCorners,
       dynamicIsland, force3DTouch, wirelessCharging, fiveG, eSIM, dualESIM, lidar, usbC, foldable,
-      actionButton, variableAperture
+      actionButton, variableAperture, opticID
   }
 
   let model: Device
-  let family: Family
+  let family: Device.Family
   let name: String
   let safeName: String
   let identifiers: [String]
@@ -23,11 +21,13 @@ struct DeviceDefinition: Sendable {
   /// Default catalog panel first. This order does not reflect the current fold state.
   let screens: [Device.Screen]
 
+  let spatialDisplay: Device.SpatialDisplay?
+
   init(
-    model: Device, family: Family, name: String, safeName: String? = nil,
-    identifiers: [String], cpu: Device.CPU, capabilities: Set<Capability>,
-    cameras: [Device.CameraType], applePencilSupport: Device.ApplePencilSupport,
-    screens: [Device.Screen]
+    model: Device, family: Device.Family, name: String, safeName: String? = nil,
+    identifiers: [String], cpu: Device.CPU, capabilities: Set<Capability> = [],
+    cameras: [Device.CameraType] = [], applePencilSupport: Device.ApplePencilSupport = [],
+    screens: [Device.Screen] = [], spatialDisplay: Device.SpatialDisplay? = nil
   ) {
     self.model = model
     self.family = family
@@ -39,5 +39,6 @@ struct DeviceDefinition: Sendable {
     self.cameras = cameras
     self.applePencilSupport = applePencilSupport
     self.screens = screens
+    self.spatialDisplay = spatialDisplay
   }
 }

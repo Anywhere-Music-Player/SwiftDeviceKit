@@ -3,7 +3,7 @@ import PackageDescription
 
 let package = Package(
   name: "SwiftDeviceKit",
-  platforms: [.iOS(.v18)],
+  platforms: [.iOS(.v18), .watchOS(.v11), .tvOS(.v18), .macOS(.v15), .visionOS(.v2)],
   products: [
     .library(name: "SwiftDeviceKitCore", targets: ["SwiftDeviceKitCore"]),
     .library(name: "SwiftDeviceKitSystem", targets: ["SwiftDeviceKitSystem"]),

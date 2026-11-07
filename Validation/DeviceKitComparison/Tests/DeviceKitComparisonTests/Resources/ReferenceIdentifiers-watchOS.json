@@ -1,0 +1,249 @@
+{
+  "models" : [
+    {
+      "caseName" : "appleWatchSeries0_38mm",
+      "identifiers" : [
+        "Watch1,1"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSeries0_42mm",
+      "identifiers" : [
+        "Watch1,2"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSeries1_38mm",
+      "identifiers" : [
+        "Watch2,6"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSeries1_42mm",
+      "identifiers" : [
+        "Watch2,7"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSeries2_38mm",
+      "identifiers" : [
+        "Watch2,3"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSeries2_42mm",
+      "identifiers" : [
+        "Watch2,4"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSeries3_38mm",
+      "identifiers" : [
+        "Watch3,1",
+        "Watch3,3"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSeries3_42mm",
+      "identifiers" : [
+        "Watch3,2",
+        "Watch3,4"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSeries4_40mm",
+      "identifiers" : [
+        "Watch4,1",
+        "Watch4,3"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSeries4_44mm",
+      "identifiers" : [
+        "Watch4,2",
+        "Watch4,4"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSeries5_40mm",
+      "identifiers" : [
+        "Watch5,1",
+        "Watch5,3"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSeries5_44mm",
+      "identifiers" : [
+        "Watch5,2",
+        "Watch5,4"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSeries6_40mm",
+      "identifiers" : [
+        "Watch6,1",
+        "Watch6,3"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSeries6_44mm",
+      "identifiers" : [
+        "Watch6,2",
+        "Watch6,4"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSE_40mm",
+      "identifiers" : [
+        "Watch5,9",
+        "Watch5,11"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSE_44mm",
+      "identifiers" : [
+        "Watch5,10",
+        "Watch5,12"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSeries7_41mm",
+      "identifiers" : [
+        "Watch6,6",
+        "Watch6,8"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSeries7_45mm",
+      "identifiers" : [
+        "Watch6,7",
+        "Watch6,9"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSeries8_41mm",
+      "identifiers" : [
+        "Watch6,14",
+        "Watch6,16"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSeries8_45mm",
+      "identifiers" : [
+        "Watch6,15",
+        "Watch6,17"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSE2_40mm",
+      "identifiers" : [
+        "Watch6,10",
+        "Watch6,12"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSE2_44mm",
+      "identifiers" : [
+        "Watch6,11",
+        "Watch6,13"
+      ]
+    },
+    {
+      "caseName" : "appleWatchUltra",
+      "identifiers" : [
+        "Watch6,18"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSeries9_41mm",
+      "identifiers" : [
+        "Watch7,1",
+        "Watch7,3"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSeries9_45mm",
+      "identifiers" : [
+        "Watch7,2",
+        "Watch7,4"
+      ]
+    },
+    {
+      "caseName" : "appleWatchUltra2",
+      "identifiers" : [
+        "Watch7,5"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSE3_40mm",
+      "identifiers" : [
+        "Watch7,13",
+        "Watch7,14"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSE3_44mm",
+      "identifiers" : [
+        "Watch7,15",
+        "Watch7,16"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSeries10_42mm",
+      "identifiers" : [
+        "Watch7,8",
+        "Watch7,10"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSeries10_46mm",
+      "identifiers" : [
+        "Watch7,9",
+        "Watch7,11"
+      ]
+    },
+    {
+      "caseName" : "appleWatchUltra3",
+      "identifiers" : [
+        "Watch7,12"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSeries11_42mm",
+      "identifiers" : [
+        "Watch7,17",
+        "Watch7,19"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSeries11_46mm",
+      "identifiers" : [
+        "Watch7,18",
+        "Watch7,20"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSeries12_42mm",
+      "identifiers" : [
+        "Watch8,2",
+        "Watch8,4"
+      ]
+    },
+    {
+      "caseName" : "appleWatchSeries12_46mm",
+      "identifiers" : [
+        "Watch8,3",
+        "Watch8,5"
+      ]
+    },
+    {
+      "caseName" : "appleWatchUltra4",
+      "identifiers" : [
+        "Watch8,1"
+      ]
+    }
+  ],
+  "revision" : "fab82bd988405367c915143e293479f481e93ba0",
+  "sourceSHA256" : "84da76eeb5bc4641dc8f80e3ef2186413018c5c307dc835b1bfe05ce26085877",
+  "version" : "5.10.0"
+}

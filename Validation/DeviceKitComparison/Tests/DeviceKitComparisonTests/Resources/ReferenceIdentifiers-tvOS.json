@@ -1,0 +1,31 @@
+{
+  "models" : [
+    {
+      "caseName" : "appleTVHD",
+      "identifiers" : [
+        "AppleTV5,3"
+      ]
+    },
+    {
+      "caseName" : "appleTV4K",
+      "identifiers" : [
+        "AppleTV6,2"
+      ]
+    },
+    {
+      "caseName" : "appleTV4K2",
+      "identifiers" : [
+        "AppleTV11,1"
+      ]
+    },
+    {
+      "caseName" : "appleTV4K3",
+      "identifiers" : [
+        "AppleTV14,1"
+      ]
+    }
+  ],
+  "revision" : "fab82bd988405367c915143e293479f481e93ba0",
+  "sourceSHA256" : "84da76eeb5bc4641dc8f80e3ef2186413018c5c307dc835b1bfe05ce26085877",
+  "version" : "5.10.0"
+}

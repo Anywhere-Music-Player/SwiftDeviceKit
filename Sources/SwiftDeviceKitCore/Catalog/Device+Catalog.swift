@@ -2,14 +2,38 @@
 // SPDX-License-Identifier: MIT
 
 extension Device {
+  /// Product family from the hardware catalog. An unrecognized identifier has no known family.
+  public enum Family: Sendable { case phone, pad, watch, tv, mac, vision }
+  public var family: Family? { definition?.family }
+
+  public static var allWatches: [Device] { DeviceCatalog.models(in: .watch) }
+  public static var allTVs: [Device] { DeviceCatalog.models(in: .tv) }
+  public static var allMacs: [Device] { DeviceCatalog.models(in: .mac) }
+  public static var allVisions: [Device] { DeviceCatalog.models(in: .vision) }
+
+  public static var allSimulatorWatches: [Device] { allWatches.map(Device.simulator) }
+  public static var allSimulatorTVs: [Device] { allTVs.map(Device.simulator) }
+  public static var allSimulatorVisions: [Device] { allVisions.map(Device.simulator) }
+
+  /// Apple removed Force Touch before the oldest watch supported by watchOS 11.
+  public static var allWatchesWithForceTouchSupport: [Device] { [] }
+  public var hasForceTouchSupport: Bool { false }
+
+  public var isWatch: Bool { family == .watch }
+  public var isTV: Bool { family == .tv }
+  public var isMac: Bool { family == .mac }
+  public var isVision: Bool { family == .vision }
+
+  public var isOpticIDCapable: Bool { definition?.capabilities.contains(.opticID) == true }
+
   /// All iPhones
   public static var allPhones: [Device] {
-    DeviceCatalog.all.filter { $0.family == .phone }.map(\.model)
+    DeviceCatalog.models(in: .phone)
   }
 
   /// All iPads
   public static var allPads: [Device] {
-    DeviceCatalog.all.filter { $0.family == .pad }.map(\.model)
+    DeviceCatalog.models(in: .pad)
   }
 
   /// All Plus and Max-Sized Devices
@@ -64,9 +88,9 @@ extension Device {
   /// All devices that support 5G.
   public static var allDevicesWith5gSupport: [Device] { DeviceCatalog.models(with: .fiveG) }
 
-  /// All iPhone and iPad models that support at least one active eSIM, including dual eSIM models.
+  /// All models that support at least one active eSIM, including dual eSIM models.
   ///
-  /// Support varies by country, region, and carrier. For iPad, only Wi-Fi + Cellular variants
+  /// Support varies by country, region, and carrier. For iPad and Apple Watch, only cellular variants
   /// support eSIM. Device cases do not distinguish these variants, so membership describes
   /// model capabilities and does not guarantee eSIM availability on a particular device.
   /// See https://support.apple.com/en-us/109317 and https://support.apple.com/en-us/119592.
@@ -85,10 +109,10 @@ extension Device {
   /// All devices that have a USB-C connectivity.
   public static var allDevicesWithUSBCConnectivity: [Device] { DeviceCatalog.models(with: .usbC) }
 
-  /// All Devices with Touch ID or Face ID
+  /// All devices with built-in biometric authentication
   public static var allBiometricAuthenticationCapableDevices: [Device] {
     DeviceCatalog.all.filter {
-      $0.capabilities.contains(.touchID) || $0.capabilities.contains(.faceID)
+      $0.capabilities.contains(.touchID) || $0.capabilities.contains(.faceID) || $0.capabilities.contains(.opticID)
     }.map(\.model)
   }
 
@@ -155,12 +179,12 @@ extension Device {
 
   /// All real devices (i.e. all devices except for all simulators)
   public static var allRealDevices: [Device] {
-    return allPhones + allPads
+    DeviceCatalog.all.map(\.model)
   }
 
   /// All simulators
   public static var allSimulators: [Device] {
-    return allRealDevices.map(Device.simulator)
+    allRealDevices.filter { $0.family != .mac }.map(Device.simulator)
   }
 
   /// All devices that feature a normal camera
@@ -200,7 +224,7 @@ extension Device {
 
   /// Returns whether or not the device has any biometric sensor (i.e. Touch ID or Face ID)
   public var hasBiometricSensor: Bool {
-    return isTouchIDCapable || isFaceIDCapable
+    return isTouchIDCapable || isFaceIDCapable || isOpticIDCapable
   }
 
   /// Returns whether or not the device has a sensor housing
@@ -255,7 +279,7 @@ extension Device {
     return definition?.capabilities.contains(.lidar) ?? false
   }
 
-  /// Returns whether or not the device has a USB-C power supply.
+  /// Whether the hardware includes USB-C. Apple TV HD uses it for service and Vision Pro for battery charging.
   public var hasUSBCConnectivity: Bool {
     return definition?.capabilities.contains(.usbC) ?? false
   }
@@ -299,7 +323,7 @@ extension Device {
   /// Whether the catalog model has a foldable display, including simulator wrappers.
   public var isFoldable: Bool { definition?.capabilities.contains(.foldable) ?? false }
 
-  /// Default panel's advertised diagonal in inches, or -1 if unavailable. Duo defaults to outer.
+  /// Default panel's diagonal in inches, or -1 if unavailable. Duo defaults to outer.
   public var diagonal: Double { screens.first?.diagonal ?? -1 }
 
   /// Default panel's portrait width-to-height ratio. Duo defaults to outer, independently of fold state.

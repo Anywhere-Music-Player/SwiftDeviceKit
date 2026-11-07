@@ -12,14 +12,15 @@ Sources/SwiftDeviceKitCore/
     Device+Catalog.swift               Queries and capability groups
     iPhone/iPhone18Pro.swift            One model's IDs and specifications
     iPhone/iPhoneDuo.swift              Duo, including both display records
-    iPad/                              One file per iPad model
+    iPad/, Watch/, TV/, Mac/, Vision/   Model records for the other families
   Hardware/                            Screen, CPU, camera and Pencil value types
   Device+Current.swift                 Identity, simulator and preview detection
 Sources/SwiftDeviceKitSystem/
   Device.swift                         Public alias of Core's Device
-  Device+System.swift                   UIKit-backed device properties
+  Device+System.swift                   Platform-specific device and OS names
   Device+Battery.swift                 Battery state
   Device+ThermalState.swift             Thermal state
+  Device+Display.swift                 Current main display pixels where exposed
   Device+Storage.swift                  Disk capacity
   Device+ScreenState.swift              Existing orientation, brightness and zoom APIs
   PrivacyInfo.xcprivacy                 Disk-space API declarations

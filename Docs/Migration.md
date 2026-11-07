@@ -10,26 +10,26 @@ Select the product that matches your usage:
 For catalog-only usage, replace `import DeviceKit` with `import SwiftDeviceKitCore`. For system-state APIs,
 select the System product and use `import SwiftDeviceKitSystem`. System exposes
 `Device` as a public type alias of the Core type: it is the same value, and one
-System import gives access to both catalog and system APIs. For supported models, the
-`Device` cases and model names retain their exact spelling. Cases for hardware
-that cannot run iOS/iPadOS 18 are removed, along with `isPod`, `allPods`,
-`allSimulatorPods` and CPU cases used only by removed models. Update references
-to those APIs when migrating; `allRealDevices` now contains only iPhones and iPads.
+System import gives access to both catalog and system APIs. The
+`Device` cases for supported iPhones, iPads, watches and TVs retain their DeviceKit
+spellings. The catalog covers models that can run the minimum OS or a newer
+one. The old iPod cases, `isPod`, `allPods` and `allSimulatorPods` are outside
+this scope. `allRealDevices` includes all six families on every platform.
+Review exhaustive switches over `Device`, `Device.CPU` and `Device.CameraType`
+for the added cases. To keep a group restricted to the original platform,
+filter by `family` or use the corresponding family list.
 
-`Device` and its associated value types are `Sendable`. Catalog lookup, model
-names, `Device.current` and `isCanvas` are in Core and can be used outside the
-main actor. UIKit-backed properties live in System and require `@MainActor`:
-`isPhone`, `isPad`, device/OS names, battery, orientation, brightness, zoom and
-Guided Access. `isPhone` and `isPad` retain
-their UIKit fallback for a current model that is not yet in the catalog. In Core,
-use `Device.allPhones.contains(device.realDevice)` or `Device.allPads` for known
-catalog-family membership without UIKit.
+`Device` and its hardware types are `Sendable`. Core exposes `family`, model
+lookup, `Device.current`, capability groups, display metadata and `isCanvas`
+outside the main actor. System adds platform services and retains main-actor
+isolation around UIKit and WatchKit. Its `isPhone` and `isPad` use hardware
+identity for known models and the current iOS idiom for an unknown iOS device.
 
-In a “Designed for iPhone/iPad” app on Apple silicon, `Device.current` is
-`.unknown` with the Mac hardware identifier (or `"Mac"` if unavailable).
-Both family flags are false. System reports `"macOS"`, the host OS version
-when available, and `"Mac"` as the model. Explicit identifier lookups still
-use the iOS catalog, including `"iPad8,6"` for the third-generation 12.9-inch iPad Pro.
+In a Designed for iPhone/iPad app on Apple silicon, `Device.current` resolves the
+Mac hardware identifier just as a native macOS process does. For an unlisted
+Mac the result is `.unknown(identifier)`. System reports macOS, its version when
+available, and Mac as the model. An explicit lookup of `iPad8,6` still resolves
+the third-generation 12.9-inch iPad Pro.
 
 ```swift
 import SwiftDeviceKitSystem
@@ -49,8 +49,9 @@ compatibility shims or claim complete source compatibility with DeviceKit.
 
 ## Supported models
 
-The catalog includes iPhone and iPad models supporting iOS/iPadOS 18 or later.
-Its oldest families are iPhone XS/XS Max/XR, iPhone SE (2nd generation),
+The [platform matrix](PlatformSupport.md) lists the OS cutoffs, family counts and
+System API availability. For the iPhone and iPad catalog, the oldest families are
+iPhone XS/XS Max/XR, iPhone SE (2nd generation),
 iPad (7th generation), iPad mini (5th generation), iPad Air (3rd generation),
 iPad Pro 11-inch (1st generation) and iPad Pro 12.9-inch (3rd generation).
 

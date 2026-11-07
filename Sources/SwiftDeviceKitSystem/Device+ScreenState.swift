@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: MIT
 
 public import SwiftDeviceKitCore
+#if os(iOS)
 import UIKit
 
 extension Device {
@@ -48,3 +49,9 @@ extension Device {
     return Int(UIScreen.main.brightness * 100)
   }
 }
+#elseif os(watchOS) || os(tvOS)
+extension Device {
+  /// Historical DeviceKit fallback on Watch and TV. The OS exposes no brightness reading.
+  public var screenBrightness: Int { 100 }
+}
+#endif

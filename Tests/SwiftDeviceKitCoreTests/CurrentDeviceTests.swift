@@ -19,7 +19,7 @@ struct CurrentDeviceTests {
           == .simulator(.unknown("iPhone999,42")))
       #expect(
         Device.resolve(identifier: architecture, simulatorModelIdentifier: nil)
-          == .simulator(.unknown("iOS")))
+          == .unknown(architecture))
       // Malformed environment values must not recurse indefinitely.
       #expect(
         Device.resolve(identifier: architecture, simulatorModelIdentifier: architecture)

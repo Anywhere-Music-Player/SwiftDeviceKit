@@ -1,4 +1,5 @@
 import Foundation
+import XCTest
 
 struct Difference: Codable {
   let identifier: String
@@ -34,12 +35,11 @@ enum ExpectedDifferences {
 
   static func reason(
     field: String, original: String, replacement: String,
-    simulator: Bool, originalReal: Snapshot, excludedAndUnknown: Bool, addedDuo: Bool,
+    simulator: Bool, originalReal: Snapshot, excludedAndUnknown: Bool,
     addedMini: Bool
   ) -> String? {
     if excludedAndUnknown { return "outside-ios18-catalog" }
-    if addedDuo { return "duo-absent-in-devicekit-5.9.0" }
-    if addedMini { return "mini-a20-pro-absent-in-devicekit-5.9.0" }
+    if addedMini { return "mini-a20-pro-absent-in-devicekit-5.10.0" }
     let name = originalReal.fields["description"] ?? ""
     if let (width, height) = portraitRatios[name] {
       if field == "screenRatio.width", original == String(height), replacement == String(width) {
@@ -60,17 +60,13 @@ enum ExpectedDifferences {
        replacement == originalReal.fields[field] {
       return "simulator-camera-metadata"
     }
-    if simulator, field == "isSimulator", original == "false", replacement == "true",
-       originalReal.fields["kind"] == "unknown" {
-      return "unknown-simulator-detection"
-    }
     return nil
   }
 }
 
 struct ComparisonReport: Codable {
-  var upstreamVersion = "5.9.0"
-  var upstreamRevision = "19528aa07e1426626ea9fb2c4a161edf43c4f9e8"
+  var upstreamVersion = "5.10.0"
+  var upstreamRevision = "fab82bd988405367c915143e293479f481e93ba0"
   var upstreamSourceSHA256 = ""
   var simulatorModel = ""
   var osVersion = ""
@@ -85,7 +81,7 @@ struct ComparisonReport: Codable {
 
   mutating func compare(
     identifier: String, variant: String, original: Snapshot, replacement: Snapshot,
-    originalReal: Snapshot, excludedAndUnknown: Bool = false, addedDuo: Bool = false,
+    originalReal: Snapshot, excludedAndUnknown: Bool = false,
     addedMini: Bool = false
   ) {
     for field in Set(original.fields.keys).union(replacement.fields.keys).sorted() {
@@ -97,7 +93,7 @@ struct ComparisonReport: Codable {
         identifier: identifier, variant: variant, field: field, original: old, replacement: new,
         reason: ExpectedDifferences.reason(
           field: field, original: old, replacement: new, simulator: variant != "hardware",
-          originalReal: originalReal, excludedAndUnknown: excludedAndUnknown, addedDuo: addedDuo,
+          originalReal: originalReal, excludedAndUnknown: excludedAndUnknown,
           addedMini: addedMini)))
     }
   }
@@ -105,9 +101,9 @@ struct ComparisonReport: Codable {
   var markdown: String {
     let reasons = Dictionary(grouping: differences, by: { $0.reason ?? "UNEXPECTED" })
     var lines = [
-      "# DeviceKit 5.9.0 versus local SwiftDeviceKit",
+      "# DeviceKit 5.10.0 versus local SwiftDeviceKit",
       "",
-      "Both original binaries execute in the same iOS Simulator test process.",
+      "DeviceKit and SwiftDeviceKit execute in the same Simulator test process.",
       "Reference: \(upstreamRevision). Source SHA-256: \(upstreamSourceSHA256).",
       "Host model: \(simulatorModel). OS: \(osVersion).",
       "",
@@ -119,17 +115,8 @@ struct ComparisonReport: Codable {
     lines += ["", "| Difference category | Field differences |", "| --- | ---: |"]
     for key in reasons.keys.sorted() { lines.append("| \(key) | \(reasons[key]!.count) |") }
     lines += [
-      "", "## Interpretation", "",
-      "- Matching fields establish compatibility with DeviceKit, not independent hardware truth.",
-      "- Excluded models must resolve to exactly the replacement's unknown-device behavior.",
-      "- Duo has no reference model in 5.9.0; its differences are reported, not independently validated here.",
-      "- Mini A20 Pro also has no reference model; independent specifications are tested in the parent package.",
-      "- Nine iPad ratios use portrait orientation; M5 Pencil compatibility excludes second generation.",
-      "- Simulator cameras intentionally forward the model's metadata; 5.9.0 returns no cameras.",
-      "- Unknown simulator detection intentionally returns true in the replacement.",
-      "- Group membership changes are reported; common-model order is compared without filtering other differences.",
-      "- New-only APIs (screens, isFoldable), battery, storage, thermal state and physical hardware are outside this differential test.",
-      "- Minimum deployment target is iOS 18; this report covers only the runtime named above.",
+      "", "## Scope", "",
+      "The report covers the named simulator and catalog. Physical hardware and live sensor accuracy require separate tests.",
       "",
       "## Unexpected differences", "",
     ]
@@ -152,5 +139,29 @@ struct ComparisonReport: Codable {
     }
     lines += ["", "## Compared fields", "", comparedFields.joined(separator: ", "), ""]
     return lines.joined(separator: "\n")
+  }
+}
+
+struct Corpus: Decodable {
+  struct Model: Decodable { let caseName: String; let identifiers: [String] }
+  let version: String
+  let revision: String
+  let sourceSHA256: String
+  let models: [Model]
+}
+
+extension XCTestCase {
+  @MainActor func attach(_ report: ComparisonReport) throws {
+    let encoder = JSONEncoder()
+    encoder.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
+    for (name, data, uti) in [
+      ("catalog-comparison.json", try encoder.encode(report), "public.json"),
+      ("catalog-comparison.md", Data(report.markdown.utf8), "net.daringfireball.markdown"),
+    ] {
+      let attachment = XCTAttachment(data: data, uniformTypeIdentifier: uti)
+      attachment.name = name
+      attachment.lifetime = .keepAlways
+      add(attachment)
+    }
   }
 }

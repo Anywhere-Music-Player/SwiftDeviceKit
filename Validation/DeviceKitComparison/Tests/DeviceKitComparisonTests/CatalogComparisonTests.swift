@@ -1,3 +1,4 @@
+#if os(iOS)
 import Foundation
 import XCTest
 @preconcurrency import DeviceKit
@@ -9,42 +10,34 @@ final class CatalogComparisonTests: XCTestCase {
   private typealias Original = DeviceKit.Device
   private typealias Replacement = SwiftDeviceKitCore.Device
 
-  private struct Corpus: Decodable {
-    struct Model: Decodable { let caseName: String; let identifiers: [String] }
-    let version: String
-    let revision: String
-    let sourceSHA256: String
-    let models: [Model]
-  }
-
   func testEntireCatalogAgainstOriginalDeviceKit() throws {
     let url = try XCTUnwrap(Bundle.module.url(forResource: "ReferenceIdentifiers", withExtension: "json"))
     let corpus = try JSONDecoder().decode(Corpus.self, from: Data(contentsOf: url))
-    XCTAssertEqual(corpus.version, "5.9.0")
-    XCTAssertEqual(corpus.revision, "19528aa07e1426626ea9fb2c4a161edf43c4f9e8")
+    XCTAssertEqual(corpus.version, "5.10.0")
+    XCTAssertEqual(corpus.revision, "fab82bd988405367c915143e293479f481e93ba0")
 
     let originalIDs = corpus.models.flatMap(\.identifiers)
-    let replacementIDs = DeviceCatalog.all.flatMap(\.identifiers)
+    let replacementIDs = DeviceCatalog.all.filter { $0.family == .phone || $0.family == .pad }.flatMap(\.identifiers)
     let allIDs = Set(originalIDs).union(replacementIDs).sorted()
     let excludedIDs = Set(corpus.models
       .filter { ExpectedDifferences.excludedCases.contains($0.caseName) }.flatMap(\.identifiers))
     let unknownIDs = ["", "not-a-device", "iPhone99,1", "iPad99,1", "iPhone11,999", "iPhone19,4 ", "iPhone19,4\n"]
 
     // Coverage gates are independent of property comparisons: silently skipping IDs must fail.
-    XCTAssertEqual(corpus.models.count, 99)
-    XCTAssertEqual(originalIDs.count, 171)
+    XCTAssertEqual(corpus.models.count, 100)
+    XCTAssertEqual(originalIDs.count, 172)
     XCTAssertEqual(Set(originalIDs).count, originalIDs.count)
     XCTAssertEqual(Set(replacementIDs).count, replacementIDs.count)
     XCTAssertEqual(excludedIDs.count, 67)
-    XCTAssertEqual(Set(originalIDs).subtracting(excludedIDs).count, 104)
-    XCTAssertEqual(Set(replacementIDs), Set(originalIDs).subtracting(excludedIDs).union(["iPhone19,4", "iPad19,1", "iPad19,2"]))
+    XCTAssertEqual(Set(originalIDs).subtracting(excludedIDs).count, 105)
+    XCTAssertEqual(Set(replacementIDs), Set(originalIDs).subtracting(excludedIDs).union(["iPad19,1", "iPad19,2"]))
     XCTAssertEqual(Set(corpus.models.map(\.caseName)).intersection(ExpectedDifferences.excludedCases),
                    ExpectedDifferences.excludedCases)
     // The extracted switch must cover the executable public model lists too.
     XCTAssertEqual(Set(originalIDs.map { Original.mapToDevice(identifier: $0).description }),
                    Set((Original.allRealDevices + [.homePod]).map(\.description)))
     XCTAssertEqual(Set(replacementIDs.map { Replacement.mapToDevice(identifier: $0).description }),
-                   Set(Replacement.allRealDevices.map(\.description)))
+                   Set((Replacement.allPhones + Replacement.allPads).map(\.description)))
 
     var report = ComparisonReport()
     report.upstreamSourceSHA256 = corpus.sourceSHA256
@@ -55,7 +48,7 @@ final class CatalogComparisonTests: XCTestCase {
     report.coverage = [
       "upstream models": corpus.models.count,
       "upstream identifiers": originalIDs.count,
-      "replacement models": DeviceCatalog.all.count,
+      "replacement models": Replacement.allPhones.count + Replacement.allPads.count,
       "replacement identifiers": replacementIDs.count,
       "union hardware identifiers": allIDs.count,
       "shared supported models": corpus.models.count - ExpectedDifferences.excludedCases.count,
@@ -78,20 +71,15 @@ final class CatalogComparisonTests: XCTestCase {
           simulator ? Replacement.simulator(.unknown(identifier)) : .unknown(identifier))
         let excluded = excludedIDs.contains(identifier)
         if excluded { XCTAssertEqual(new, unknown, "\(identifier) must resolve to unknown") }
-        let duo = identifier == "iPhone19,4"
         let mini = ["iPad19,1", "iPad19,2"].contains(identifier)
         if mini {
           XCTAssertEqual(originalReal.fields["kind"], "unknown")
           XCTAssertEqual(replacement, .iPadMiniA20Pro)
         }
-        if duo {
-          XCTAssertEqual(originalReal.fields["kind"], "unknown")
-          XCTAssertEqual(replacement, .iPhoneDuo)
-        }
         report.compare(
           identifier: identifier, variant: simulator ? "simulator" : "hardware",
           original: old, replacement: new, originalReal: originalReal,
-          excludedAndUnknown: excluded && new == unknown, addedDuo: duo, addedMini: mini)
+          excludedAndUnknown: excluded && new == unknown, addedMini: mini)
       }
     }
 
@@ -104,7 +92,6 @@ final class CatalogComparisonTests: XCTestCase {
         identifier: architecture, variant: "architecture",
         original: Snapshots.read(original), replacement: Snapshots.read(replacement),
         originalReal: Snapshots.read(original.realDevice),
-        addedDuo: report.simulatorModel == "iPhone19,4",
         addedMini: ["iPad19,1", "iPad19,2"].contains(report.simulatorModel))
     }
     XCTAssertEqual(Original.identifier, Replacement.identifier)
@@ -113,22 +100,11 @@ final class CatalogComparisonTests: XCTestCase {
       identifier: report.simulatorModel, variant: "current",
       original: Snapshots.read(Original.current), replacement: Snapshots.read(Replacement.current),
       originalReal: Snapshots.read(Original.current.realDevice),
-      addedDuo: report.simulatorModel == "iPhone19,4",
       addedMini: ["iPad19,1", "iPad19,2"].contains(report.simulatorModel))
     report.coverage["architecture inputs plus current device"] = 4
 
     compareGroups(corpus: corpus, report: &report)
-    let encoder = JSONEncoder()
-    encoder.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
-    for (name, data, uti) in [
-      ("catalog-comparison.json", try encoder.encode(report), "public.json"),
-      ("catalog-comparison.md", Data(report.markdown.utf8), "net.daringfireball.markdown"),
-    ] {
-      let attachment = XCTAttachment(data: data, uniformTypeIdentifier: uti)
-      attachment.name = name
-      attachment.lifetime = .keepAlways
-      add(attachment)
-    }
+    try attach(report)
     print("CATALOG_COMPARISON: \(report.comparisons) fields; \(report.differences.count) differences; \(report.unexpected.count) unexpected")
     XCTAssertTrue(report.unexpected.isEmpty,
       "\(report.unexpected.count) unexpected differences; inspect catalog-comparison.md attachment")
@@ -143,7 +119,6 @@ final class CatalogComparisonTests: XCTestCase {
       .map { Original.mapToDevice(identifier: $0.identifiers[0]) }
     let excludedNames = Set(excludedModels.flatMap { [$0.description, Original.simulator($0).description] })
     let addedNames: Set<String> = [
-      Replacement.iPhoneDuo.description, Replacement.simulator(.iPhoneDuo).description,
       Replacement.iPadMiniA20Pro.description, Replacement.simulator(.iPadMiniA20Pro).description,
     ]
     report.groupNames = oldGroups.keys.sorted()
@@ -160,8 +135,7 @@ final class CatalogComparisonTests: XCTestCase {
         if excludedNames.contains(member), old.contains(member), !new.contains(member) {
           reason = "outside-ios18-catalog"
         } else if addedNames.contains(member), !old.contains(member), new.contains(member) {
-          reason = member.contains("iPad mini")
-            ? "mini-a20-pro-absent-in-devicekit-5.9.0" : "duo-absent-in-devicekit-5.9.0"
+          reason = "mini-a20-pro-absent-in-devicekit-5.10.0"
         } else {
           reason = nil
         }
@@ -219,3 +193,4 @@ final class CatalogComparisonTests: XCTestCase {
     }
   }
 }
+#endif

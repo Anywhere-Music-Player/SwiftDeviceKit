@@ -1,84 +1,105 @@
 // Copyright © 2014 - 2018 Dennis Weissmann and the DeviceKit project authors
 // SPDX-License-Identifier: MIT
 
+import Foundation
 public import SwiftDeviceKitCore
+#if os(watchOS)
+import WatchKit
+#elseif !os(macOS)
 import UIKit
+#endif
 
 extension Device {
   var isCurrent: Bool { self == Device.current }
 
-  /// Returns whether the device is an iPhone (real or simulator)
+  /// Known models use their hardware family, including iPads running iPhone-only apps.
   @MainActor
   public var isPhone: Bool {
-    deviceIdiom == .phone
+    if let family { return family == .phone }
+    #if os(iOS)
+      return isCurrent && !MacHost.isIOSAppOnMac && UIDevice.current.userInterfaceIdiom == .phone
+    #else
+      return false
+    #endif
   }
 
-  /// Returns whether the device is an iPad (real or simulator)
   @MainActor
   public var isPad: Bool {
-    deviceIdiom == .pad
+    if let family { return family == .pad }
+    #if os(iOS)
+      return isCurrent && !MacHost.isIOSAppOnMac && UIDevice.current.userInterfaceIdiom == .pad
+    #else
+      return false
+    #endif
   }
 
-  @MainActor
-  private var deviceIdiom: UIUserInterfaceIdiom {
-    let model = realDevice
-    if case .unknown = model {
-      guard isCurrent, !IOSAppOnMac.isRunning else { return .unspecified }
-      return UIDevice.current.userInterfaceIdiom
-    }
-    // An iPhone-only app also gets the phone idiom on iPad.
-    return Device.allPhones.contains(model) ? .phone : .pad
-  }
+  #if os(watchOS)
+  @MainActor private var systemDevice: WKInterfaceDevice { WKInterfaceDevice.current() }
+  #elseif !os(macOS)
+  @MainActor private var systemDevice: UIDevice { UIDevice.current }
+  #endif
 
-  /// The name identifying the device (e.g. "Dennis' iPhone").
-  /// As of iOS 16, this will return a generic String like "iPhone", unless your app has additional entitlements.
-  /// See the follwing link for more information: https://developer.apple.com/documentation/uikit/uidevice/1620015-name
+  /// The name identifying the current device, subject to platform privacy restrictions.
   @MainActor
   public var name: String? {
     guard isCurrent else { return nil }
-    return UIDevice.current.name
+    #if os(macOS)
+      return Host.current().localizedName
+    #else
+      return systemDevice.name
+    #endif
   }
 
-  /// The name of the operating system running on the device represented by the receiver (e.g. "iOS" or "iPadOS").
   @MainActor
   public var systemName: String? {
     guard isCurrent else { return nil }
-    if IOSAppOnMac.isRunning { return "macOS" }
-    if isPad, UIDevice.current.systemName == "iOS" {
-      return "iPadOS"
-    } else {
-      return UIDevice.current.systemName
-    }
+    #if os(macOS)
+      return "macOS"
+    #else
+      if MacHost.isIOSAppOnMac { return "macOS" }
+      if isPad, systemDevice.systemName == "iOS" { return "iPadOS" }
+      return systemDevice.systemName
+    #endif
   }
 
-  /// The current version of the operating system (e.g. 18.0 or 27.0).
   @MainActor
   public var systemVersion: String? {
     guard isCurrent else { return nil }
-    if IOSAppOnMac.isRunning { return IOSAppOnMac.systemVersion }
-    return UIDevice.current.systemVersion
+    #if os(macOS)
+      return MacHost.systemVersion
+    #else
+      if MacHost.isIOSAppOnMac { return MacHost.systemVersion }
+      return systemDevice.systemVersion
+    #endif
   }
 
-  /// The model of the device (e.g. "iPhone" or "iPad").
   @MainActor
   public var model: String? {
     guard isCurrent else { return nil }
-    if IOSAppOnMac.isRunning { return "Mac" }
-    return UIDevice.current.model
+    #if os(macOS)
+      return "Mac"
+    #else
+      return MacHost.isIOSAppOnMac ? "Mac" : systemDevice.model
+    #endif
   }
 
-  /// The model of the device as a localized string.
   @MainActor
   public var localizedModel: String? {
     guard isCurrent else { return nil }
-    if IOSAppOnMac.isRunning { return "Mac" }
-    return UIDevice.current.localizedModel
+    #if os(macOS)
+      return "Mac"
+    #else
+      return MacHost.isIOSAppOnMac ? "Mac" : systemDevice.localizedModel
+    #endif
   }
 
-  /// True when a Guided Access session is currently active; otherwise, false.
+  /// DeviceKit returns false on Watch and TV.
   @MainActor
   public var isGuidedAccessSessionActive: Bool {
-    return UIAccessibility.isGuidedAccessEnabled
+    #if os(iOS) || os(visionOS)
+      UIAccessibility.isGuidedAccessEnabled
+    #else
+      false
+    #endif
   }
-
 }

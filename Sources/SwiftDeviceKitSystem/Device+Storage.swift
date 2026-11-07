@@ -26,6 +26,7 @@ extension Device {
       .volumeAvailableCapacity
   }
 
+  #if !os(watchOS) && !os(tvOS)
   /// The volume’s available capacity in bytes for storing important resources.
 
   public static var volumeAvailableCapacityForImportantUsage: Int64? {
@@ -64,4 +65,5 @@ extension Device {
       return nil
     }
   }
+  #endif
 }

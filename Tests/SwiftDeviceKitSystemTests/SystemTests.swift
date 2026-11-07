@@ -14,7 +14,7 @@ struct SystemTests {
 
   @Test @MainActor
   func simulatorFamilyUsesTheSystemIdiom() {
-    #if targetEnvironment(simulator)
+    #if os(iOS) && targetEnvironment(simulator)
       #expect(Device.current.isSimulator)
       #expect(Device.current.isPhone != Device.current.isPad)
       #expect(Device.current.systemName == (Device.current.isPad ? "iPadOS" : "iOS"))
@@ -30,9 +30,13 @@ struct SystemTests {
     #expect(other.model == nil)
     #expect(other.localizedModel == nil)
     #expect(other.isCanvas == nil)
+    #if !os(tvOS)
     #expect(other.batteryState == nil)
     #expect(other.batteryLevel == nil)
+    #endif
     #expect(other.thermalState == nil)
+    #if os(iOS)
     #expect(other.isZoomed == nil)
+    #endif
   }
 }

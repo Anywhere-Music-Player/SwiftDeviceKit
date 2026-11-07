@@ -7,42 +7,44 @@ import Foundation
 extension Device {
   /// Returns a `Device` representing the current device this software runs on.
   public static var current: Device {
-    return Device.mapToDevice(identifier: Device.identifier)
+    #if targetEnvironment(simulator)
+      let model = ProcessInfo.processInfo.environment["SIMULATOR_MODEL_IDENTIFIER"] ?? identifier
+      return .simulator(hardware(model))
+    #else
+      return hardware(identifier)
+    #endif
   }
 
-  /// Gets the identifier from the system, such as "iPhone19,2".
+  /// The raw hardware identifier, or the simulator's architecture as reported by uname.
   public static let identifier: String = {
-    if IOSAppOnMac.isRunning {
-      // uname reports a compatibility iPad for an iOS app running on a Mac.
-      return IOSAppOnMac.hostModel ?? "Mac"
-    }
-    var systemInfo = utsname()
-    uname(&systemInfo)
-    let mirror = Mirror(reflecting: systemInfo.machine)
-
-    let identifier = mirror.children.reduce("") { identifier, element in
-      guard let value = element.value as? Int8, value != 0 else { return identifier }
-      return identifier + String(UnicodeScalar(UInt8(value)))
-    }
-    return identifier
+    #if os(macOS) || targetEnvironment(macCatalyst)
+      return MacHost.model ?? "Mac"
+    #else
+      if MacHost.isIOSAppOnMac { return MacHost.model ?? "Mac" }
+      var info = utsname()
+      uname(&info)
+      return withUnsafeBytes(of: &info.machine) {
+        String(decoding: $0.prefix { $0 != 0 }, as: UTF8.self)
+      }
+    #endif
   }()
 
-  /// Resolves a hardware identifier, including the simulator architecture identifiers.
-  public static func mapToDevice(identifier: String) -> Device {
-    resolve(
-      identifier: identifier,
-      simulatorModelIdentifier: ProcessInfo.processInfo.environment["SIMULATOR_MODEL_IDENTIFIER"])
+  private static func hardware(_ identifier: String) -> Device {
+    DeviceCatalog.byIdentifier[identifier] ?? .unknown(identifier)
   }
 
-  /// Explicit environment input keeps identifier resolution deterministic and testable.
+  /// Architecture aliases require an actual simulated model supplied by CoreSimulator.
+  public static func mapToDevice(identifier: String) -> Device {
+    resolve(identifier: identifier,
+            simulatorModelIdentifier: ProcessInfo.processInfo.environment["SIMULATOR_MODEL_IDENTIFIER"])
+  }
+
   static func resolve(identifier: String, simulatorModelIdentifier: String?) -> Device {
-    switch identifier {
-    case "i386", "x86_64", "arm64":
-      let modelIdentifier = simulatorModelIdentifier ?? "iOS"
-      return .simulator(DeviceCatalog.byIdentifier[modelIdentifier] ?? .unknown(modelIdentifier))
-    default:
-      return DeviceCatalog.byIdentifier[identifier] ?? .unknown(identifier)
+    if ["arm64", "x86_64", "i386"].contains(identifier), let simulatorModelIdentifier,
+       !simulatorModelIdentifier.isEmpty {
+      return .simulator(hardware(simulatorModelIdentifier))
     }
+    return hardware(identifier)
   }
 
   /// Returns whether the current device is a SwiftUI preview canvas
@@ -56,17 +58,19 @@ extension Device {
   }
 }
 
-/// Host information for an iOS binary running directly on macOS.
-package enum IOSAppOnMac {
-  package static var isRunning: Bool {
-    #if os(iOS)
+/// Host information shared by native Mac and iOS compatibility processes.
+package enum MacHost {
+  package static var isIOSAppOnMac: Bool {
+    #if targetEnvironment(macCatalyst)
+      true
+    #elseif os(iOS)
       ProcessInfo.processInfo.isiOSAppOnMac
     #else
       false
     #endif
   }
 
-  static let hostModel = string(for: "hw.model")
+  static let model = string(for: "hw.model")
   package static let systemVersion = string(for: "kern.osproductversion")
 
   private static func string(for key: String) -> String? {

@@ -21,3 +21,9 @@ as a separate telephoto camera.
 The installed simulator profile lists the inner panel as 2007 × 2853 pixels at
 460 PPI, which differs from Apple's hardware specification. Display metadata uses
 the published hardware values; the simulator profile is evidence for identity only.
+
+Apple Watch and Apple TV case names and compatibility behavior follow
+[DeviceKit 5.10.0](https://github.com/devicekit/DeviceKit/tree/fab82bd988405367c915143e293479f481e93ba0).
+The differential tests execute that exact version. Apple's model lists, firmware
+identifiers, technical specifications and simulator profiles supply independent
+hardware checks. See [platform support](Docs/PlatformSupport.md).

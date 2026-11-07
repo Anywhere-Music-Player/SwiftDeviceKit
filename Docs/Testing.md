@@ -27,8 +27,8 @@ A single simulator can exercise the whole catalog by passing each identifier to
 ## Optional comparison with DeviceKit
 
 The standalone [DeviceKitComparison package](../Validation/DeviceKitComparison/README.md)
-runs the original DeviceKit and the local SwiftDeviceKit in the same test process.
-It pins its reference dependency, checks the union of both iOS catalogs and
+runs DeviceKit 5.10.0 and the local SwiftDeviceKit in iOS, watchOS and tvOS test processes.
+It pins its reference dependency, checks the union of the corresponding catalogs and
 exports a report of every differing field.
 
 ~~~sh
@@ -39,7 +39,9 @@ This is an explicit validation command, separate from the normal package build
 and tests. Its reference dependency is not part of either library product.
 Generated reports, logs and build products stay local and are ignored by Git.
 
-## Validation coverage
+See the [current platform matrix and client measurements](PlatformSupport.md).
+
+## Historical iOS validation
 
 | Check | Where |
 | --- | --- |

@@ -11,6 +11,7 @@ struct HardwareCapabilityTests {
       .iPhone16, .iPhone16Plus, .iPhone16Pro, .iPhone16ProMax, .iPhone16e,
       .iPhone17, .iPhone17Pro, .iPhone17ProMax, .iPhoneAir, .iPhone17e,
       .iPhone18Pro, .iPhone18ProMax,
+      .appleWatchUltra, .appleWatchUltra2, .appleWatchUltra3, .appleWatchUltra4,
     ]
     #expect(Device.allDevicesWithActionButton == supported)
     check(\.hasActionButton, supported: supported)

@@ -2,7 +2,16 @@
 // SPDX-License-Identifier: MIT
 
 public import SwiftDeviceKitCore
+import Foundation
+#if os(macOS)
+import IOKit.ps
+#elseif os(watchOS)
+import WatchKit
+#elseif !os(tvOS)
 import UIKit
+#endif
+
+#if !os(tvOS)
 
 // MARK: Battery
 
@@ -25,20 +34,53 @@ extension Device {
     case unplugged(Int)
 
     @MainActor
-    fileprivate init() {
-      let wasBatteryMonitoringEnabled = UIDevice.current.isBatteryMonitoringEnabled
-      UIDevice.current.isBatteryMonitoringEnabled = true
-      let batteryLevel = Int(round(UIDevice.current.batteryLevel * 100))  // round() is actually not needed anymore since -[batteryLevel] seems to always return a two-digit precision number
-      // but maybe that changes in the future.
-      switch UIDevice.current.batteryState {
-      case .charging: self = .charging(batteryLevel)
-      case .full: self = .full
-      case .unplugged: self = .unplugged(batteryLevel)
-      case .unknown: self = .full  // Should never happen since `batteryMonitoring` is enabled.
-      @unknown default:
-        self = .full  // To cover any future additions for which DeviceKit might not have updated yet.
-      }
-      UIDevice.current.isBatteryMonitoringEnabled = wasBatteryMonitoringEnabled
+    fileprivate init?() {
+      #if os(macOS)
+        guard let snapshot = IOPSCopyPowerSourcesInfo()?.takeRetainedValue(),
+              let sources = IOPSCopyPowerSourcesList(snapshot)?.takeRetainedValue() as? [CFTypeRef]
+        else { return nil }
+        for source in sources {
+          guard let info = IOPSGetPowerSourceDescription(snapshot, source)?.takeUnretainedValue()
+                  as? [String: Any],
+                info[kIOPSTypeKey] as? String == kIOPSInternalBatteryType,
+                let capacity = info[kIOPSCurrentCapacityKey] as? Int,
+                let maximum = info[kIOPSMaxCapacityKey] as? Int, maximum > 0
+          else { continue }
+          let percent = Int((Double(capacity) * 100 / Double(maximum)).rounded())
+          if info[kIOPSPowerSourceStateKey] as? String == kIOPSBatteryPowerValue {
+            self = .unplugged(percent)
+          } else if info[kIOPSIsChargedKey] as? Bool == true {
+            self = .full
+          } else {
+            // BatteryState describes external power, including optimized charging holds.
+            self = .charging(percent)
+          }
+          return
+        }
+        return nil
+      #else
+        #if os(watchOS)
+          let device = WKInterfaceDevice.current()
+        #else
+          let device = UIDevice.current
+        #endif
+        let previous = device.isBatteryMonitoringEnabled
+        device.isBatteryMonitoringEnabled = true
+        defer { device.isBatteryMonitoringEnabled = previous }
+        let percent = Int((device.batteryLevel * 100).rounded())
+        switch device.batteryState {
+        case .charging: self = .charging(percent)
+        case .unplugged: self = .unplugged(percent)
+        case .full: self = .full
+        case .unknown:
+          #if os(visionOS)
+            return nil
+          #else
+            self = .full  // DeviceKit compatibility on iOS and watchOS simulators.
+          #endif
+        @unknown default: return nil
+        }
+      #endif
     }
 
     /// The user enabled Low Power mode
@@ -75,8 +117,8 @@ extension Device {
   /// Battery level ranges from 0 (fully discharged) to 100 (100% charged).
   @MainActor
   public var batteryLevel: Int? {
-    guard isCurrent else { return nil }
-    switch BatteryState() {
+    switch batteryState {
+    case nil: return nil
     case .charging(let value): return value
     case .full: return 100
     case .unplugged(let value): return value
@@ -106,3 +148,4 @@ extension Device.BatteryState: Comparable {
     }
   }
 }
+#endif

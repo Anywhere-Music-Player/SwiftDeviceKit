@@ -6,6 +6,10 @@ extension Device {
     @available(*, deprecated, renamed: "wide")
     case normal
 
+    /// Built-in front-facing Mac camera.
+    case front
+    /// Main spatial camera system on Apple Vision Pro.
+    case stereoscopic
     case wide
     case telephoto
     case ultraWide

@@ -21,7 +21,7 @@ extension Device {
 
     public let role: Role
 
-    /// Advertised diagonal in inches. Rounded corners reduce the actual viewable area.
+    /// Diagonal in inches. Watch values use the pixel diagonal divided by panel PPI. Rounded corners reduce the actual viewable area.
     public let diagonal: Double
 
     /// Physical pixels per inch.
@@ -31,11 +31,19 @@ extension Device {
     public let screenRatio: AspectRatio
 
     /// Published pixel dimensions, or nil when the catalog has no verified resolution.
-    /// iPhone Duo and iPad mini (A20 Pro) have verified resolutions.
     public let resolution: Resolution?
   }
 
-  /// Known built-in screens: one `.main` panel for a single-screen model,
+  /// Apple's published specifications for both eye displays together.
+  public struct SpatialDisplay: Sendable, Hashable {
+    public let approximateTotalPixels: Int
+    public let pixelPitchMicrometers: Double
+    public let refreshRatesHz: [Int]
+  }
+
+  public var spatialDisplay: SpatialDisplay? { definition?.spatialDisplay }
+
+  /// Known rectangular panels: one `.main` panel for a single-screen model,
   /// or `.outer` followed by `.inner` for iPhone Duo. Unknown models return an empty array.
   /// Simulator wrappers expose the same catalog specifications as their model.
   /// These values do not describe the currently active screen or connected external displays.
