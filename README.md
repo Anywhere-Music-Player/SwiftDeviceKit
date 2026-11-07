@@ -169,6 +169,9 @@ import SwiftDeviceKitSystem
 func batteryLabel() -> String {
     switch Device.current.batteryState {
     case .charging(let percent): "\(percent)% · Charging"
+    #if os(macOS)
+    case .pluggedInNotCharging(let percent): "\(percent)% · Connected to power"
+    #endif
     case .unplugged(let percent): "\(percent)%"
     case .full: "Charged"
     case nil: "Battery unavailable"

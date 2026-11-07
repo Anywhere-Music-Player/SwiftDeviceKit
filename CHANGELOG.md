@@ -6,6 +6,7 @@
 - Add `Device.Family`, new cases in `Device`, `Device.CPU` and `Device.CameraType`, and spatial display specifications for Vision Pro. Update exhaustive switches when migrating.
 - Correct the 2024 Mac mini chip identifiers and limit simulator groups to models with simulator runtimes.
 - Return 64-bit storage byte counts on watchOS and preserve the measured battery percentage on Mac. Unknown battery readings on physical iPhones, iPads and watches return `nil`.
+- On macOS, handle the new `BatteryState.pluggedInNotCharging(Int)` case in exhaustive switches. It reports external power with charging paused.
 - Expose Low Power Mode through `Device.current.isLowPowerModeEnabled`, including on Macs without an internal battery.
 - Add `hasActionButton` and `Device.allDevicesWithActionButton` for models with a customizable Action button.
 - Add `hasVariableAperture` and `Device.allDevicesWithVariableAperture` for models with a variable-aperture camera lens.

@@ -20,15 +20,20 @@ extension Device {
    This enum describes the state of the battery.
 
    - Full:      The OS reports the battery as charged. On Mac, batteryLevel can still be below 100%.
-   - Charging:  The device is plugged into power and the battery is less than 100% charged.
+   - Charging:  The battery is charging.
+   - Plugged in, not charging (Mac): External power is connected and charging is inactive.
    - Unplugged: The device is not plugged into power; the battery is discharging.
    */
   public enum BatteryState: CustomStringConvertible, Equatable, Sendable {
     /// The OS reports the battery as charged. On Mac, batteryLevel can still be below 100%.
     case full
-    /// The device is plugged into power and the battery is less than 100% charged.
+    /// The battery is charging.
     /// The associated value is in percent (0-100).
     case charging(Int)
+    #if os(macOS)
+    /// External power is connected and the battery is not charging, for example during an optimized charging hold.
+    case pluggedInNotCharging(Int)
+    #endif
     /// The device is not plugged into power; the battery is discharging.
     /// The associated value is in percent (0-100).
     case unplugged(Int)
@@ -93,6 +98,10 @@ extension Device {
       switch self {
       case .charging(let batteryLevel):
         return "Battery level: \(batteryLevel)%, device is plugged in."
+      #if os(macOS)
+      case .pluggedInNotCharging(let level):
+        return "Battery level: \(level)%, device is plugged in and not charging."
+      #endif
       case .full:
         #if os(macOS)
           return "Battery is charged, device is plugged in."
@@ -137,7 +146,7 @@ extension Device {
 
 #if os(macOS)
 struct MacBatteryReading {
-  let state: Device.BatteryState
+  let state: Device.BatteryState?
   let level: Int
 
   init?(source: [String: Any]) {
@@ -148,13 +157,20 @@ struct MacBatteryReading {
     else { return nil }
 
     level = Int((Double(capacity) * 100 / Double(maximum)).rounded())
-    if source[kIOPSPowerSourceStateKey] as? String == kIOPSBatteryPowerValue {
+    switch source[kIOPSPowerSourceStateKey] as? String {
+    case kIOPSBatteryPowerValue:
       state = .unplugged(level)
-    } else if source[kIOPSIsChargedKey] as? Bool == true {
+    case kIOPSACPowerValue:
       // IOKit may consider a battery charged while its measured level is 95–99%.
-      state = .full
-    } else {
-      state = .charging(level)
+      if source[kIOPSIsChargedKey] as? Bool == true {
+        state = .full
+      } else if let charging = source[kIOPSIsChargingKey] as? Bool {
+        state = charging ? .charging(level) : .pluggedInNotCharging(level)
+      } else {
+        state = nil
+      }
+    default:
+      state = nil
     }
   }
 
@@ -181,16 +197,19 @@ extension Device.BatteryState: Comparable {
   /// - parameter lhs: A battery state.
   /// - parameter rhs: Another battery state.
   ///
-  /// Full sorts last. Otherwise compare charge percentages, with unplugged before charging
-  /// at the same percentage. Equality retains both the state and its associated percentage.
+  /// Full sorts last. Equal percentages sort by state: unplugged, plugged in but not charging, then charging.
   public static func < (lhs: Device.BatteryState, rhs: Device.BatteryState) -> Bool {
-    switch (lhs, rhs) {
-    case (.full, _): return false  // return false (even if both are `.Full` -> they are equal)
-    case (_, .full): return true  // lhs is *not* `.Full`, rhs is
-    case (.charging(let lhsLevel), .charging(let rhsLevel)): return lhsLevel < rhsLevel
-    case (.charging(let lhsLevel), .unplugged(let rhsLevel)): return lhsLevel < rhsLevel
-    case (.unplugged(let lhsLevel), .charging(let rhsLevel)): return lhsLevel <= rhsLevel
-    case (.unplugged(let lhsLevel), .unplugged(let rhsLevel)): return lhsLevel < rhsLevel
+    lhs.sortKey < rhs.sortKey
+  }
+
+  private var sortKey: (level: Int, state: Int) {
+    switch self {
+    case .unplugged(let level): (level, 0)
+    #if os(macOS)
+    case .pluggedInNotCharging(let level): (level, 1)
+    #endif
+    case .charging(let level): (level, 2)
+    case .full: (.max, 3)
     }
   }
 }
