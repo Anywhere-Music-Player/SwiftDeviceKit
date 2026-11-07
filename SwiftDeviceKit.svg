@@ -4,13 +4,13 @@
   <!-- The tile contours are adapted from DeviceKit.svg, Dennis Weissmann and the DeviceKit project authors (MIT). -->
   <defs>
     <linearGradient id="base" x2=".95" y2=".65">
-      <stop stop-color="#3270c6"/><stop offset=".52" stop-color="#345bc3"/><stop offset="1" stop-color="#353f99"/>
+      <stop stop-color="#8a93d1"/><stop offset=".52" stop-color="#7975c9"/><stop offset="1" stop-color="#6961af"/>
     </linearGradient>
-    <linearGradient id="middle" x2=".9" y2=".8">
-      <stop stop-color="#419ff2"/><stop offset=".52" stop-color="#397ae8"/><stop offset="1" stop-color="#365dcb"/>
+    <linearGradient id="middle" gradientUnits="userSpaceOnUse" x1="3" y1="40" x2="113" y2="58">
+      <stop offset="0" stop-color="#919ada"/><stop offset=".50" stop-color="#8382cf"/><stop offset="1" stop-color="#7671c1"/>
     </linearGradient>
-    <linearGradient id="face" x1=".12" y1="0" x2=".82" y2="1">
-      <stop stop-color="#66cafb"/><stop offset=".48" stop-color="#369cef"/><stop offset="1" stop-color="#3574dc"/>
+    <linearGradient id="face" gradientUnits="userSpaceOnUse" x1="3" y1="40" x2="113" y2="58">
+      <stop offset="0" stop-color="#a5ade1"/><stop offset=".50" stop-color="#9593db"/><stop offset="1" stop-color="#8a7fc9"/>
     </linearGradient>
   </defs>
   <g>
