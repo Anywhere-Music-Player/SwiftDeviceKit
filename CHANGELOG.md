@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 2026.1.0 — 2026-11-07
 
 - Refresh disk-capacity measurements between synchronous reads.
 - Correct 3x display-scale zoom detection and remove the unsupported legacy Plus heuristic.
