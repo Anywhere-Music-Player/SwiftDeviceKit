@@ -4,13 +4,7 @@
 extension Device: CustomStringConvertible {
   /// A textual representation of the device.
   public var description: String {
-    if let definition, !isSimulator { return definition.name }
-    switch self {
-    case .simulator(let model): return "Simulator (\(model.description))"
-    case .unknown(let identifier): return identifier
-    case .unidentifiedVision: return "Apple Vision"
-    default: preconditionFailure("Every known Device case must have a catalog definition")
-    }
+    formattedName(safe: false)
   }
 
   /// A safe version of `description`.
@@ -18,12 +12,28 @@ extension Device: CustomStringConvertible {
   /// Device.iPhoneXR.description:     iPhone Xʀ
   /// Device.iPhoneXR.safeDescription: iPhone XR
   public var safeDescription: String {
-    if let definition, !isSimulator { return definition.safeName }
-    switch self {
-    case .simulator(let model): return "Simulator (\(model.safeDescription))"
-    case .unknown(let identifier): return identifier
-    case .unidentifiedVision: return description
-    default: preconditionFailure("Every known Device case must have a catalog definition")
+    formattedName(safe: true)
+  }
+
+  private func formattedName(safe: Bool) -> String {
+    var base = self
+    var depth = 0
+    while case .simulator(let model) = base {
+      depth += 1
+      base = model
     }
+
+    let name: String
+    switch base {
+    case .unknown(let identifier): name = identifier
+    case .unidentifiedVision: name = "Apple Vision"
+    default:
+      guard let definition = base.definition else {
+        preconditionFailure("Every known Device case must have a catalog definition")
+      }
+      name = safe ? definition.safeName : definition.name
+    }
+    guard depth > 0 else { return name }
+    return String(repeating: "Simulator (", count: depth) + name + String(repeating: ")", count: depth)
   }
 }
