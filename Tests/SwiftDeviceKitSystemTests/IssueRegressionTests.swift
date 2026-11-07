@@ -55,6 +55,21 @@ final class SystemIssueRegressionTests: XCTestCase {
     XCTAssertEqual(current.isPhone, !isPad)
   }
 
+  func testBrightnessReportsOnlyMeasuredPercentages() throws {
+    let method = try XCTUnwrap(class_getInstanceMethod(UIScreen.self, #selector(getter: UIScreen.brightness)))
+    let readings: [(CGFloat, Int?)] = [(-1, nil), (0, 0), (0.5, 50), (1, 100), (.nan, nil), (1.1, nil)]
+    for (raw, expected) in readings {
+      let getter: @convention(block) (AnyObject) -> CGFloat = { _ in raw }
+      let replacement = imp_implementationWithBlock(getter)
+      let original = method_setImplementation(method, replacement)
+      defer {
+        method_setImplementation(method, original)
+        imp_removeBlock(replacement)
+      }
+      XCTAssertEqual(Device.current.screenBrightness, expected)
+    }
+  }
+
   func testZoomUsesActualScaleWithoutLegacyPlusAssumptions() throws {
     let scaleMethod = try XCTUnwrap(class_getInstanceMethod(UIScreen.self, #selector(getter: UIScreen.scale)))
     let nativeMethod = try XCTUnwrap(class_getInstanceMethod(UIScreen.self, #selector(getter: UIScreen.nativeScale)))

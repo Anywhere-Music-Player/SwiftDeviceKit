@@ -56,10 +56,12 @@ extension Device {
     return UIScreen.main.nativeScale > UIScreen.main.scale
   }
 
-  /// The brightness level of the screen.
+  /// Screen brightness in percent, or nil when UIKit has no reading.
   @MainActor
-  public var screenBrightness: Int {
-    return Int(UIScreen.main.brightness * 100)
+  public var screenBrightness: Int? {
+    let brightness = UIScreen.main.brightness
+    guard (0...1).contains(brightness) else { return nil }
+    return Int(brightness * 100)
   }
 }
 #elseif os(watchOS) || os(tvOS)

@@ -221,7 +221,9 @@ if let pixels = device.currentDisplayPixels {
     print("\(pixels.width) × \(pixels.height)")  // Connected display on Apple TV
 }
 #if os(iOS)
-print("Brightness: \(device.screenBrightness)%")
+if let brightness = device.screenBrightness {
+    print("Brightness: \(brightness)%")
+}
 if device.isZoomed == true {
     print("Display Zoom is enabled.")
 }
