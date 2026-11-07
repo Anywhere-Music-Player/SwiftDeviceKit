@@ -1,0 +1,325 @@
+Family,Hardware identifier,SwiftDeviceKit model case,DeviceKit 5.10.0 model case
+iPhone,"iPhone3,1",,iPhone4
+iPhone,"iPhone3,2",,iPhone4
+iPhone,"iPhone3,3",,iPhone4
+iPhone,"iPhone4,1",,iPhone4s
+iPhone,"iPhone5,1",,iPhone5
+iPhone,"iPhone5,2",,iPhone5
+iPhone,"iPhone5,3",,iPhone5c
+iPhone,"iPhone5,4",,iPhone5c
+iPhone,"iPhone6,1",,iPhone5s
+iPhone,"iPhone6,2",,iPhone5s
+iPhone,"iPhone7,1",,iPhone6Plus
+iPhone,"iPhone7,2",,iPhone6
+iPhone,"iPhone8,1",,iPhone6s
+iPhone,"iPhone8,2",,iPhone6sPlus
+iPhone,"iPhone8,4",,iPhoneSE
+iPhone,"iPhone9,1",,iPhone7
+iPhone,"iPhone9,2",,iPhone7Plus
+iPhone,"iPhone9,3",,iPhone7
+iPhone,"iPhone9,4",,iPhone7Plus
+iPhone,"iPhone10,1",,iPhone8
+iPhone,"iPhone10,2",,iPhone8Plus
+iPhone,"iPhone10,3",,iPhoneX
+iPhone,"iPhone10,4",,iPhone8
+iPhone,"iPhone10,5",,iPhone8Plus
+iPhone,"iPhone10,6",,iPhoneX
+iPhone,"iPhone11,2",iPhoneXS,iPhoneXS
+iPhone,"iPhone11,4",iPhoneXSMax,iPhoneXSMax
+iPhone,"iPhone11,6",iPhoneXSMax,iPhoneXSMax
+iPhone,"iPhone11,8",iPhoneXR,iPhoneXR
+iPhone,"iPhone12,1",iPhone11,iPhone11
+iPhone,"iPhone12,3",iPhone11Pro,iPhone11Pro
+iPhone,"iPhone12,5",iPhone11ProMax,iPhone11ProMax
+iPhone,"iPhone12,8",iPhoneSE2,iPhoneSE2
+iPhone,"iPhone13,1",iPhone12Mini,iPhone12Mini
+iPhone,"iPhone13,2",iPhone12,iPhone12
+iPhone,"iPhone13,3",iPhone12Pro,iPhone12Pro
+iPhone,"iPhone13,4",iPhone12ProMax,iPhone12ProMax
+iPhone,"iPhone14,2",iPhone13Pro,iPhone13Pro
+iPhone,"iPhone14,3",iPhone13ProMax,iPhone13ProMax
+iPhone,"iPhone14,4",iPhone13Mini,iPhone13Mini
+iPhone,"iPhone14,5",iPhone13,iPhone13
+iPhone,"iPhone14,6",iPhoneSE3,iPhoneSE3
+iPhone,"iPhone14,7",iPhone14,iPhone14
+iPhone,"iPhone14,8",iPhone14Plus,iPhone14Plus
+iPhone,"iPhone15,2",iPhone14Pro,iPhone14Pro
+iPhone,"iPhone15,3",iPhone14ProMax,iPhone14ProMax
+iPhone,"iPhone15,4",iPhone15,iPhone15
+iPhone,"iPhone15,5",iPhone15Plus,iPhone15Plus
+iPhone,"iPhone16,1",iPhone15Pro,iPhone15Pro
+iPhone,"iPhone16,2",iPhone15ProMax,iPhone15ProMax
+iPhone,"iPhone17,1",iPhone16Pro,iPhone16Pro
+iPhone,"iPhone17,2",iPhone16ProMax,iPhone16ProMax
+iPhone,"iPhone17,3",iPhone16,iPhone16
+iPhone,"iPhone17,4",iPhone16Plus,iPhone16Plus
+iPhone,"iPhone17,5",iPhone16e,iPhone16e
+iPhone,"iPhone18,1",iPhone17Pro,iPhone17Pro
+iPhone,"iPhone18,2",iPhone17ProMax,iPhone17ProMax
+iPhone,"iPhone18,3",iPhone17,iPhone17
+iPhone,"iPhone18,4",iPhoneAir,iPhoneAir
+iPhone,"iPhone18,5",iPhone17e,iPhone17e
+iPhone,"iPhone19,2",iPhone18Pro,iPhone18Pro
+iPhone,"iPhone19,3",iPhone18ProMax,iPhone18ProMax
+iPhone,"iPhone19,4",iPhoneDuo,iPhoneDuo
+iPhone,"iPhone19,7",iPhone18ProMax,iPhone18ProMax
+iPad,"iPad2,1",,iPad2
+iPad,"iPad2,2",,iPad2
+iPad,"iPad2,3",,iPad2
+iPad,"iPad2,4",,iPad2
+iPad,"iPad2,5",,iPadMini
+iPad,"iPad2,6",,iPadMini
+iPad,"iPad2,7",,iPadMini
+iPad,"iPad3,1",,iPad3
+iPad,"iPad3,2",,iPad3
+iPad,"iPad3,3",,iPad3
+iPad,"iPad3,4",,iPad4
+iPad,"iPad3,5",,iPad4
+iPad,"iPad3,6",,iPad4
+iPad,"iPad4,1",,iPadAir
+iPad,"iPad4,2",,iPadAir
+iPad,"iPad4,3",,iPadAir
+iPad,"iPad4,4",,iPadMini2
+iPad,"iPad4,5",,iPadMini2
+iPad,"iPad4,6",,iPadMini2
+iPad,"iPad4,7",,iPadMini3
+iPad,"iPad4,8",,iPadMini3
+iPad,"iPad4,9",,iPadMini3
+iPad,"iPad5,1",,iPadMini4
+iPad,"iPad5,2",,iPadMini4
+iPad,"iPad5,3",,iPadAir2
+iPad,"iPad5,4",,iPadAir2
+iPad,"iPad6,3",,iPadPro9Inch
+iPad,"iPad6,4",,iPadPro9Inch
+iPad,"iPad6,7",,iPadPro12Inch
+iPad,"iPad6,8",,iPadPro12Inch
+iPad,"iPad6,11",,iPad5
+iPad,"iPad6,12",,iPad5
+iPad,"iPad7,1",,iPadPro12Inch2
+iPad,"iPad7,2",,iPadPro12Inch2
+iPad,"iPad7,3",,iPadPro10Inch
+iPad,"iPad7,4",,iPadPro10Inch
+iPad,"iPad7,5",,iPad6
+iPad,"iPad7,6",,iPad6
+iPad,"iPad7,11",iPad7,iPad7
+iPad,"iPad7,12",iPad7,iPad7
+iPad,"iPad8,1",iPadPro11Inch,iPadPro11Inch
+iPad,"iPad8,2",iPadPro11Inch,iPadPro11Inch
+iPad,"iPad8,3",iPadPro11Inch,iPadPro11Inch
+iPad,"iPad8,4",iPadPro11Inch,iPadPro11Inch
+iPad,"iPad8,5",iPadPro12Inch3,iPadPro12Inch3
+iPad,"iPad8,6",iPadPro12Inch3,iPadPro12Inch3
+iPad,"iPad8,7",iPadPro12Inch3,iPadPro12Inch3
+iPad,"iPad8,8",iPadPro12Inch3,iPadPro12Inch3
+iPad,"iPad8,9",iPadPro11Inch2,iPadPro11Inch2
+iPad,"iPad8,10",iPadPro11Inch2,iPadPro11Inch2
+iPad,"iPad8,11",iPadPro12Inch4,iPadPro12Inch4
+iPad,"iPad8,12",iPadPro12Inch4,iPadPro12Inch4
+iPad,"iPad11,1",iPadMini5,iPadMini5
+iPad,"iPad11,2",iPadMini5,iPadMini5
+iPad,"iPad11,3",iPadAir3,iPadAir3
+iPad,"iPad11,4",iPadAir3,iPadAir3
+iPad,"iPad11,6",iPad8,iPad8
+iPad,"iPad11,7",iPad8,iPad8
+iPad,"iPad12,1",iPad9,iPad9
+iPad,"iPad12,2",iPad9,iPad9
+iPad,"iPad13,1",iPadAir4,iPadAir4
+iPad,"iPad13,2",iPadAir4,iPadAir4
+iPad,"iPad13,4",iPadPro11Inch3,iPadPro11Inch3
+iPad,"iPad13,5",iPadPro11Inch3,iPadPro11Inch3
+iPad,"iPad13,6",iPadPro11Inch3,iPadPro11Inch3
+iPad,"iPad13,7",iPadPro11Inch3,iPadPro11Inch3
+iPad,"iPad13,8",iPadPro12Inch5,iPadPro12Inch5
+iPad,"iPad13,9",iPadPro12Inch5,iPadPro12Inch5
+iPad,"iPad13,10",iPadPro12Inch5,iPadPro12Inch5
+iPad,"iPad13,11",iPadPro12Inch5,iPadPro12Inch5
+iPad,"iPad13,16",iPadAir5,iPadAir5
+iPad,"iPad13,17",iPadAir5,iPadAir5
+iPad,"iPad13,18",iPad10,iPad10
+iPad,"iPad13,19",iPad10,iPad10
+iPad,"iPad14,1",iPadMini6,iPadMini6
+iPad,"iPad14,2",iPadMini6,iPadMini6
+iPad,"iPad14,3",iPadPro11Inch4,iPadPro11Inch4
+iPad,"iPad14,4",iPadPro11Inch4,iPadPro11Inch4
+iPad,"iPad14,5",iPadPro12Inch6,iPadPro12Inch6
+iPad,"iPad14,6",iPadPro12Inch6,iPadPro12Inch6
+iPad,"iPad14,8",iPadAir11M2,iPadAir11M2
+iPad,"iPad14,9",iPadAir11M2,iPadAir11M2
+iPad,"iPad14,10",iPadAir13M2,iPadAir13M2
+iPad,"iPad14,11",iPadAir13M2,iPadAir13M2
+iPad,"iPad15,3",iPadAir11M3,iPadAir11M3
+iPad,"iPad15,4",iPadAir11M3,iPadAir11M3
+iPad,"iPad15,5",iPadAir13M3,iPadAir13M3
+iPad,"iPad15,6",iPadAir13M3,iPadAir13M3
+iPad,"iPad15,7",iPadA16,iPadA16
+iPad,"iPad15,8",iPadA16,iPadA16
+iPad,"iPad16,1",iPadMiniA17Pro,iPadMiniA17Pro
+iPad,"iPad16,2",iPadMiniA17Pro,iPadMiniA17Pro
+iPad,"iPad16,3",iPadPro11M4,iPadPro11M4
+iPad,"iPad16,4",iPadPro11M4,iPadPro11M4
+iPad,"iPad16,5",iPadPro13M4,iPadPro13M4
+iPad,"iPad16,6",iPadPro13M4,iPadPro13M4
+iPad,"iPad16,8",iPadAir11M4,iPadAir11M4
+iPad,"iPad16,9",iPadAir11M4,iPadAir11M4
+iPad,"iPad16,10",iPadAir13M4,iPadAir13M4
+iPad,"iPad16,11",iPadAir13M4,iPadAir13M4
+iPad,"iPad17,1",iPadPro11M5,iPadPro11M5
+iPad,"iPad17,2",iPadPro11M5,iPadPro11M5
+iPad,"iPad17,3",iPadPro13M5,iPadPro13M5
+iPad,"iPad17,4",iPadPro13M5,iPadPro13M5
+iPad,"iPad19,1",iPadMiniA20Pro,
+iPad,"iPad19,2",iPadMiniA20Pro,
+Apple Watch,"Watch1,1",,appleWatchSeries0_38mm
+Apple Watch,"Watch1,2",,appleWatchSeries0_42mm
+Apple Watch,"Watch2,3",,appleWatchSeries2_38mm
+Apple Watch,"Watch2,4",,appleWatchSeries2_42mm
+Apple Watch,"Watch2,6",,appleWatchSeries1_38mm
+Apple Watch,"Watch2,7",,appleWatchSeries1_42mm
+Apple Watch,"Watch3,1",,appleWatchSeries3_38mm
+Apple Watch,"Watch3,2",,appleWatchSeries3_42mm
+Apple Watch,"Watch3,3",,appleWatchSeries3_38mm
+Apple Watch,"Watch3,4",,appleWatchSeries3_42mm
+Apple Watch,"Watch4,1",,appleWatchSeries4_40mm
+Apple Watch,"Watch4,2",,appleWatchSeries4_44mm
+Apple Watch,"Watch4,3",,appleWatchSeries4_40mm
+Apple Watch,"Watch4,4",,appleWatchSeries4_44mm
+Apple Watch,"Watch5,1",,appleWatchSeries5_40mm
+Apple Watch,"Watch5,2",,appleWatchSeries5_44mm
+Apple Watch,"Watch5,3",,appleWatchSeries5_40mm
+Apple Watch,"Watch5,4",,appleWatchSeries5_44mm
+Apple Watch,"Watch5,9",,appleWatchSE_40mm
+Apple Watch,"Watch5,10",,appleWatchSE_44mm
+Apple Watch,"Watch5,11",,appleWatchSE_40mm
+Apple Watch,"Watch5,12",,appleWatchSE_44mm
+Apple Watch,"Watch6,1",appleWatchSeries6_40mm,appleWatchSeries6_40mm
+Apple Watch,"Watch6,2",appleWatchSeries6_44mm,appleWatchSeries6_44mm
+Apple Watch,"Watch6,3",appleWatchSeries6_40mm,appleWatchSeries6_40mm
+Apple Watch,"Watch6,4",appleWatchSeries6_44mm,appleWatchSeries6_44mm
+Apple Watch,"Watch6,6",appleWatchSeries7_41mm,appleWatchSeries7_41mm
+Apple Watch,"Watch6,7",appleWatchSeries7_45mm,appleWatchSeries7_45mm
+Apple Watch,"Watch6,8",appleWatchSeries7_41mm,appleWatchSeries7_41mm
+Apple Watch,"Watch6,9",appleWatchSeries7_45mm,appleWatchSeries7_45mm
+Apple Watch,"Watch6,10",appleWatchSE2_40mm,appleWatchSE2_40mm
+Apple Watch,"Watch6,11",appleWatchSE2_44mm,appleWatchSE2_44mm
+Apple Watch,"Watch6,12",appleWatchSE2_40mm,appleWatchSE2_40mm
+Apple Watch,"Watch6,13",appleWatchSE2_44mm,appleWatchSE2_44mm
+Apple Watch,"Watch6,14",appleWatchSeries8_41mm,appleWatchSeries8_41mm
+Apple Watch,"Watch6,15",appleWatchSeries8_45mm,appleWatchSeries8_45mm
+Apple Watch,"Watch6,16",appleWatchSeries8_41mm,appleWatchSeries8_41mm
+Apple Watch,"Watch6,17",appleWatchSeries8_45mm,appleWatchSeries8_45mm
+Apple Watch,"Watch6,18",appleWatchUltra,appleWatchUltra
+Apple Watch,"Watch7,1",appleWatchSeries9_41mm,appleWatchSeries9_41mm
+Apple Watch,"Watch7,2",appleWatchSeries9_45mm,appleWatchSeries9_45mm
+Apple Watch,"Watch7,3",appleWatchSeries9_41mm,appleWatchSeries9_41mm
+Apple Watch,"Watch7,4",appleWatchSeries9_45mm,appleWatchSeries9_45mm
+Apple Watch,"Watch7,5",appleWatchUltra2,appleWatchUltra2
+Apple Watch,"Watch7,8",appleWatchSeries10_42mm,appleWatchSeries10_42mm
+Apple Watch,"Watch7,9",appleWatchSeries10_46mm,appleWatchSeries10_46mm
+Apple Watch,"Watch7,10",appleWatchSeries10_42mm,appleWatchSeries10_42mm
+Apple Watch,"Watch7,11",appleWatchSeries10_46mm,appleWatchSeries10_46mm
+Apple Watch,"Watch7,12",appleWatchUltra3,appleWatchUltra3
+Apple Watch,"Watch7,13",appleWatchSE3_40mm,appleWatchSE3_40mm
+Apple Watch,"Watch7,14",appleWatchSE3_44mm,appleWatchSE3_40mm
+Apple Watch,"Watch7,15",appleWatchSE3_40mm,appleWatchSE3_44mm
+Apple Watch,"Watch7,16",appleWatchSE3_44mm,appleWatchSE3_44mm
+Apple Watch,"Watch7,17",appleWatchSeries11_42mm,appleWatchSeries11_42mm
+Apple Watch,"Watch7,18",appleWatchSeries11_46mm,appleWatchSeries11_46mm
+Apple Watch,"Watch7,19",appleWatchSeries11_42mm,appleWatchSeries11_42mm
+Apple Watch,"Watch7,20",appleWatchSeries11_46mm,appleWatchSeries11_46mm
+Apple Watch,"Watch8,1",appleWatchUltra4,appleWatchUltra4
+Apple Watch,"Watch8,2",appleWatchSeries12_42mm,appleWatchSeries12_42mm
+Apple Watch,"Watch8,3",appleWatchSeries12_46mm,appleWatchSeries12_46mm
+Apple Watch,"Watch8,4",appleWatchSeries12_42mm,appleWatchSeries12_42mm
+Apple Watch,"Watch8,5",appleWatchSeries12_46mm,appleWatchSeries12_46mm
+Apple TV,"AppleTV5,3",appleTVHD,appleTVHD
+Apple TV,"AppleTV6,2",appleTV4K,appleTV4K
+Apple TV,"AppleTV11,1",appleTV4K2,appleTV4K2
+Apple TV,"AppleTV14,1",appleTV4K3,appleTV4K3
+Apple TV,"AppleTV18,1",appleTV4K4,
+Mac,"Mac13,1",macStudioM1Max,
+Mac,"Mac13,2",macStudioM1Ultra,
+Mac,"Mac14,2",macBookAir13M2,
+Mac,"Mac14,3",macMiniM2,
+Mac,"Mac14,5",macBookPro14M2Max,
+Mac,"Mac14,6",macBookPro16M2Max,
+Mac,"Mac14,7",macBookPro13M2,
+Mac,"Mac14,8",macProM2Ultra,
+Mac,"Mac14,9",macBookPro14M2Pro,
+Mac,"Mac14,10",macBookPro16M2Pro,
+Mac,"Mac14,12",macMiniM2Pro,
+Mac,"Mac14,13",macStudioM2Max,
+Mac,"Mac14,14",macStudioM2Ultra,
+Mac,"Mac14,15",macBookAir15M2,
+Mac,"Mac15,3",macBookPro14M3,
+Mac,"Mac15,4",iMac24M3TwoPorts,
+Mac,"Mac15,5",iMac24M3FourPorts,
+Mac,"Mac15,6",macBookPro14M3Pro,
+Mac,"Mac15,7",macBookPro16M3Pro,
+Mac,"Mac15,8",macBookPro14M3Max,
+Mac,"Mac15,9",macBookPro16M3Max,
+Mac,"Mac15,10",macBookPro14M3Max,
+Mac,"Mac15,11",macBookPro16M3Max,
+Mac,"Mac15,12",macBookAir13M3,
+Mac,"Mac15,13",macBookAir15M3,
+Mac,"Mac15,14",macStudioM3Ultra,
+Mac,"Mac16,1",macBookPro14M4,
+Mac,"Mac16,2",iMac24M4TwoPorts,
+Mac,"Mac16,3",iMac24M4FourPorts,
+Mac,"Mac16,5",macBookPro16M4Max,
+Mac,"Mac16,6",macBookPro14M4Max,
+Mac,"Mac16,7",macBookPro16M4Pro,
+Mac,"Mac16,8",macBookPro14M4Pro,
+Mac,"Mac16,9",macStudioM4Max,
+Mac,"Mac16,10",macMiniM4,
+Mac,"Mac16,11",macMiniM4Pro,
+Mac,"Mac16,12",macBookAir13M4,
+Mac,"Mac16,13",macBookAir15M4,
+Mac,"Mac17,2",macBookPro14M5,
+Mac,"Mac17,3",macBookAir13M5,
+Mac,"Mac17,4",macBookAir15M5,
+Mac,"Mac17,5",macBookNeo,
+Mac,"Mac17,6",macBookPro16M5Max,
+Mac,"Mac17,7",macBookPro14M5Max,
+Mac,"Mac17,8",macBookPro16M5Pro,
+Mac,"Mac17,9",macBookPro14M5Pro,
+Mac,"Mac17,10",macBookPro16M5MaxPROLED,
+Mac,"Mac17,11",macBookPro14M5MaxPROLED,
+Mac,"Mac17,12",macBookPro16M5ProPROLED,
+Mac,"Mac17,13",macBookPro14M5ProPROLED,
+Mac,"Mac17,14",macStudioM5Max,
+Mac,"Mac17,15",macStudioM5Ultra,
+Mac,"Mac17,16",macMiniM5Pro,
+Mac,"Mac18,1",macBookPro14M6,
+Mac,"Mac18,2",iMac24M6,
+Mac,"Mac18,5",macMiniM6,
+Mac,"MacBookAir9,1",macBookAir13Intel2020,
+Mac,"MacBookAir10,1",macBookAir13M1,
+Mac,"MacBookPro15,1",macBookPro152018To2019,
+Mac,"MacBookPro15,2",macBookPro132018To2019FourPorts,
+Mac,"MacBookPro15,3",macBookPro152018To2019Vega,
+Mac,"MacBookPro15,4",macBookPro132019TwoPorts,
+Mac,"MacBookPro16,1",macBookPro162019,
+Mac,"MacBookPro16,2",macBookPro132020FourPorts,
+Mac,"MacBookPro16,3",macBookPro132020TwoPorts,
+Mac,"MacBookPro16,4",macBookPro162019,
+Mac,"MacBookPro17,1",macBookPro13M1,
+Mac,"MacBookPro18,1",macBookPro16M1Pro,
+Mac,"MacBookPro18,2",macBookPro16M1Max,
+Mac,"MacBookPro18,3",macBookPro14M1Pro,
+Mac,"MacBookPro18,4",macBookPro14M1Max,
+Mac,"MacPro7,1",macPro2019,
+Mac,"Macmini8,1",macMini2018,
+Mac,"Macmini9,1",macMiniM1,
+Mac,"iMac19,1",iMac27Intel2019,
+Mac,"iMac19,2",iMac21Intel2019,
+Mac,"iMac20,1",iMac27Intel2020,
+Mac,"iMac20,2",iMac27Intel2020,
+Mac,"iMac21,1",iMac24M1FourPorts,
+Mac,"iMac21,2",iMac24M1TwoPorts,
+Mac,"iMacPro1,1",iMacPro,
+Apple Vision Pro,"RealityDevice14,1",appleVisionProM2,
+Apple Vision Pro,"RealityDevice17,1",appleVisionProM5,
+iPod touch,"iPod5,1",,iPodTouch5
+iPod touch,"iPod7,1",,iPodTouch6
+iPod touch,"iPod9,1",,iPodTouch7
+HomePod,"AudioAccessory1,1",,homePod

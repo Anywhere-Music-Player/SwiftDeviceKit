@@ -11,25 +11,40 @@
 
 SwiftDeviceKit identifies the iPhone, iPad, Apple Watch, Apple TV, Mac or Apple Vision Pro running your app. Based on [DeviceKit](https://github.com/devicekit/DeviceKit), it brings all six device families into one Swift catalog. An iPhone app can read Apple Watch specifications, and a native Mac app can identify its host and read its battery level when available.
 
-## Features
-
 Choose **SwiftDeviceKitCore** for the hardware catalog without UIKit. Choose **SwiftDeviceKitSystem** when you also need live readings. System includes every Core feature through the same `Device` type.
 
-| Feature | Core | System |
-| :--- | :---: | :---: |
-| [Model name, device family, processor and simulator detection](#get-the-current-device) | ✓ | ✓ |
-| SwiftUI preview detection in debug builds | ✓ | ✓ |
-| [Screen size, pixel density and both iPhone Duo panels](#show-display-sizes-on-iphone-and-iphone-duo) | ✓ | ✓ |
-| [Camera lenses and variable aperture](#check-camera-hardware), LiDAR, Dynamic Island and Action button | ✓ | ✓ |
-| [Face ID, Touch ID and Optic ID hardware](#identify-the-biometric-sensor) | ✓ | ✓ |
-| [Apple Watch screen resolution and Vision Pro display specifications](#read-apple-watch-and-vision-pro-display-specifications) | ✓ | ✓ |
-| [Apple Pencil and wireless charging support](#check-accessory-support-on-iphone-and-ipad), USB-C | ✓ | ✓ |
-| 5G, eSIM and dual eSIM capabilities | ✓ | ✓ |
-| [OS name and version](#include-the-model-and-os-in-a-support-report), `isPhone` and `isPad` with iOS idiom fallback | — | ✓ |
-| [Battery percentage and charging state](#display-battery-percentage-and-charging-status) on battery-equipped devices | — | ✓ |
-| [Low Power Mode and thermal state](#defer-background-work-when-power-or-cooling-is-limited) | — | ✓ |
-| [Available and total storage capacity](#check-space-before-a-download) | — | ✓ |
-| [Current display pixels, brightness and Display Zoom](#read-the-current-display-settings), orientation and Guided Access where available | — | ✓ |
+## DeviceKit 5.10.0 vs SwiftDeviceKit 2026.2.0
+
+SwiftDeviceKit focuses on the hardware modern apps can run on. Its catalog counts **173 models across six Apple device families**, each capable of running the package’s minimum OS for its platform or a newer release. For an app targeting iOS 18, `Device.allPhones` already gives you the compatible iPhones, with older generations filtered out. [Minimum OS by platform](#requirements)
+
+In our tests, the SwiftDeviceKit development build identified the Mac running an iPad app, distinguished the 40 mm and 44 mm Apple Watch SE 3 models, and reported the updated free space after a file write. [Tested commit `17f99f1`](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/commit/17f99f17fd78b2730ecae0c1afcce3ef711c8a5c)
+
+| Scenario | DeviceKit 5.10.0 | SwiftDeviceKit 2026.2.0 | Bug report · Fix |
+| --- | --- | --- | --- |
+| iPad app on a MacBook Pro | ❌ `iPad8,6` · iPadOS | ✅ `MacBookPro18,3` · macOS | [#10](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/issues/10) · [61a13c8](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/commit/61a13c8a0a2d383eb11e0268d5cf11de099cf7ec) |
+| iPhone-only app on an iPad | ❌ Both `isPhone` and `isPad` are true | ✅ Only `isPad` is true | [#9](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/issues/9) · [8daaaa9](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/commit/8daaaa97d29916d9446780e0059332138888e90c) |
+| Apple Pencil on iPad Pro M5 | ❌ Includes Pencil (2nd generation) | ✅ Pencil Pro and USB-C | [#4](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/issues/4) · [a066b86](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/commit/a066b86e1585043b910bd8eb5113cd1f8b130a32) |
+| 11-inch iPad Pro M5 screen ratio in portrait | ❌ 605:417 | ✅ 417:605 in portrait | [#5](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/issues/5) · [887a59f](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/commit/887a59f8f92b224c000758c88932693d37d5050b) |
+| Watch SE 3 case size (`Watch7,14` / `Watch7,15`) | ❌ 40 mm / 44 mm | ✅ 44 mm / 40 mm, matching Apple’s profiles | [Measurements](Docs/DeviceKitComparison.md#where-did-the-answers-differ) · [f40aa7e](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/commit/f40aa7e1d7dff889254c0e5a31f6475176ee2579) |
+| Apple Watch Ultra 2 pixel density | ❌ 338 PPI | ✅ 326 PPI, matching Apple’s specifications | [Apple specs](https://support.apple.com/en-us/111832) · [f40aa7e](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/commit/f40aa7e1d7dff889254c0e5a31f6475176ee2579) |
+| Free space after a 32 MiB write | ❌ Repeated the earlier reading | ✅ Matched a fresh filesystem reading | [#1](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/issues/1) · [da19bc5](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/commit/da19bc572688a52707ece3a91d3f0359dc96c8dd) |
+| Mac battery in Catalyst | ❌ 0% | ✅ 80%, matching `pmset` | [Measured values](Docs/DeviceKitComparison.md#four-fixes-verified-in-swiftdevicekit) · [b05519e](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/commit/b05519e62926f17b6019ab7019bf2ad4e67db054) |
+| Unavailable display brightness in Catalyst | ❌ −100% | ✅ `nil` when UIKit has no reading | [Measurements](Docs/DeviceKitComparison.md#four-fixes-verified-in-swiftdevicekit) · [38f0148](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/commit/38f014898b72aa3e6e55cec6c445f751989af41d) |
+| Unknown battery in an iPad app on the Vision simulator | ❌ Full, 100% | ✅ `nil` for state and level | [Measurements](Docs/DeviceKitComparison.md#four-fixes-verified-in-swiftdevicekit) · [17f99f1](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/commit/17f99f17fd78b2730ecae0c1afcce3ef711c8a5c) |
+| Unknown ID with the display name “iPhone Xs” | ❌ Compares equal to the known XS | ✅ Remains a distinct device | [#3](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/issues/3) · [5f5a6a0](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/commit/5f5a6a01fd8103b05a78d55260426e772a443dbc) |
+| Twice-wrapped iPhone XS simulator | ❌ `isPhone` is false | ✅ `isPhone` is true for the underlying XS | [#7](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/issues/7) · [a6d14b5](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/commit/a6d14b5724a81a9a5f19ce1642ecfdd16f5e1f90) |
+
+[Full comparison, including all four fixes from the audit and their retest results](Docs/DeviceKitComparison.md).
+
+## Installation
+
+In Xcode, choose **File → Add Package Dependencies…** and paste this URL.
+
+```text
+https://github.com/Anywhere-Music-Player/SwiftDeviceKit.git
+```
+
+For six-platform support, select the **Branch** dependency rule and enter `main`. Add one [product](#features) to your app target. The latest tagged release, [2026.1.1](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/releases/tag/2026.1.1), supports iPhone and iPad.
 
 ## Requirements
 
@@ -46,15 +61,23 @@ Both products require Swift tools 6.4+ and use Swift 6 language mode. Core provi
 
 The [platform guide](Docs/PlatformSupport.md) lists model coverage, API availability, Release client sizes and test results for each platform.
 
-## Installation
+## Features
 
-In Xcode, choose **File → Add Package Dependencies…** and paste this URL.
-
-```text
-https://github.com/Anywhere-Music-Player/SwiftDeviceKit.git
-```
-
-For six-platform support, select the **Branch** dependency rule and enter `main`. Add one [product](#features) to your app target. The latest tagged release, [2026.1.1](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/releases/tag/2026.1.1), supports iPhone and iPad.
+| Feature | Core | System |
+| :--- | :---: | :---: |
+| [Model name, device family, processor and simulator detection](#get-the-current-device) | ✓ | ✓ |
+| SwiftUI preview detection in debug builds | ✓ | ✓ |
+| [Screen size, pixel density and both iPhone Duo panels](#show-display-sizes-on-iphone-and-iphone-duo) | ✓ | ✓ |
+| [Camera lenses and variable aperture](#check-camera-hardware), LiDAR, Dynamic Island and Action button | ✓ | ✓ |
+| [Face ID, Touch ID and Optic ID hardware](#identify-the-biometric-sensor) | ✓ | ✓ |
+| [Apple Watch screen resolution and Vision Pro display specifications](#read-apple-watch-and-vision-pro-display-specifications) | ✓ | ✓ |
+| [Apple Pencil and wireless charging support](#check-accessory-support-on-iphone-and-ipad), USB-C | ✓ | ✓ |
+| 5G, eSIM and dual eSIM capabilities | ✓ | ✓ |
+| [OS name and version](#include-the-model-and-os-in-a-support-report), `isPhone` and `isPad` with iOS idiom fallback | — | ✓ |
+| [Battery percentage and charging state](#display-battery-percentage-and-charging-status) on battery-equipped devices | — | ✓ |
+| [Low Power Mode and thermal state](#defer-background-work-when-power-or-cooling-is-limited) | — | ✓ |
+| [Available and total storage capacity](#check-space-before-a-download) | — | ✓ |
+| [Current display pixels, brightness and Display Zoom](#read-the-current-display-settings), orientation and Guided Access where available | — | ✓ |
 
 ## Usage
 
