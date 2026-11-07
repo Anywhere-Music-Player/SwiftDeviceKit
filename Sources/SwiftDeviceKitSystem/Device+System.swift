@@ -10,15 +10,23 @@ extension Device {
   /// Returns whether the device is an iPhone (real or simulator)
   @MainActor
   public var isPhone: Bool {
-    return realDevice.isOneOf(Device.allPhones)
-      || (UIDevice.current.userInterfaceIdiom == .phone && isCurrent)
+    deviceIdiom == .phone
   }
 
   /// Returns whether the device is an iPad (real or simulator)
   @MainActor
   public var isPad: Bool {
-    return realDevice.isOneOf(Device.allPads)
-      || (UIDevice.current.userInterfaceIdiom == .pad && isCurrent)
+    deviceIdiom == .pad
+  }
+
+  @MainActor
+  private var deviceIdiom: UIUserInterfaceIdiom {
+    let model = realDevice
+    if case .unknown = model {
+      return isCurrent ? UIDevice.current.userInterfaceIdiom : .unspecified
+    }
+    // An iPhone-only app also gets the phone idiom on iPad.
+    return Device.allPhones.contains(model) ? .phone : .pad
   }
 
   /// The name identifying the device (e.g. "Dennis' iPhone").

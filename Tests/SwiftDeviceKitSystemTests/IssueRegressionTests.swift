@@ -30,6 +30,27 @@ final class SystemIssueRegressionTests: XCTestCase {
     }
   }
 
+  func testKnownCurrentModelKeepsItsFamilyWithTheOppositeUIIdiom() throws {
+    let current = Device.current
+    let isPad = Device.allPads.contains(current.realDevice)
+    guard isPad || Device.allPhones.contains(current.realDevice) else {
+      throw XCTSkip("Requires a cataloged iPhone or iPad")
+    }
+    let method = try XCTUnwrap(class_getInstanceMethod(
+      UIDevice.self, #selector(getter: UIDevice.userInterfaceIdiom)))
+    let opposite: UIUserInterfaceIdiom = isPad ? .phone : .pad
+    let getter: @convention(block) (AnyObject) -> Int = { _ in opposite.rawValue }
+    let replacement = imp_implementationWithBlock(getter)
+    let original = method_setImplementation(method, replacement)
+    defer {
+      method_setImplementation(method, original)
+      imp_removeBlock(replacement)
+    }
+    XCTAssertEqual(UIDevice.current.userInterfaceIdiom, opposite)
+    XCTAssertEqual(current.isPad, isPad)
+    XCTAssertEqual(current.isPhone, !isPad)
+  }
+
   func testZoomUsesActualScaleWithoutLegacyPlusAssumptions() throws {
     let scaleMethod = try XCTUnwrap(class_getInstanceMethod(UIScreen.self, #selector(getter: UIScreen.scale)))
     let nativeMethod = try XCTUnwrap(class_getInstanceMethod(UIScreen.self, #selector(getter: UIScreen.nativeScale)))
