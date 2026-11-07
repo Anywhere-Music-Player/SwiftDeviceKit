@@ -23,7 +23,8 @@ extension Device {
   private var deviceIdiom: UIUserInterfaceIdiom {
     let model = realDevice
     if case .unknown = model {
-      return isCurrent ? UIDevice.current.userInterfaceIdiom : .unspecified
+      guard isCurrent, !IOSAppOnMac.isRunning else { return .unspecified }
+      return UIDevice.current.userInterfaceIdiom
     }
     // An iPhone-only app also gets the phone idiom on iPad.
     return Device.allPhones.contains(model) ? .phone : .pad
@@ -42,6 +43,7 @@ extension Device {
   @MainActor
   public var systemName: String? {
     guard isCurrent else { return nil }
+    if IOSAppOnMac.isRunning { return "macOS" }
     if isPad, UIDevice.current.systemName == "iOS" {
       return "iPadOS"
     } else {
@@ -53,6 +55,7 @@ extension Device {
   @MainActor
   public var systemVersion: String? {
     guard isCurrent else { return nil }
+    if IOSAppOnMac.isRunning { return IOSAppOnMac.systemVersion }
     return UIDevice.current.systemVersion
   }
 
@@ -60,6 +63,7 @@ extension Device {
   @MainActor
   public var model: String? {
     guard isCurrent else { return nil }
+    if IOSAppOnMac.isRunning { return "Mac" }
     return UIDevice.current.model
   }
 
@@ -67,6 +71,7 @@ extension Device {
   @MainActor
   public var localizedModel: String? {
     guard isCurrent else { return nil }
+    if IOSAppOnMac.isRunning { return "Mac" }
     return UIDevice.current.localizedModel
   }
 

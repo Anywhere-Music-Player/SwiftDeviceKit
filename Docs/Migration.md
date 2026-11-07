@@ -25,6 +25,12 @@ their UIKit fallback for a current model that is not yet in the catalog. In Core
 use `Device.allPhones.contains(device.realDevice)` or `Device.allPads` for known
 catalog-family membership without UIKit.
 
+In a “Designed for iPhone/iPad” app on Apple silicon, `Device.current` is
+`.unknown` with the Mac hardware identifier (or `"Mac"` if unavailable).
+Both family flags are false. System reports `"macOS"`, the host OS version
+when available, and `"Mac"` as the model. Explicit identifier lookups still
+use the iOS catalog, including `"iPad8,6"` for the third-generation 12.9-inch iPad Pro.
+
 ```swift
 import SwiftDeviceKitSystem
 

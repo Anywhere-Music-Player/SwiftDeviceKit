@@ -12,6 +12,10 @@ extension Device {
 
   /// Gets the identifier from the system, such as "iPhone19,2".
   public static let identifier: String = {
+    if IOSAppOnMac.isRunning {
+      // uname reports a compatibility iPad for an iOS app running on a Mac.
+      return IOSAppOnMac.hostModel ?? "Mac"
+    }
     var systemInfo = utsname()
     uname(&systemInfo)
     let mirror = Mirror(reflecting: systemInfo.machine)
@@ -49,5 +53,27 @@ extension Device {
     #else
       return false
     #endif
+  }
+}
+
+/// Host information for an iOS binary running directly on macOS.
+package enum IOSAppOnMac {
+  package static var isRunning: Bool {
+    #if os(iOS)
+      ProcessInfo.processInfo.isiOSAppOnMac
+    #else
+      false
+    #endif
+  }
+
+  static let hostModel = string(for: "hw.model")
+  package static let systemVersion = string(for: "kern.osproductversion")
+
+  private static func string(for key: String) -> String? {
+    var size = 0
+    guard sysctlbyname(key, nil, &size, nil, 0) == 0, size > 1 else { return nil }
+    var bytes = [UInt8](repeating: 0, count: size)
+    guard sysctlbyname(key, &bytes, &size, nil, 0) == 0, size > 1 else { return nil }
+    return String(bytes: bytes.prefix(size).prefix { $0 != 0 }, encoding: .utf8)
   }
 }

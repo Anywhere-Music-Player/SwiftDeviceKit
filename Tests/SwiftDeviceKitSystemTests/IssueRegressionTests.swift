@@ -13,7 +13,10 @@ final class SystemIssueRegressionTests: XCTestCase {
   }
 
   func testUnknownDisplayNameCannotReadCurrentDeviceState() {
-    let unknown = Device.unknown(Device.current.description)
+    let current = Device.current
+    // On a Mac, use the compatibility iPad's display name as the impostor.
+    let unknown = Device.unknown(ProcessInfo.processInfo.isiOSAppOnMac
+      ? Device.iPadPro12Inch3.description : current.description)
     XCTAssertNotEqual(unknown, Device.current)
     XCTAssertNil(unknown.systemVersion)
     XCTAssertNil(unknown.batteryState)

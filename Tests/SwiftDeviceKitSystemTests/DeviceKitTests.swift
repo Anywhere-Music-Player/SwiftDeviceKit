@@ -65,18 +65,28 @@ final class DeviceKitTests: XCTestCase {
   }
 
   func testDeviceSimulator() {
-    XCTAssertTrue(device.isOneOf(Device.allSimulators))
+    #if targetEnvironment(simulator)
+      XCTAssertTrue(device.isOneOf(Device.allSimulators))
+    #else
+      XCTAssertFalse(device.isOneOf(Device.allSimulators))
+    #endif
   }
 
   func testIsSimulator() {
-    XCTAssertTrue(device.isSimulator)
+    #if targetEnvironment(simulator)
+      XCTAssertTrue(device.isSimulator)
+    #else
+      XCTAssertFalse(device.isSimulator)
+    #endif
   }
 
   func testDeviceDescription() {
-    XCTAssertTrue(device.description.hasPrefix("Simulator"))
-    XCTAssertTrue(
-      device.description.contains("iPhone")
-        || device.description.contains("iPad"))
+    #if targetEnvironment(simulator)
+      XCTAssertTrue(device.description.hasPrefix("Simulator"))
+      XCTAssertTrue(device.description.contains("iPhone") || device.description.contains("iPad"))
+    #else
+      XCTAssertFalse(device.description.hasPrefix("Simulator"))
+    #endif
   }
 
   func testIsCanvas() {
@@ -133,10 +143,13 @@ final class DeviceKitTests: XCTestCase {
   // MARK: - iOS
 
   func testIsPhoneIsPad() {
-    if UIDevice.current.userInterfaceIdiom == .pad {
+    if ProcessInfo.processInfo.isiOSAppOnMac {
+      XCTAssertFalse(device.isPhone)
+      XCTAssertFalse(device.isPad)
+    } else if Device.allPads.contains(device.realDevice) {
       XCTAssertTrue(device.isPad)
       XCTAssertFalse(device.isPhone)
-    } else if UIDevice.current.userInterfaceIdiom == .phone {
+    } else if Device.allPhones.contains(device.realDevice) {
       XCTAssertFalse(device.isPad)
       XCTAssertTrue(device.isPhone)
     }
@@ -151,9 +164,16 @@ final class DeviceKitTests: XCTestCase {
   }
 
   func testSystemName() {
-    if UIDevice.current.userInterfaceIdiom == .pad {
+    if ProcessInfo.processInfo.isiOSAppOnMac {
+      XCTAssertEqual(device, .unknown(Device.identifier))
+      XCTAssertEqual(device.systemName, "macOS")
+      XCTAssertEqual(device.model, "Mac")
+      XCTAssertEqual(device.localizedModel, "Mac")
+      XCTAssertNotNil(device.systemVersion)
+      XCTAssertEqual(Device.mapToDevice(identifier: "iPad8,6"), .iPadPro12Inch3)
+    } else if Device.allPads.contains(device.realDevice) {
       XCTAssertEqual(device.systemName, "iPadOS")
-    } else if UIDevice.current.userInterfaceIdiom == .phone {
+    } else if Device.allPhones.contains(device.realDevice) {
       XCTAssertEqual(device.systemName, "iOS")
     }
   }
