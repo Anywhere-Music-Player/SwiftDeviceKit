@@ -2,6 +2,7 @@
 
 ## Unreleased
 
+- Preserve the iPhone-only membership and order of deprecated `allXSeriesDevices` when migrating to `allPhonesWithSensorHousing`.
 - Read the Mac battery through IOKit in Mac Catalyst, including the `BatteryState.pluggedInNotCharging(Int)` case. Designed for iPad/iPhone apps on Mac return `nil` for battery readings.
 
 - Add Apple Watch (watchOS 11), Apple TV (tvOS 18), native Mac (macOS 15) and Apple Vision Pro (visionOS 2) to Core and System. The shared catalog covers all six device families on each platform.

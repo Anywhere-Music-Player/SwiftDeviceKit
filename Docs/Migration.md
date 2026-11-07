@@ -17,7 +17,8 @@ one. The old iPod cases, `isPod`, `allPods` and `allSimulatorPods` are outside
 this scope. `allRealDevices` includes all six families on every platform.
 Review exhaustive switches over `Device`, `Device.CPU` and `Device.CameraType`
 for the added cases. To keep a group restricted to the original platform,
-filter by `family` or use the corresponding family list.
+filter by `family` or use the corresponding family list. Migrate `allXSeriesDevices` to
+`allPhonesWithSensorHousing` to preserve membership and order.
 
 `Device` and its hardware types are `Sendable`. Core exposes `family`, model
 lookup, `Device.current`, capability groups, display metadata and `isCanvas`

@@ -7,6 +7,12 @@ final class CatalogIssueRegressionTests: XCTestCase {
     continueAfterFailure = false
   }
 
+  func testXSeriesReplacementPreservesPhoneMembershipAndOrder() {
+    XCTAssertEqual(Device.allPhonesWithSensorHousing, Device.allPhones.filter(\.hasSensorHousing))
+    XCTAssertEqual(Device.allXSeriesDevices, Device.allPhonesWithSensorHousing)
+    XCTAssertTrue(Device.allDevicesWithSensorHousing.contains(where: \.isMac))
+  }
+
   func testIdentityDoesNotDependOnDisplayNames() {
     for model in Device.allRealDevices {
       for value in [model, .simulator(model), .simulator(.simulator(model))] {

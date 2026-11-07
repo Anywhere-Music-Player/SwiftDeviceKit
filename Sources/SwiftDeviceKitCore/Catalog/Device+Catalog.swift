@@ -50,8 +50,11 @@ extension Device {
   public static var allMiniDevices: [Device] { DeviceCatalog.models(with: .mini) }
 
   /// All X-Series Devices
-  @available(*, deprecated, renamed: "allDevicesWithSensorHousing")
-  public static var allXSeriesDevices: [Device] { DeviceCatalog.models(with: .xSeries) }
+  @available(*, deprecated, renamed: "allPhonesWithSensorHousing")
+  public static var allXSeriesDevices: [Device] { allPhonesWithSensorHousing }
+
+  /// iPhones with a sensor housing, in catalog order.
+  public static var allPhonesWithSensorHousing: [Device] { DeviceCatalog.models(with: .xSeries) }
 
   /// All Touch ID Capable Devices
   public static var allTouchIDCapableDevices: [Device] { DeviceCatalog.models(with: .touchID) }
