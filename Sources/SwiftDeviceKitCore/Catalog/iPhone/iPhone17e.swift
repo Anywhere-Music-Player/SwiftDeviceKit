@@ -9,7 +9,7 @@ extension DeviceDefinition {
     cpu: .a19,
     capabilities: [
       .xSeries, .faceID, .sensorHousing, .roundedDisplayCorners, .wirelessCharging, .fiveG, .eSIM,
-      .dualESIM, .usbC,
+      .dualESIM, .usbC, .actionButton,
     ],
     cameras: [.wide],
     applePencilSupport: [],

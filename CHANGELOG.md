@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Add `hasActionButton` and `Device.allDevicesWithActionButton` for models with a customizable Action button.
+
 ## 2026.1.1 — 2026-11-07
 
 - Keep a known iPad classified as an iPad when it runs an iPhone-only app. [#9](https://github.com/Anywhere-Music-Player/SwiftDeviceKit/issues/9)

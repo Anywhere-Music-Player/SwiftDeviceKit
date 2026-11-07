@@ -37,7 +37,7 @@ extension DeviceDefinition {
     cpu: .a20Pro,
     capabilities: [
       .pro, .xSeries, .faceID, .sensorHousing, .roundedDisplayCorners, .dynamicIsland,
-      .wirelessCharging, .fiveG, .eSIM, .dualESIM, .lidar, .usbC,
+      .wirelessCharging, .fiveG, .eSIM, .dualESIM, .lidar, .usbC, .actionButton,
     ],
     cameras: [.wide, .telephoto, .ultraWide],
     applePencilSupport: [],
@@ -54,6 +54,15 @@ The public `Device` remains an enum so existing cases and pattern matching stay
 available. A central registry is explicit: Swift does not discover extension
 records by scanning source files at runtime. Capability groups are derived from
 the registered records, and identifier lookup uses an immutable index.
+
+## Hardware capability lookup
+
+Use `Device.current.hasActionButton` to check the current model and
+`Device.allDevicesWithActionButton` to list matching catalog models. Simulator
+wrappers report their model's capability, and unknown models return `false`.
+Apple distinguishes the customizable Action button from Camera Control on
+[its iPhone controls page](https://support.apple.com/105103). The iPhone Duo
+has Camera Control and no Action button in its [hardware specifications](https://www.apple.com/iphone-duo/specs/).
 
 ## Adding a model
 

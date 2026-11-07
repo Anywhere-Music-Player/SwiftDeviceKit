@@ -9,7 +9,7 @@ extension DeviceDefinition {
     cpu: .a18,
     capabilities: [
       .plus, .xSeries, .faceID, .sensorHousing, .roundedDisplayCorners, .dynamicIsland,
-      .wirelessCharging, .fiveG, .eSIM, .dualESIM, .usbC,
+      .wirelessCharging, .fiveG, .eSIM, .dualESIM, .usbC, .actionButton,
     ],
     cameras: [.wide, .ultraWide],
     applePencilSupport: [],

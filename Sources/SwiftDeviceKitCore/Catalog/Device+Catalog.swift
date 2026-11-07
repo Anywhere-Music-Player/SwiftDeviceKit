@@ -46,6 +46,11 @@ extension Device {
     DeviceCatalog.models(with: .dynamicIsland)
   }
 
+  /// Catalog models with a physical, customizable Action button.
+  public static var allDevicesWithActionButton: [Device] {
+    DeviceCatalog.models(with: .actionButton)
+  }
+
   /// All devices that have 3D Touch support.
   public static var allDevicesWith3dTouchSupport: [Device] {
     DeviceCatalog.models(with: .force3DTouch)
@@ -211,6 +216,11 @@ extension Device {
   /// Returns whether or not the device has the Dynamic Island.
   public var hasDynamicIsland: Bool {
     return definition?.capabilities.contains(.dynamicIsland) ?? false
+  }
+
+  /// Whether the model has an Action button. Simulators report their model's capability.
+  public var hasActionButton: Bool {
+    definition?.capabilities.contains(.actionButton) ?? false
   }
 
   /// Returns whether or not the device has 3D Touch support.
