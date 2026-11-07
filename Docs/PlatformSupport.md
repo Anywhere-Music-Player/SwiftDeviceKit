@@ -19,6 +19,9 @@ Both products can look up any family by hardware identifier on every platform.
 `Device` through a public type alias. System keeps UIKit and WatchKit reads
 on the main actor.
 
+System reads `Device.current.isLowPowerModeEnabled` directly from Foundation on
+every platform, including desktop Macs without battery monitoring.
+
 Storage includes total and free bytes everywhere. The important-use and
 opportunistic-use Foundation keys, and the `volumes` dictionary containing
 them, are available on iOS, iPadOS, macOS and visionOS. On Watch and TV,

@@ -12,6 +12,12 @@ import UIKit
 extension Device {
   var isCurrent: Bool { self == Device.current }
 
+  /// Current OS power-saving state, including on Macs without an internal battery.
+  public var isLowPowerModeEnabled: Bool? {
+    guard isCurrent else { return nil }
+    return ProcessInfo.processInfo.isLowPowerModeEnabled
+  }
+
   /// Known models use their hardware family, including iPads running iPhone-only apps.
   @MainActor
   public var isPhone: Bool {

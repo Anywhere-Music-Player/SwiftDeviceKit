@@ -187,9 +187,7 @@ import SwiftDeviceKitSystem
 @MainActor
 func shouldDeferBackgroundWork() -> Bool {
     let device = Device.current
-    #if !os(tvOS)
-    if device.batteryState?.lowPowerMode == true { return true }
-    #endif
+    if device.isLowPowerModeEnabled == true { return true }
     switch device.thermalState {
     case .serious, .critical: return true
     default: return false

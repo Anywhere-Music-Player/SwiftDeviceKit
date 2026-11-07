@@ -1,3 +1,4 @@
+import Foundation
 import SwiftDeviceKitSystem
 import Testing
 
@@ -19,6 +20,11 @@ struct SystemTests {
       #expect(Device.current.isPhone != Device.current.isPad)
       #expect(Device.current.systemName == (Device.current.isPad ? "iPadOS" : "iOS"))
     #endif
+  }
+
+  @Test func lowPowerModeComesFromTheCurrentOS() {
+    #expect(Device.current.isLowPowerModeEnabled == ProcessInfo.processInfo.isLowPowerModeEnabled)
+    #expect(Device.unknown("other-hardware").isLowPowerModeEnabled == nil)
   }
 
   @Test @MainActor
