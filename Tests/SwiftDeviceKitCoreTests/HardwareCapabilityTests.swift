@@ -13,9 +13,21 @@ struct HardwareCapabilityTests {
       .iPhone18Pro, .iPhone18ProMax,
     ]
     #expect(Device.allDevicesWithActionButton == supported)
+    check(\.hasActionButton, supported: supported)
+  }
+
+  @Test
+  func variableApertureModels() {
+    // https://www.apple.com/iphone-18-pro/specs/ lists the variable aperture on the Fusion Main lens.
+    let supported: [Device] = [.iPhone18Pro, .iPhone18ProMax]
+    #expect(Device.allDevicesWithVariableAperture == supported)
+    check(\.hasVariableAperture, supported: supported)
+  }
+
+  private func check(_ capability: KeyPath<Device, Bool>, supported: [Device]) {
     for model in Device.allRealDevices + [.unknown("iPhone99,1")] {
       for device in [model, .simulator(model), .simulator(.simulator(model))] {
-        #expect(device.hasActionButton == supported.contains(model), "\(device)")
+        #expect(device[keyPath: capability] == supported.contains(model), "\(device)")
       }
     }
   }

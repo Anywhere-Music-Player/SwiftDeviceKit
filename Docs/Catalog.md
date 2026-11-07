@@ -37,7 +37,7 @@ extension DeviceDefinition {
     cpu: .a20Pro,
     capabilities: [
       .pro, .xSeries, .faceID, .sensorHousing, .roundedDisplayCorners, .dynamicIsland,
-      .wirelessCharging, .fiveG, .eSIM, .dualESIM, .lidar, .usbC, .actionButton,
+      .wirelessCharging, .fiveG, .eSIM, .dualESIM, .lidar, .usbC, .actionButton, .variableAperture,
     ],
     cameras: [.wide, .telephoto, .ultraWide],
     applePencilSupport: [],
@@ -63,6 +63,11 @@ wrappers report their model's capability, and unknown models return `false`.
 Apple distinguishes the customizable Action button from Camera Control on
 [its iPhone controls page](https://support.apple.com/105103). The iPhone Duo
 has Camera Control and no Action button in its [hardware specifications](https://www.apple.com/iphone-duo/specs/).
+
+`Device.current.hasVariableAperture` reports whether the model has a lens with a
+physically adjustable aperture. `Device.allDevicesWithVariableAperture` lists the
+matching models. Apple specifies this capability for the 48 MP Fusion Main camera
+on [iPhone 18 Pro and iPhone 18 Pro Max](https://www.apple.com/iphone-18-pro/specs/).
 
 ## Adding a model
 

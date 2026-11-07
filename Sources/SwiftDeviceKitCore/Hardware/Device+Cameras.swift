@@ -16,6 +16,16 @@ extension Device {
     return !self.cameras.isEmpty
   }
 
+  /// Catalog models with a camera lens whose physical aperture can change.
+  public static var allDevicesWithVariableAperture: [Device] {
+    DeviceCatalog.models(with: .variableAperture)
+  }
+
+  /// Whether the model has a lens with a variable aperture. Simulators report their model's capability.
+  public var hasVariableAperture: Bool {
+    definition?.capabilities.contains(.variableAperture) ?? false
+  }
+
   /// Returns whether or not the current device has a normal camera
   @available(*, deprecated, renamed: "hasWideCamera")
   public var hasNormalCamera: Bool {

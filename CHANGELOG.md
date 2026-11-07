@@ -3,6 +3,7 @@
 ## Unreleased
 
 - Add `hasActionButton` and `Device.allDevicesWithActionButton` for models with a customizable Action button.
+- Add `hasVariableAperture` and `Device.allDevicesWithVariableAperture` for models with a variable-aperture camera lens.
 
 ## 2026.1.1 — 2026-11-07
 

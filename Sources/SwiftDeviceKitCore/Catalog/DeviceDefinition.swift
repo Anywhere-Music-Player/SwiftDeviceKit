@@ -8,7 +8,7 @@ struct DeviceDefinition: Sendable {
   enum Capability: Sendable, Hashable {
     case plus, pro, mini, xSeries, touchID, faceID, sensorHousing, roundedDisplayCorners,
       dynamicIsland, force3DTouch, wirelessCharging, fiveG, eSIM, dualESIM, lidar, usbC, foldable,
-      actionButton
+      actionButton, variableAperture
   }
 
   let model: Device
