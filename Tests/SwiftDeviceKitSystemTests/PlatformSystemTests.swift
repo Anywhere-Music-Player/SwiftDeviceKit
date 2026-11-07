@@ -15,6 +15,15 @@ struct PlatformSystemTests {
     }
   }
 
+  #if os(macOS)
+  @Test func knownAndVirtualMacIdentifiers() {
+    #expect(Device.mapToDevice(identifier: "Macmini9,1").isMac)
+    let virtual = Device.mapToDevice(identifier: "VirtualMac2,1")
+    #expect(virtual == .unknown("VirtualMac2,1"))
+    #expect(virtual.family == nil)
+  }
+  #endif
+
   @Test func currentSystemServices() {
     let device = Device.current
     #expect(device.thermalState != nil)
@@ -23,7 +32,12 @@ struct PlatformSystemTests {
     #expect((Device.volumeTotalCapacity ?? 0) > 0)
     #expect(Device.volumeAvailableCapacity != nil)
     #if os(macOS)
-      #expect(device.isMac)
+      if case .unknown(let rawIdentifier) = device {
+        #expect(rawIdentifier == Device.identifier)
+      } else {
+        #expect(device.isMac)
+      }
+      #expect(device.model == "Mac")
       #expect(!device.isSimulator)
       #expect(device.systemName == "macOS")
       #expect(Device.identifier != "arm64" && Device.identifier != "x86_64")
