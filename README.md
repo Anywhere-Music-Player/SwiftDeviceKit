@@ -3,7 +3,6 @@
 </p>
 <h1 align="center">SwiftDeviceKit</h1>
 <p align="center">
-  <a href="https://github.com/Anywhere-Music-Player/SwiftDeviceKit/releases/tag/2026.2.0"><img src="Docs/Badges/release.svg" alt="Release 2026.2.0"></a>
   <a href="Package.swift"><img src="https://img.shields.io/badge/Swift_tools-6.4%2B-F05138" alt="Swift tools 6.4+"></a>
   <a href="#requirements"><img src="https://img.shields.io/badge/platforms-iOS_%C2%B7_iPadOS_%C2%B7_watchOS_%C2%B7_tvOS_%C2%B7_macOS_%C2%B7_visionOS-2463A2" alt="iOS, iPadOS, watchOS, tvOS, macOS and visionOS"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue" alt="MIT license"></a>
